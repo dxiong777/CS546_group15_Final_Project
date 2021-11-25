@@ -1,0 +1,52 @@
+<main class="ab">
+    {{!-- <p id="bold">logIn form</p> --}}
+<h1>Add Item in {{shopName}} Store</h1>
+
+    <form method="post" id="login-form" action="/shopItem/{{shopId}}/item">
+
+        <label>{{shopId}} </label>
+   <br>
+   <br>
+
+        <label>Product Name</label>
+        <input type="text" name="productname" placeholder="Product Name" value="John"/>
+        <br>
+        <br>
+
+        <label>Product Details</label>
+        <input type="text" name="productdetails" placeholder="ProductDetails" value="John" />
+        <br>
+        <br>
+
+        <label>Product Highlights</label>
+        <input type="text" name="producthighlights" placeholder="Product Highlights" value="John" />
+        <br>
+        <br>
+
+        <label>Price</label>
+        <input type="text" name="price" placeholder="Price ( $ )" value="John"/>
+        <br>
+        <br>
+
+
+        <label>Quantity Remaining</label>
+        <input type="number" name="quantityremaining" placeholder="Quantity Remaining" value="5"/>
+        <br>
+        <br>
+
+        <label>Date of Manufacture</label>
+        <input type="text" name="dateofmanufacture" placeholder="Date of Manufacture" value="John"/>
+        <br>
+        <br>
+
+        <label>Date of Expiry</label>
+        <input type="text" name="dateofexpiry" placeholder="Date of Expiry" value="John"/>
+        <br>
+        <br>
+
+        <label for="search">Add Item</label>
+        <button id="search" type="submit" value="search">SUBMIT</button>
+
+    </form>
+
+</main>

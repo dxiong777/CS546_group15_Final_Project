@@ -1,0 +1,26 @@
+<main id="ab">
+    <h1>{{title}}</h1>
+
+    <ul>
+        {{#each allItem}}
+        <li>
+            <p>Product Name: {{this.productname}}</p>
+            <p>Product Details: {{this.productdetails}}</p>
+            <p>Product Highlights: {{this.producthighlights}}</p>
+            <p>Price: {{this.price}}</p>
+            <p>Quantity Remaining: {{this.quantityremaining}}</p>
+            <p>Date of Manufacture: {{this.dateofmanufacture}}</p>
+            <p>Date of Expiry: {{this.dateofexpiry}}</p>
+
+            <form id="b1" action="/delete" method="post">
+                <button  type="submit" value="search">Remove</button>
+            </form>
+            <form id="b2" action="/update" method="post">
+                <button  type="submit" value="search">Update</button>
+            </form>
+        </li>
+        <p>------------------------------------------</p>
+        {{/each}}
+    </ul>
+
+</main>
