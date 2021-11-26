@@ -35,6 +35,7 @@ const exportedMethods = {
         // console.log(typeof newId)
         return await this.get(newInsertInformation.insertedId);
     },
+
 }
 
 module.exports = exportedMethods;

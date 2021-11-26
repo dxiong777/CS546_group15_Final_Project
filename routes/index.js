@@ -2,7 +2,7 @@ const product = require('./products');
 const shop = require('./shop');
 
 const constructorMethod = (app) => {
-  app.use('/shopItem', product);
+  app.use('/shopId', product);
   app.use('/shop', shop);
 
 

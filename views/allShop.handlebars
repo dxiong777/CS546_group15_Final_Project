@@ -1,11 +1,12 @@
-{{!-- <a class="get-home" href="/">To Home Page</a> --}}
+<a class="get-home" href="/shop">To Home Page</a>
 <main id="ab">
     <h1>{{title}}</h1>
 
     <ul>
         {{#each allShop}}
         <li>
-            <a class="person-item" href="/shopItem/{{this._id}}">{{this.name}} </a>
+             {{!-- {{this.name}} --}}
+            <a class="person-item" href="/shopId/{{this._id}}">{{this.name}} </a>
         </li>
         <br>
         {{/each}}

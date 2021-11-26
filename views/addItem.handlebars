@@ -1,8 +1,10 @@
+<a class="get-home" href="/shop">To Home Page</a>
+
 <main class="ab">
     {{!-- <p id="bold">logIn form</p> --}}
-<h1>Add Item in {{shopName}} Store</h1>
+<h1>Add Item in {{shopName}}</h1>
 
-    <form method="post" id="login-form" action="/shopItem/{{shopId}}/item">
+    <form method="post" id="login-form" action="/shopId/{{shopId}}">
 
         <label>{{shopId}} </label>
    <br>
@@ -44,8 +46,8 @@
         <br>
         <br>
 
-        <label for="search">Add Item</label>
-        <button id="search" type="submit" value="search">SUBMIT</button>
+        {{!-- <label for="search">Add Item</label> --}}
+        <button id="search" type="submit" value="search">ADD Item</button>
 
     </form>
 
