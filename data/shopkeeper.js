@@ -3,12 +3,11 @@ const bcrypt = require('bcrypt');
 const saltRounds = 16;
 const shopkeeper = mongoCollections.shopkeeper;
 module.exports = {
- async createShopkeeper(shopId, ShopName, username, ownerFirstname, ownerLastname, Address, email, pincode, password, phoneNumber){
+ async createShopkeeper(ShopName, username, ownerFirstname, ownerLastname, Address, email, pincode, phoneNumber, password){
         const shopkeeperCollections = await shopkeeper();
         const hashed_pass = await bcrypt.hash(password, saltRounds);
         let lower = username.toLowerCase();
         let newShopkeeper = {
-            shopId : shopId,
             ShopName : ShopName,
             username : lower,
             ownerFirstname : ownerFirstname,
@@ -16,8 +15,8 @@ module.exports = {
             Address : Address,
             email : email,
             pincode : pincode,
+            phoneNumber : phoneNumber,
             password : hashed_pass,
-            phoneNumber : phoneNumber
         }
         const duplicateUser = await shopkeeperCollections.findOne({username : username});
         if(duplicateUser !== null)
@@ -25,7 +24,11 @@ module.exports = {
         const insertInfo = await shopkeeperCollections.insertOne(newShopkeeper);
         if(insertInfo.insertedCount === 0)
         throw 'Could not create user';
+        // const new_id = insertInfo.insertedId;
+        // const shopkeepers = await this.get(new_id.toString());
+      //  return shopkeepers
         return {userInsterted : true};
+
     },
     async checkShopkeeper(username, password){
         const shopkeeperCollections = await shopkeeper();
@@ -46,8 +49,8 @@ module.exports = {
         }
     },
 
-    async updateShopkeeper(shopId, ShopName, username, ownerFirstname, ownerLastname, Address, email, pincode, password, phoneNumber){
-        const UpdateInfo = await this.get(shopId);
+    async updateShopkeeper(id, ShopName, username, ownerFirstname, ownerLastname, email, password, phoneNumber){
+        const UpdateInfo = await this.get(id);
         let updated_hash = await bcrypt.hash(password, saltRounds);
         let updatedLower = username.toLowerCase();
         let shopkeeper_update = {
@@ -55,28 +58,26 @@ module.exports = {
             username : updatedLower,
             ownerFirstname : ownerFirstname,
             ownerLastname : ownerLastname,
-            Address : Address,
             email : email,
-            pincode : pincode,
             password : updated_hash,
             phoneNumber : phoneNumber
         }
         const shopkeeperCollections = await shopkeeper();
-        const UpdateInfo = await shopkeeperCollections.updateOne( 
-            {shopId : ObjectId(shopId)},
+        const UpdatedInfo = await shopkeeperCollections.updateOne( 
+            {id : ObjectId(id)},
             {$set : shopkeeper_update}
         );
-        if(!UpdateInfo.matchedCount && !UpdateInfo.modifiedCount)
+        if(!UpdatedInfo.matchedCount && !UpdatedInfo.modifiedCount)
         throw 'Updation failed';
-        return await this.get(shopId);
+        return await this.get(id);
     },
-    async removeShop(shopId){
-        const removeId = new ObjectId(shopId);
-        const ShopName = await this.get(shopId);
+    async removeShop(id){
+        const removeId = new ObjectId(id);
+        const ShopName = await this.get(id);
         const shopkeeperCollections = await shopkeeper();
-        const deleteInfo = await shopkeeperCollections.deleteOne({shopId : removeId});
+        const deleteInfo = await shopkeeperCollections.deleteOne({id : removeId});
         if(deleteInfo.deletedCount === 0)
-        throw `Could not delete the shop with ${shopId}`;
+        throw `Could not delete the shop with ${id}`;
         return `${ShopName['shopName']} deleted successfully`;
     }
 }
