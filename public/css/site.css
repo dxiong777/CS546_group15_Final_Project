@@ -1,0 +1,117 @@
+body {
+    background-color: rgba(233, 166, 42, 0.534);
+    font-family: "arial", "time new roman";
+    margin: auto;
+    width: 90%;
+    padding: 30px 30px 30px 30px;
+}
+
+#b1, #b2, #b3  
+{
+    display:inline;
+}
+
+#b11, #b22, #b33  
+{
+    display:inline;
+}
+
+main#ab {
+    background-color: rgba(233, 166, 42, 0.534);
+    font-family: "arial", "time new roman";
+    margin: auto;
+    border: 3px solid green;
+}
+
+button:hover {
+    background: #da0b0b;
+}
+
+button {
+    font-size: 16px;
+    text-align: center;
+    padding: 5px 5px;
+}
+
+p {
+    color:black;
+}
+
+p#bold {
+    font-weight: bold;
+    color: rgb(0, 38, 255);
+}
+
+label {
+    font-weight: bold;
+    text-align: center;
+}
+
+a:hover {
+    color: rgba(7, 7, 7, 0.521);
+    text-decoration: underline;
+}
+
+a:visited {
+    color: rgb(5, 5, 5);
+}
+
+li {
+    text-align: justify;
+}
+
+h1 {
+    color: green;
+}
+
+h2 {
+    color: sienna;
+    font-weight: bold;
+}
+
+.characters {
+    color: darkslategrey;
+    text-decoration: rgb(0, 255, 242);
+}
+
+#divColorBorder {
+    margin: 05%;
+    padding: 3%;
+    border-top: 3px solid rgb(0, 0, 0);
+    border-bottom: 3px solid blue;
+    border-right: 3px solid rgb(0, 0, 0);
+    border-left: 3px solid salmon;
+    background-color: rgba(42, 233, 217, 0.534);
+}
+
+p#error {
+    color: #da0b0b;
+}
+
+.error {
+    color: #da0b0b;
+}
+
+.ab {
+    background-color: rgba(233, 166, 42, 0.534);
+    font-family: "arial", "time new roman";
+    margin: auto;
+    border: 3px solid green;
+    padding: 10px;
+}
+
+button:hover {
+    background: #da0b0b;
+}
+h4{
+    color: #da0b0b;
+}
+
+
+.people {
+    color: darkslategrey;
+    text-decoration: rgb(0, 255, 242);
+}
+
+
+
