@@ -34,6 +34,7 @@ router.get('/addItem/:id', async function (request, response) {
     const shopid = request.params.id;
     //console.log(idd)
     const shopDetail = await shopData.get(shopid);
+    
     var shopName = shopDetail.name
     const dataa = {
         shopId: shopid,
@@ -84,18 +85,6 @@ router.post('/editItem/:id', async function (req, res) {
     }
 });
 
-router.get('/addItem/:id', async function (request, response) {
-    const idd = request.params.id;
-    //console.log(idd)
-    const shopDetail = await shopData.get(idd);
-    var shopName = shopDetail.name
-    const dataa = {
-        shopId: idd,
-        shopName: shopName
-    };
-    response.render('addItem', dataa);
-    return;
-});
 
 router.post('/:id', async function (req, res) {
     const idProduct = req.params.id;
@@ -109,31 +98,6 @@ router.post('/:id', async function (req, res) {
         dateofexpiry
     } = req.body;
 
-    var err = [];
-
-    if (!productname) {
-        err.push("Enter Productname")
-    }
-    // try {
-    //     if (err.length != 0) {
-    //         var restDetail = await productData.getShopIdForEditItem(idProduct);
-    //         // var itemDetail = await productData.getProductDetail(restDetail._id, idProduct)
-    //         // var data = {
-    //         //     shopId: restDetail._id,
-    //         //     itemDetail: itemDetail,
-    //         //     errors: err
-    //         // }
-    //         // res.status(400)
-    //         // res.render('addItem', data)
-    //         res.redirect(`/shopId/addItem/${restDetail._id}`)
-    //         return;
-    //     }
-    // } catch (e) {
-    //     res.status(500).json({
-    //         error: e.message
-    //     });
-    // }
-
     try {
         const newItem = await productData.createProduct(
             idProduct,
@@ -145,9 +109,7 @@ router.post('/:id', async function (req, res) {
             dateofmanufacture,
             dateofexpiry
         );
-        //console.log(newItem)
         if (typeof newItem == "string") {
-            //console.log("string")
             //------------------------------------
             const shopDetail = await shopData.get(idProduct);
             var shopName = shopDetail.name
@@ -163,32 +125,11 @@ router.post('/:id', async function (req, res) {
                 res.render("allItem", data)
                 return;
             }
-            //------------------------------------
-
         }
         res.redirect(`/shopId/${idProduct}`)
-
     } catch (e) {
         res.status(500).json({
             error: e.message
-        });
-    }
-});
-
-router.get('/:id/allItem', async function (req, res) {
-    const idd = req.params.id;
-    try {
-        const shopDetail = await shopData.get(idd);
-        var shopName = shopDetail.name
-        var shopItem = shopDetail.item
-        const data = {
-            title: shopName,
-            allItem: newItem,
-            shopItem: shopItem
-        };
-    } catch (e) {
-        res.status(500).json({
-            error: e
         });
     }
 });
@@ -207,5 +148,22 @@ router.delete('/delete/:id', async function (req, res) {
     }
 })
 
+// router.get('/:id/allItem', async function (req, res) {
+//     const idd = req.params.id;
+//     try {
+//         const shopDetail = await shopData.get(idd);
+//         var shopName = shopDetail.name
+//         var shopItem = shopDetail.item
+//         const data = {
+//             title: shopName,
+//             allItem: newItem,
+//             shopItem: shopItem
+//         };
+//     } catch (e) {
+//         res.status(500).json({
+//             error: e
+//         });
+//     }
+// });
 
 module.exports = router;

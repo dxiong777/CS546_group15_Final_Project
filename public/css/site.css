@@ -12,6 +12,14 @@ body {
     display: inline;
 }
 
+/* .control-label .text-info {
+    display: inline-block;
+} */
+input, td, th{
+    align-items: center;
+    text-align: center;
+}
+
 #b11,
 #b22,
 #b33 {

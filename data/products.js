@@ -69,6 +69,20 @@ const exportedMethods = {
         var id = mongoose.Types.ObjectId();
         var convertId = mongoose.Types.ObjectId(shopId);
         var message;
+
+        var CurrentDate = new Date();
+        mDate = new Date(dateofmanufacture);
+        eData = new Date(dateofexpiry);
+
+        if (mDate >= CurrentDate) {
+            message = ('Date of Manufacture can\'t be furete data');
+            return message
+        }
+        if (eData <= CurrentDate) {
+            message = ('Date of Expire can\'t be past date');
+            return message
+        }
+
         const shopCollection = await shops();
         const newItem = {
             _id: id,

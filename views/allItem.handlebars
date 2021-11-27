@@ -4,9 +4,9 @@
     <h1>{{title}}</h1>
     <h2>shopId: {{shopId}}</h2>
 
-    <form method="get" id="b1" action="/shopId/addItem/{{shopId}}">
+    {{!-- <form method="get" id="b1" action="/shopId/addItem/{{shopId}}">
         <button type="submit" value="search">Add</button>
-    </form>
+    </form> --}}
     <table width="25%" border="0">
         {{!-- <ul> --}}
             <tr style='text-align:left; background-color:#CCC'>
@@ -29,7 +29,7 @@
             <tr>
                 <td>
                     <div style="float:left">
-                        <a href='/shopId/editItem/{{this._id}}'>Edit</a>
+                        <button><a href='/shopId/editItem/{{this._id}}'>Edit</a></button>
                         {{!-- <input type="submit" name="delete" value='Delete' />
                         <input type="hidden" name="_method" value="DELETE" /> --}}
 
@@ -61,22 +61,69 @@
                 <td><label type="text" name="name" id="name" value="{{this.dateofexpiry}}">{{this.dateofexpiry}}</label>
                 </td>
 
-
             </tr>
 
-            {{!-- <form method="delete" id="b1" action="/shopId/{{this._id}}">
-                <button type="submit" value="search">Remove</button>
-            </form>
 
-            <form method="put" id="b2" action="/shopId/{{this._id}}">
-                <button type="submit" value="search">Update</button>
-            </form> --}}
+            {{/each}}
 
             {{!--
-            </li> --}}
-            {{/each}}
+            ..........................................................................................................................
+            --}}
+            <form method="post" id="addItem-form" action="/shopId/{{shopId}}">
+
+                <td>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">Add</button>
+                    </div>
+                </td>
+                <td>
+                    <input required oninvalid="this.setCustomValidity('Please Enter Product Name')"
+                        oninput="this.setCustomValidity('')" id="productname" type="text" name="productname"
+                        placeholder="Product Name" />
+                </td>
+
+                <td>
+                    <input required oninvalid="this.setCustomValidity('Please Enter Product Details')"
+                        oninput="this.setCustomValidity('')" id="productdetails" type="text" name="productdetails"
+                        placeholder="ProductDetails" value="John" />
+                </td>
+
+                <td>
+                    <input required oninvalid="this.setCustomValidity('Please Enter Product Highlights')"
+                        oninput="this.setCustomValidity('')" type="text" name="producthighlights"
+                        placeholder="Product Highlights" value="John" />
+                </td>
+
+                <td>
+                    <input required oninvalid="this.setCustomValidity('Please Enter Valid Price')"
+                        oninput="this.setCustomValidity('')" type="text" name="price" placeholder="Price ( $ )"
+                        value="John" />
+                </td>
+                <td>
+                    <input required oninvalid="this.setCustomValidity('Please Enter Quantity Remaining')"
+                        oninput="this.setCustomValidity('')" type="number" name="quantityremaining"
+                        placeholder="Quantity Remaining" value="5" />
+                </td>
+                <td>
+                    <input id="StartDate" required oninvalid="this.setCustomValidity('Please Enter Valid Date')"
+                        oninput="this.setCustomValidity('')" type="date" name="dateofmanufacture"
+                        placeholder="Date of Manufacture" value="John" />
+                </td>
+                <td>
+                    <input id="EndDate" required oninvalid="this.setCustomValidity('Please Enter Valid Date of Expiry')"
+                        oninput="this.setCustomValidity('')" type="date" name="dateofexpiry"
+                        placeholder="Date of Expiry" value="John" />
+                </td>
+
+                {{!-- <div class="form-group hidden" id="error-container">
+                    <div class="alert alert-danger text-goes-here">
+                    </div>
+                </div> --}}
+            </form>
+
+
+
     </table>
-    {{!--
-    </ul> --}}
+
 
 </main>
