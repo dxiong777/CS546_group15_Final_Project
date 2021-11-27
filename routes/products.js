@@ -31,12 +31,12 @@ router.get('/:id', async function (request, response) {
 });
 
 router.get('/addItem/:id', async function (request, response) {
-    const idd = request.params.id;
+    const shopid = request.params.id;
     //console.log(idd)
-    const shopDetail = await shopData.get(idd);
+    const shopDetail = await shopData.get(shopid);
     var shopName = shopDetail.name
     const dataa = {
-        shopId: idd,
+        shopId: shopid,
         shopName: shopName
     };
     response.render('addItem', dataa);
@@ -145,8 +145,27 @@ router.post('/:id', async function (req, res) {
             dateofmanufacture,
             dateofexpiry
         );
-       //console.log(newItem)
+        //console.log(newItem)
+        if (typeof newItem == "string") {
+            //console.log("string")
+            //------------------------------------
+            const shopDetail = await shopData.get(idProduct);
+            var shopName = shopDetail.name
+            var shopId = shopDetail._id;
+            const allProduct = await productData.getAllProduct(idProduct);
+            if (allProduct.item.length != 0) {
+                const data = {
+                    allItem: allProduct.item,
+                    title: shopName,
+                    shopId: shopId,
+                    message: newItem
+                }
+                res.render("allItem", data)
+                return;
+            }
+            //------------------------------------
 
+        }
         res.redirect(`/shopId/${idProduct}`)
 
     } catch (e) {

@@ -68,13 +68,7 @@ const exportedMethods = {
 
         var id = mongoose.Types.ObjectId();
         var convertId = mongoose.Types.ObjectId(shopId);
-        var err = [];
-        // if (!productname) {
-        //     err.push("Enter Productname")
-        // }
-        // if (err.length != 0) {
-        //     return err;
-        // }
+        var message;
         const shopCollection = await shops();
         const newItem = {
             _id: id,
@@ -87,6 +81,22 @@ const exportedMethods = {
             dateofmanufacture: dateofmanufacture,
             dateofexpiry: dateofexpiry
         };
+
+        const findStore = await shopCollection.findOne({
+            _id: convertId
+        });
+        //console.log(findStore)
+        findStore.item.forEach(x => {
+            //console.log(x.productname +" === "+ newItem.productname)
+            if (x.productname == newItem.productname) {
+                message = (`${newItem.productname} is available in your Database`)
+            }
+        })
+        //console.log(message)
+        if (message) {
+            //console.log("abb")
+            return message;
+        }
 
         const newaddedItem = await productCollection.insertOne(newItem);
         const newId = newaddedItem.insertedId;

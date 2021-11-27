@@ -19,6 +19,10 @@
                 <th> Date of Manufacture</th>
                 <th> Date of Expiry</th>
             </tr>
+            {{#if message}}
+            <p id="message">{{message}}</p>
+            {{/if}}
+
             {{#each allItem}}
             {{!-- <p>------------------------------------------</p> --}}
 
