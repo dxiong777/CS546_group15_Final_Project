@@ -6,43 +6,50 @@
 
     <form method="post" id="addItem-form" action="/shopId/{{shopId}}">
 
-        <label>{{shopId}} </label>
+        {{!-- <label id="shopId" for="shoId">{{shopId}} </label>
         <br>
-        <br>
+        <br> --}}
 
         <label for="productname">Product Name</label>
-        <input id="productname" type="text" name="productname" placeholder="Product Name" value="John" />
+        <input required oninvalid="this.setCustomValidity('Please Enter Product Name')" oninput="this.setCustomValidity('')"
+            id="productname" type="text" name="productname" placeholder="Product Name" />
         <br>
         <br>
 
         <label>Product Details</label>
-        <input id="productdetails" type="text" name="productdetails" placeholder="ProductDetails" value="John" />
+        <input required oninvalid="this.setCustomValidity('Please Enter Product Details')" oninput="this.setCustomValidity('')" 
+        id="productdetails" type="text" name="productdetails" placeholder="ProductDetails" value="John" />
         <br>
         <br>
 
         <label>Product Highlights</label>
-        <input type="text" name="producthighlights" placeholder="Product Highlights" value="John" />
+        <input required oninvalid="this.setCustomValidity('Please Enter Product Highlights')" oninput="this.setCustomValidity('')" 
+        type="text" name="producthighlights" placeholder="Product Highlights" value="John" />
         <br>
         <br>
 
         <label>Price</label>
-        <input type="text" name="price" placeholder="Price ( $ )" value="John" />
+        <input required oninvalid="this.setCustomValidity('Please Enter Valid Price')" oninput="this.setCustomValidity('')" 
+        type="text" name="price" placeholder="Price ( $ )" value="John" />
         <br>
         <br>
 
 
         <label>Quantity Remaining</label>
-        <input type="number" name="quantityremaining" placeholder="Quantity Remaining" value="5" />
+        <input required oninvalid="this.setCustomValidity('Please Enter Quantity Remaining')" oninput="this.setCustomValidity('')" 
+        type="number" name="quantityremaining" placeholder="Quantity Remaining" value="5" />
         <br>
         <br>
 
         <label>Date of Manufacture</label>
-        <input type="text" name="dateofmanufacture" placeholder="Date of Manufacture" value="John" />
+        <input required oninvalid="this.setCustomValidity('Please Enter Valid Date')" oninput="this.setCustomValidity('')" type="date" 
+        name="dateofmanufacture" placeholder="Date of Manufacture" value="John" />
         <br>
         <br>
 
         <label>Date of Expiry</label>
-        <input type="text" name="dateofexpiry" placeholder="Date of Expiry" value="John" />
+        <input required oninvalid="this.setCustomValidity('Please Enter Valid Date of Expiry')" oninput="this.setCustomValidity('')" type="date" 
+        name="dateofexpiry" placeholder="Date of Expiry" value="John" />
         <br>
         <br>
 
@@ -51,8 +58,8 @@
             </div>
         </div> --}}
 
-       <div class="form-group">
-            <button type="submit" class="btn btn-default">Submit</button>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default">Add Item</button>
         </div>
 
     </form>
