@@ -6,14 +6,24 @@ body {
     padding: 30px 30px 30px 30px;
 }
 
-#b1, #b2, #b3  
-{
-    display:inline;
+#b1,
+#b2,
+#b3 {
+    display: inline;
 }
 
-#b11, #b22, #b33  
-{
-    display:inline;
+#b11,
+#b22,
+#b33 {
+    display: inline;
+}
+
+p#message {
+
+    color: #da0b0b;
+    border: 3px solid red;
+    margin: 2%;
+    padding: 1%;
 }
 
 main#ab {
@@ -21,6 +31,7 @@ main#ab {
     font-family: "arial", "time new roman";
     margin: auto;
     border: 3px solid green;
+    padding: 1%;
 }
 
 button:hover {
@@ -34,7 +45,7 @@ button {
 }
 
 p {
-    color:black;
+    color: black;
 }
 
 p#bold {
@@ -103,7 +114,8 @@ p#error {
 button:hover {
     background: #da0b0b;
 }
-h4{
+
+h4 {
     color: #da0b0b;
 }
 
@@ -112,6 +124,3 @@ h4{
     color: darkslategrey;
     text-decoration: rgb(0, 255, 242);
 }
-
-
-
