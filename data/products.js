@@ -64,14 +64,18 @@ const exportedMethods = {
     },
 
     async createProduct(shopId, productname, productdetails, producthighlights, price, quantityremaining, dateofmanufacture, dateofexpiry) {
-        //  console.log("AA")
         const productCollection = await products();
 
         var id = mongoose.Types.ObjectId();
         var convertId = mongoose.Types.ObjectId(shopId);
-
+        var err = [];
+        // if (!productname) {
+        //     err.push("Enter Productname")
+        // }
+        // if (err.length != 0) {
+        //     return err;
+        // }
         const shopCollection = await shops();
-        //console.log("BB")
         const newItem = {
             _id: id,
             shopId: shopId,

@@ -26,10 +26,19 @@
                 <td>
                     <div style="float:left">
                         <a href='/shopId/editItem/{{this._id}}'>Edit</a>
-                            <form method="post" action="/shopId/delete/{{this._id}}" style="float:right">
-                                <input type="submit" name="delete" value='Delete' />
-                                <input type="hidden" name="_method" value="DELETE" />
-                            </form>
+                        {{!-- <input type="submit" name="delete" value='Delete' />
+                        <input type="hidden" name="_method" value="DELETE" /> --}}
+
+                        <form method="post" action="/shopId/delete/{{this._id}}?_method=DELETE">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="submit" name="delete" value='Delete' />
+                        </form>
+
+                        {{!-- <form action="/shopId/delete/{{this._id}}" style="float:right">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            <input type="submit" name="delete" value='Delete' />
+                        </form>
+                        --}}
                     </div>
                 </td>
                 {{!-- <label for="na">{{this._id}}</label> --}}

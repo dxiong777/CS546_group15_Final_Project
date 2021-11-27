@@ -6,10 +6,8 @@ const constructorMethod = (app) => {
   app.use('/shop', shop);
 
 
-  app.use("*", (request, response) => {
-    response.status(404).json({
-      error: "Route not found"
-    });
+  app.use("*", (req, res) => {
+    res.redirect('/shop');
   });
 
 }

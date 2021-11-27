@@ -15,13 +15,9 @@ router.get('/', function (request, response) {
 router.get('/:id', async function (request, response) {
     const idd = request.params.id;
     const shopDetail = await shopData.get(idd);
-
     var shopName = shopDetail.name
-    var shopId = shopDetail._id
-    //console.log(shopName)
+    var shopId = shopDetail._id;
     const allProduct = await productData.getAllProduct(idd);
-    //  console.log(allProduct)
-    //console.log("---------3--------")
     if (allProduct.item.length != 0) {
         const dataa = {
             allItem: allProduct.item,
@@ -58,26 +54,17 @@ router.get('/editItem/:id', async function (req, res) {
 });
 
 router.post('/editItem/:id', async function (req, res) {
-
     const iddProduct = req.params.id;
-
-    const{productname, productdetails, producthighlights, price,
-        quantityremaining,dateofmanufacture, dateofexpiry} = req.body;
-
-
-    // if (!username || !password) {
-    //     const data = {
-    //       title: "Login Form",
-    //       errors: "Please enter username or password",
-    //     }
-    //     res.status(400).render('login', data);
-    //     return;
-    //   }
-
+    const {
+        productname,
+        productdetails,
+        producthighlights,
+        price,
+        quantityremaining,
+        dateofmanufacture,
+        dateofexpiry
+    } = req.body;
     try {
-        // const restDetail = await productData.getShopIdForEditItem(idd);
-        // const itemDetail = await productData.getProductDetail(restDetail._id, itemId)
-
         const updateStore = await productData.updateProduct(
             iddProduct,
             productname,
@@ -97,11 +84,55 @@ router.post('/editItem/:id', async function (req, res) {
     }
 });
 
-router.post('/:id', async function (req, res) {
+router.get('/addItem/:id', async function (request, response) {
+    const idd = request.params.id;
+    //console.log(idd)
+    const shopDetail = await shopData.get(idd);
+    var shopName = shopDetail.name
+    const dataa = {
+        shopId: idd,
+        shopName: shopName
+    };
+    response.render('addItem', dataa);
+    return;
+});
 
+router.post('/:id', async function (req, res) {
     const idProduct = req.params.id;
-    const{productname, productdetails, producthighlights, price,
-        quantityremaining,dateofmanufacture, dateofexpiry} = req.body;
+    const {
+        productname,
+        productdetails,
+        producthighlights,
+        price,
+        quantityremaining,
+        dateofmanufacture,
+        dateofexpiry
+    } = req.body;
+
+    var err = [];
+
+    if (!productname) {
+        err.push("Enter Productname")
+    }
+    // try {
+    //     if (err.length != 0) {
+    //         var restDetail = await productData.getShopIdForEditItem(idProduct);
+    //         // var itemDetail = await productData.getProductDetail(restDetail._id, idProduct)
+    //         // var data = {
+    //         //     shopId: restDetail._id,
+    //         //     itemDetail: itemDetail,
+    //         //     errors: err
+    //         // }
+    //         // res.status(400)
+    //         // res.render('addItem', data)
+    //         res.redirect(`/shopId/addItem/${restDetail._id}`)
+    //         return;
+    //     }
+    // } catch (e) {
+    //     res.status(500).json({
+    //         error: e.message
+    //     });
+    // }
 
     try {
         const newItem = await productData.createProduct(
@@ -114,6 +145,8 @@ router.post('/:id', async function (req, res) {
             dateofmanufacture,
             dateofexpiry
         );
+       //console.log(newItem)
+
         res.redirect(`/shopId/${idProduct}`)
 
     } catch (e) {
@@ -141,7 +174,7 @@ router.get('/:id/allItem', async function (req, res) {
     }
 });
 
-router.post('/delete/:id', async function (req, res) {
+router.delete('/delete/:id', async function (req, res) {
     const itemId = req.params.id;
     var iddItem = mongoose.Types.ObjectId(itemId);
     try {
