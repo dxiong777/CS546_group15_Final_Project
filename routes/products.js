@@ -5,15 +5,15 @@ const shopData = data.shop;
 const productData = data.products;
 var mongoose = require('mongoose');
 
-router.get('/', function (request, response) {
+router.get('/', function (req, res) {
     const datta = {
         title: "characters Finder"
     };
-    response.render('home', datta);
+    res.render('home', datta);
 });
 
-router.get('/:id', async function (request, response) {
-    const idd = request.params.id;
+router.get('/:id', async function (req, res) {
+    const idd = req.params.id;
     const shopDetail = await shopData.get(idd);
     var shopName = shopDetail.name
     var shopId = shopDetail._id;
@@ -24,25 +24,33 @@ router.get('/:id', async function (request, response) {
             title: shopName,
             shopId: shopId
         };
-        response.render('allItem', dataa);
+        res.render('allItem', dataa);
+        return;
     } else {
-        response.redirect(`/shopId/addItem/${idd}`)
+        const dataa = {
+            allItem: allProduct.item,
+            title: shopName,
+            shopId: shopId,
+            message: "No product in Database"
+        };
+        res.render('allItem', dataa);
+        return;
     }
 });
 
-router.get('/addItem/:id', async function (request, response) {
-    const shopid = request.params.id;
-    //console.log(idd)
+router.get('/addItem/:id', async function (req, res) {
+    const shopid = req.params.id;
     const shopDetail = await shopData.get(shopid);
     var shopName = shopDetail.name
     const dataa = {
         shopId: shopid,
         shopName: shopName
     };
-    response.render('addItem', dataa);
+    res.render('addItem', dataa);
 });
 
 router.get('/editItem/:id', async function (req, res) {
+    console.log("z")
     var itemId = req.params.id;
     var restDetail = await productData.getShopIdForEditItem(itemId);
     var itemDetail = await productData.getProductDetail(restDetail._id, itemId)
@@ -53,8 +61,9 @@ router.get('/editItem/:id', async function (req, res) {
     res.render('edititem', data)
 });
 
-router.post('/editItem/:id', async function (req, res) {
+router.put('/:id', async function (req, res) {
     const iddProduct = req.params.id;
+    //console.log("xxxxxxxxxxxxx")
     const {
         productname,
         productdetails,
@@ -64,6 +73,101 @@ router.post('/editItem/:id', async function (req, res) {
         dateofmanufacture,
         dateofexpiry
     } = req.body;
+
+    try {
+        var restDetail = await productData.getShopIdForEditItem(iddProduct);
+        var itemDetail = await productData.getProductDetail(restDetail._id, iddProduct)
+    } catch (e) {
+        res.status(500).json({
+            error: e.message
+        });
+    }
+    var priceNum = parseInt(price)
+    var qtyRem = parseInt(quantityremaining)
+
+    try {
+        if ((!productname) || typeof productname != 'string') {
+            var data = {
+                message: `productname "${productname}" is not valid`,
+                shopId: restDetail._id,
+                itemDetail: itemDetail
+            }
+            res.status(400)
+            res.render('edititem', data)
+            return;
+        }
+    } catch (e) {
+        res.status(500).json({
+            error: e.message
+        });
+    }
+    try {
+        if ((!productdetails) || typeof productdetails != 'string' || (!productdetails.match(/^[0-9A-z]{5,}$/))) {
+            var data = {
+                message: `productdetails "${productdetails}" is not valid or not atleast 5 charcture`,
+                shopId: restDetail._id,
+                itemDetail: itemDetail
+            }
+            res.status(400)
+            res.render('edititem', data)
+            return;
+        }
+    } catch (e) {
+        res.status(500).json({
+            error: e.message
+        });
+    }
+    try {
+        if ((!producthighlights) || typeof producthighlights != 'string') {
+            var data = {
+                message: `producthighlights "${producthighlights}" is not valid`,
+                shopId: restDetail._id,
+                itemDetail: itemDetail
+            }
+            res.status(400)
+            res.render('edititem', data)
+            return;
+        }
+    } catch (e) {
+        res.status(500).json({
+            error: e.message
+        });
+    }
+    try {
+        if ((!price) || typeof priceNum != 'number' || (!price.match(/^[0-9]{1,}$/))) {
+            var data = {
+                message: `Price "${price}" is not valid`,
+                shopId: restDetail._id,
+                itemDetail: itemDetail
+            }
+            res.status(400)
+            res.render('edititem', data)
+            return;
+        }
+    } catch (e) {
+        res.status(500).json({
+            error: e.message
+        });
+    }
+
+    try {
+        if ((!quantityremaining) || typeof qtyRem != 'number' || (!quantityremaining.match(/^[0-9]{1,}$/))) {
+            var data = {
+                message: `quantityremaining "${quantityremaining}" is not valid or not atleast 5 charcture`,
+                shopId: restDetail._id,
+                itemDetail: itemDetail
+            }
+            res.status(400)
+            res.render('edititem', data)
+            return;
+        }
+    } catch (e) {
+        res.status(500).json({
+            error: e.message
+        });
+    }
+
+
     try {
         const updateStore = await productData.updateProduct(
             iddProduct,
@@ -74,28 +178,29 @@ router.post('/editItem/:id', async function (req, res) {
             quantityremaining,
             dateofmanufacture,
             dateofexpiry
-        );
+        )
+        var restDetail = await productData.getShopIdForEditItem(iddProduct);
+        var itemDetail = await productData.getProductDetail(restDetail._id, iddProduct)
+
+        if (typeof updateStore == "string") {
+            var data = {
+                shopId: restDetail._id,
+                itemDetail: itemDetail,
+                message: updateStore
+            }
+            res.status(400)
+            res.render('edititem', data)
+            return;
+        }
         var shopId = updateStore._id;
         res.redirect(`/shopId/${shopId}`)
     } catch (e) {
         res.status(500).json({
-            error: e
+            error: e.message
         });
     }
 });
 
-router.get('/addItem/:id', async function (request, response) {
-    const idd = request.params.id;
-    //console.log(idd)
-    const shopDetail = await shopData.get(idd);
-    var shopName = shopDetail.name
-    const dataa = {
-        shopId: idd,
-        shopName: shopName
-    };
-    response.render('addItem', dataa);
-    return;
-});
 
 router.post('/:id', async function (req, res) {
     const idProduct = req.params.id;
@@ -109,23 +214,85 @@ router.post('/:id', async function (req, res) {
         dateofexpiry
     } = req.body;
 
-    var err = [];
-
-    if (!productname) {
-        err.push("Enter Productname")
+    try {
+        const restDetail = await shopData.get(idProduct);
+        // console.log(restDetail)
+    } catch (e) {
+        res.status(500).json({
+            error: e.message
+        });
     }
+    // var priceNum = parseInt(price)
+    // var qtyRem = parseInt(quantityremaining)
+
     // try {
-    //     if (err.length != 0) {
-    //         var restDetail = await productData.getShopIdForEditItem(idProduct);
-    //         // var itemDetail = await productData.getProductDetail(restDetail._id, idProduct)
-    //         // var data = {
-    //         //     shopId: restDetail._id,
-    //         //     itemDetail: itemDetail,
-    //         //     errors: err
-    //         // }
-    //         // res.status(400)
-    //         // res.render('addItem', data)
-    //         res.redirect(`/shopId/addItem/${restDetail._id}`)
+    //     if ((!productname) || typeof productname != 'string') {
+    //         var data = {
+    //             message: `productname "${productname}" is not valid`,
+    //         }
+    //         res.status(400)
+    //         res.render('edititem', data)
+    //         return;
+    //     }
+    // } catch (e) {
+    //     res.status(500).json({
+    //         error: e.message
+    //     });
+    // }
+    // try {
+    //     if ((!productdetails) || typeof productdetails != 'string' || (!productdetails.match(/^[0-9A-z]{5,}$/))) {
+    //         var data = {
+    //             message: `productdetails "${productdetails}" is not valid or not atleast 5 charcture`,
+    //         }
+    //         res.status(400)
+    //         res.render('edititem', data)
+    //         return;
+    //     }
+    // } catch (e) {
+    //     res.status(500).json({
+    //         error: e.message
+    //     });
+    // }
+    // try {
+    //     if ((!producthighlights) || typeof producthighlights != 'string') {
+    //         var data = {
+    //             message: `producthighlights "${producthighlights}" is not valid`,
+    //         }
+    //         res.status(400)
+    //         res.render('edititem', data)
+    //         return;
+    //     }
+    // } catch (e) {
+    //     res.status(500).json({
+    //         error: e.message
+    //     });
+    // }
+    // try {
+    //     if ((!price) || typeof priceNum != 'number' || (!price.match(/^[0-9]{1,}$/))) {
+    //         var data = {
+    //             message: `Price "${price}" is not valid`,
+    //             shopId: restDetail._id,
+    //             itemDetail: itemDetail
+    //         }
+    //         res.status(400)
+    //         res.render('edititem', data)
+    //         return;
+    //     }
+    // } catch (e) {
+    //     res.status(500).json({
+    //         error: e.message
+    //     });
+    // }
+
+    // try {
+    //     if ((!quantityremaining) || typeof qtyRem != 'number' || (!quantityremaining.match(/^[0-9]{1,}$/))) {
+    //         var data = {
+    //             message: `quantityremaining "${quantityremaining}" is not valid or not atleast 5 charcture`,
+    //             shopId: restDetail._id,
+    //             itemDetail: itemDetail
+    //         }
+    //         res.status(400)
+    //         res.render('edititem', data)
     //         return;
     //     }
     // } catch (e) {
@@ -145,50 +312,29 @@ router.post('/:id', async function (req, res) {
             dateofmanufacture,
             dateofexpiry
         );
-        //console.log(newItem)
         if (typeof newItem == "string") {
-            //console.log("string")
+            console.log("=====================================================")
             //------------------------------------
             const shopDetail = await shopData.get(idProduct);
             var shopName = shopDetail.name
             var shopId = shopDetail._id;
-            const allProduct = await productData.getAllProduct(idProduct);
-            if (allProduct.item.length != 0) {
+            var allProducts = await productData.getAllProduct(idProduct);
+            if (allProducts.item.length != 0) {
                 const data = {
-                    allItem: allProduct.item,
+                    allItem: allProducts.item,
                     title: shopName,
                     shopId: shopId,
                     message: newItem
                 }
+                res.status(400)
                 res.render("allItem", data)
                 return;
             }
-            //------------------------------------
-
         }
         res.redirect(`/shopId/${idProduct}`)
-
     } catch (e) {
         res.status(500).json({
             error: e.message
-        });
-    }
-});
-
-router.get('/:id/allItem', async function (req, res) {
-    const idd = req.params.id;
-    try {
-        const shopDetail = await shopData.get(idd);
-        var shopName = shopDetail.name
-        var shopItem = shopDetail.item
-        const data = {
-            title: shopName,
-            allItem: newItem,
-            shopItem: shopItem
-        };
-    } catch (e) {
-        res.status(500).json({
-            error: e
         });
     }
 });
@@ -207,5 +353,22 @@ router.delete('/delete/:id', async function (req, res) {
     }
 })
 
+// router.get('/:id/allItem', async function (req, res) {
+//     const idd = req.params.id;
+//     try {
+//         const shopDetail = await shopData.get(idd);
+//         var shopName = shopDetail.name
+//         var shopItem = shopDetail.item
+//         const data = {
+//             title: shopName,
+//             allItem: newItem,
+//             shopItem: shopItem
+//         };
+//     } catch (e) {
+//         res.status(500).json({
+//             error: e
+//         });
+//     }
+// });
 
 module.exports = router;

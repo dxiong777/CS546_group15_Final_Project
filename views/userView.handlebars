@@ -1,0 +1,38 @@
+<a class="get-home" href="/user/shop">To Home Page</a>
+
+<main id="ab">
+    <h1>{{title}}</h1>
+    <h2>shopId: {{shopId}}</h2>
+    <table width="25%" border="0">
+        <tr style='text-align:left; background-color:#CCC'>
+            <th> Product Name</th>
+            <th> Product Details</th>
+            <th> Product Highlights</th>
+            <th> Price</th>
+            <th> Quantity Remaining</th>
+            <th> Date of Manufacture</th>
+            <th> Date of Expiry</th>
+        </tr>
+        {{#each allItem}}
+        <tr>
+            <td><label type="text" name="name" id="name" value="{{this.productname}}">{{this.productname}}</label>
+            </td>
+            <td><label type="text" name="name" id="name" value="{{this.productdetails}}">{{this.productdetails}}</label>
+            </td>
+            <td><label type="text" name="name" id="name"
+                    value="{{this.producthighlights}}">{{this.producthighlights}}</label></td>
+            <td><label type="text" name="name" id="name" value="{{this.price}}">{{this.price}}</label></td>
+            <td><label type="text" name="name" id="name"
+                    value="{{this.quantityremaining}}">{{this.quantityremaining}}</label></td>
+            <td><label type="text" name="name" id="name"
+                    value="{{this.dateofmanufacture}}">{{this.dateofmanufacture}}</label></td>
+            <td><label type="text" name="name" id="name" value="{{this.dateofexpiry}}">{{this.dateofexpiry}}</label>
+            </td>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+    {{#if message}}
+    <p id="message">{{message}}</p>
+    {{/if}}
+</main>

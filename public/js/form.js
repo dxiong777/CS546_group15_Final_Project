@@ -1,16 +1,53 @@
-$scope.checkErr = function(startDate,endDate) {
-  $scope.errMessage = '';
-  var curDate = new Date();
+$('#edit').click(function (event) {
+  // event.preventDefault();
+  var text = $('.text-info').text();
+  var input = $('<input id="attribute" type="text" value="' + text + '" />')
+  $('.text-info').text('').append(input);
+  input.select();
 
-  if(new Date(startDate) > new Date(endDate)){
-    $scope.errMessage = 'End Date should be greater than start date';
-    return false;
-  }
-  if(new Date(startDate) < curDate){
-     $scope.errMessage = 'Start date should not be before today.';
-     return false;
-  }
-};
+  input.blur(function () {
+    var text = $('#attribute').val();
+    $('#attribute').parent().text(text);
+    $('#attribute').remove();
+  });
+});
+
+$('#edit2').click(function (event) {
+  // event.preventDefault();
+  var text2 = $('.text-info2').text();
+  var input2 = $('<input id="attribute2" type="text" value="' + text2 + '" />')
+  $('.text-info2').text('').append(input2);
+  input2.select();
+
+  input2.blur(function () {
+    var text2 = $('#attribute2').val();
+    $('#attribute2').parent().text(text2);
+    $('#attribute2').remove();
+  });
+});
+
+
+function increment() {
+  // event.preventDefault();
+  document.getElementById('demoInput').stepUp();
+}
+
+function decrement() {
+  document.getElementById('demoInput').stepDown();
+}
+// $scope.checkErr = function(startDate,endDate) {
+//   $scope.errMessage = '';
+//   var curDate = new Date();
+
+//   if(new Date(startDate) > new Date(endDate)){
+//     $scope.errMessage = 'End Date should be greater than start date';
+//     return false;
+//   }
+//   if(new Date(startDate) < curDate){
+//      $scope.errMessage = 'Start date should not be before today.';
+//      return false;
+//   }
+// };
 
 // $("#addItem-form").change(function () {
 //   var startDate = document.getElementById("StartDate").value;
