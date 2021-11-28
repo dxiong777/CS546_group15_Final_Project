@@ -2,7 +2,7 @@
 
 <main id="ab">
     <h1>{{title}}</h1>
-    <h2>shopId: {{shopId}}</h2>
+    <h2 id="shopId">{{shopId}}</h2>
 
     {{!-- <form method="get" id="b1" action="/shopId/addItem/{{shopId}}">
         <button type="submit" value="search">Add</button>
@@ -89,34 +89,34 @@
 
                 <td>
                     <input required oninvalid="this.setCustomValidity('Please Enter Product Highlights')"
-                        oninput="this.setCustomValidity('')" type="text" name="producthighlights"
+                        oninput="this.setCustomValidity('')" id="producthighlights" type="text" name="producthighlights"
                         placeholder="Product Highlights" value="John" />
                 </td>
 
                 <td>
                     <input size="10" required oninvalid="this.setCustomValidity('Please Enter Valid Price')"
-                        oninput="this.setCustomValidity('')" type="number" name="price" placeholder="Price ( $ )"
+                        oninput="this.setCustomValidity('')" type="text" id="price totalAmt" step="0.5" name="price" placeholder="Price ( $ )"
                         value="5" />
                 </td>
                 <td>
                     <input required oninvalid="this.setCustomValidity('Please Enter Quantity Remaining')"
-                        oninput="this.setCustomValidity('')" type="number" name="quantityremaining"
-                        placeholder="Quantity Remaining" value="5" />
+                        oninput="this.setCustomValidity('')" type="text" id="quantityremaining" name="quantityremaining"
+                        placeholder="Quantity Remaining (0-5)" value="5" />
                 </td>
                 <td>
-                    <input id="StartDate" required oninvalid="this.setCustomValidity('Please Enter Valid Date')"
-                        oninput="this.setCustomValidity('')" type="date" name="dateofmanufacture"
+                    <input id="dateofmanufacture" required oninvalid="this.setCustomValidity('Please Enter Valid Date')"
+                        oninput="this.setCustomValidity('')" type="date"  name="dateofmanufacture"
                         placeholder="Date of Manufacture" value="2021-01-01" />
                 </td>
                 <td>
-                    <input id="EndDate" required oninvalid="this.setCustomValidity('Please Enter Valid Date of Expiry')"
+                    <input id="dateofexpiry" required oninvalid="this.setCustomValidity('Please Enter Valid Date of Expiry')"
                         oninput="this.setCustomValidity('')" type="date" name="dateofexpiry"
                         placeholder="Date of Expiry" value="2022-01-01" />
                 </td>
 
                 <td>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-default">Add</button>
+                    <div class="form-group" id="addNeww">
+                        <button type="submit" id="submit addNew" class="btn btn-default">Add</button>
                     </div>
                 </td>
                 {{!-- <div class="form-group hidden" id="error-container">

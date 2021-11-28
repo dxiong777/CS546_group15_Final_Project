@@ -1,3 +1,39 @@
+$(document).ready(function () {
+  // Set form variable
+  var form = $('#addItem-formm');
+
+  form.submit(function (event) {
+    var productname = $('#productname').val();
+    var productdetails = $('#productdetails').val();
+    var producthighlights = $('#producthighlights').val();
+    var price = $('#price').val();
+    var quantityremaining = $('#quantityremaining').val();
+    var dateofmanufacture = $('#dateofmanufacture').val();
+    var dateofexpiry = $('#dateofexpiry').val();
+    var shopId = $('shopId').innerHTML;
+    if ($.trim(productname) != '' && $.trim(productdetails) != '' &&
+      $.trim(producthighlights) != '' && $.trim(price) != '' &&
+      $.trim(quantityremaining) != '' && $.trim(dateofmanufacture) != '' &&
+      $.trim(dateofexpiry) != '') {
+      // Process AJAX request
+      $.post('http://localhost:3001/shopId/'+shopId, {
+        productname: productname,
+        productdetails: productdetails,
+        producthighlights: producthighlights,
+        price: price,
+        quantityremaining: quantityremaining,
+        dateofmanufacture: dateofmanufacture,
+        dateofexpiry: dateofexpiry
+      }, function (data) {
+        console.log(data);
+      });
+    }
+    // Prevent default form action
+    event.preventDefault();
+  });
+});
+
+
 $('#edit').click(function (event) {
   // event.preventDefault();
   var text = $('.text-info').text();

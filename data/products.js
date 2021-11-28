@@ -75,7 +75,12 @@ const exportedMethods = {
         mDate = new Date(dateofmanufacture);
         eData = new Date(dateofexpiry);
         var priceNum = parseInt(price)
+        var floarNum = parseFloat(price)
         var qtyRem = parseInt(quantityremaining)
+        // if(typeof priceNum != 'number' && typeof floarNum != "fl" ){
+        //     message = ('Price is invalid');
+        //     return message
+        // }
         if (mDate >= CurrentDate) {
             message = ('Date of Manufacture can\'t be future data');
             return message
@@ -96,12 +101,14 @@ const exportedMethods = {
             message = `producthighlights "${producthighlights}" is not valid.`
             return message
         }
-        if ((!price) || typeof priceNum != 'number' || (!price.match(/^[0-9]{1,}$/))) {
+
+        if ((!price) || (!price.match(/^(?!0\d)\d*(\.\d+)?$/)) ) {
             message = `Price "${price}" is not valid`
             return message
         }
-        if ((!quantityremaining) || typeof qtyRem != 'number' || (!quantityremaining.match(/^[0-9]{1,}$/))) {
-            message = `quantityremaining "${quantityremaining}" is not valid or not atleast 5 charcture.`
+                                                                        
+        if ((!quantityremaining) || typeof qtyRem != 'number' || (!quantityremaining.match(/^[0-5]{1}$/))) {
+            message = `quantityremaining is in 0 to 5 no "${quantityremaining}".`
             return message
         }
 
@@ -121,16 +128,12 @@ const exportedMethods = {
         const findStore = await shopCollection.findOne({
             _id: convertId
         });
-        //console.log(findStore)
         findStore.item.forEach(x => {
-            //console.log(x.productname +" === "+ newItem.productname)
             if (x.productname == newItem.productname) {
                 message = (`${newItem.productname} is available in your Database`)
             }
         })
-        //console.log(message)
         if (message) {
-            //console.log("abb")
             return message;
         }
 

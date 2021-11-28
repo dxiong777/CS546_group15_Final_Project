@@ -1,9 +1,21 @@
 body {
-    background-color: rgba(233, 166, 42, 0.534);
+    background-color: rgba(223, 206, 174, 0.534);
     font-family: "arial", "time new roman";
     margin: auto;
     width: 90%;
     padding: 30px 30px 30px 30px;
+}
+
+label {
+    display: block;
+    width: 130px;
+    font-weight: bold;
+    text-align: center;
+}
+
+table {
+    background-origin: padding-box;
+    color: rgb(31, 30, 19);
 }
 
 #b1,
@@ -15,7 +27,9 @@ body {
 /* .control-label .text-info {
     display: inline-block;
 } */
-input, td, th{
+input,
+td,
+th {
     align-items: center;
     text-align: center;
 }
@@ -35,12 +49,14 @@ p#message {
 }
 
 main#ab {
-    background-color: rgba(233, 166, 42, 0.534);
+    background-color: rgba(188, 216, 137, 0.534);
     font-family: "arial", "time new roman";
     margin: auto;
     border: 3px solid green;
     padding: 1%;
 }
+
+
 
 button:hover {
     background: #da0b0b;
@@ -61,10 +77,6 @@ p#bold {
     color: rgb(0, 38, 255);
 }
 
-label {
-    font-weight: bold;
-    text-align: center;
-}
 
 a:hover {
     color: rgba(7, 7, 7, 0.521);
@@ -127,6 +139,13 @@ h4 {
     color: #da0b0b;
 }
 
+button#addNew {
+    border-block-end-color: #da0b0b;
+}
+
+div#addNeww {
+    background-color: blue;
+}
 
 .people {
     color: darkslategrey;
