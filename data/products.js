@@ -123,12 +123,12 @@ const exportedMethods = {
         var message;
 
         var todayDate = new Date().toISOString().slice(0, 10);
-    
+
 
         mDate = new Date(dateofmanufacture);
         eData = new Date(dateofexpiry);
         var qtyRem = parseInt(quantityremaining)
-        
+
         if (dateofmanufacture > todayDate) {
             message = ('Date of Manufacture can\'t be future data');
             return message
@@ -207,15 +207,18 @@ const exportedMethods = {
 
         var message;
 
-        var CurrentDate = new Date();
+        var todayDate = new Date().toISOString().slice(0, 10);
+
+
         mDate = new Date(dateofmanufacture);
         eData = new Date(dateofexpiry);
+        var qtyRem = parseInt(quantityremaining)
 
-        if (mDate >= CurrentDate) {
+        if (dateofmanufacture > todayDate) {
             message = ('Date of Manufacture can\'t be future data');
             return message
         }
-        if (eData <= CurrentDate) {
+        if (dateofexpiry < todayDate) {
             message = ('Date of Expire can\'t be past date');
             return message
         }

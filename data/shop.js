@@ -38,9 +38,7 @@ const exportedMethods = {
     async get(id) {
         var x = id.toString()
         var convertId = mongoose.Types.ObjectId(id);
-        // console.log(convertId)
         const findShop = await shop();
-        // console.log("a")
         const shopData = await findShop.findOne({
             _id: convertId
         });
