@@ -59,7 +59,8 @@ router.get('/:idUser/shop/:shopId', async (req, res) => {
                 allItem: allProduct.item,
                 shopName: shopName,
                 shopId: shopIdd,
-                userData: userInfo
+                userData: userInfo,
+                shopDetail: shopDetail
             };
             res.render('userView', dataa);
             return;
@@ -72,6 +73,38 @@ router.get('/:idUser/shop/:shopId', async (req, res) => {
     }
 });
 
+router.post('/:idUser/shop/:shopId', async (req, res) => {
+    const userid = req.params.idUser;
+    const shopId = req.params.shopId;
+    const {
+        message
+    } = req.body;
+    try {
+        const userInfo = await user.getUser(userid);
+        const shopInfo = await shopData.get(shopId);
+        await shopData.message(userInfo, shopId, message)
+        var shopName = shopInfo.name
+        var shopIdd = shopInfo._id;
+        const allProduct = await productData.getAllProduct(shopId);
+        if (allProduct) {
+            const dataa = {
+                allItem: allProduct.item,
+                shopName: shopName,
+                shopId: shopIdd,
+                userData: userInfo,
+                shopDetail: shopInfo,
+                mess: "Thanks for sending replay"
+            };
+            res.render('userView', dataa);
+            return;
+        }
+
+    } catch (e) {
+        res.status(500).json({
+            error: e.message
+        });
+    }
+});
 
 router.post('/', async (req, res) => {
     const userData = req.body;

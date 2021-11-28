@@ -40,13 +40,18 @@ router.post('/', async (req, res) => {
   } 
 });
 
-
-// router.get('/characters/:id', async function (request, response) {
-//   const idd = request.params.id; 
-//   const id = (parseInt(id));
-  
-
-
-// });
+// router.delete('/delete/:id', async function (req, res) {
+//   const itemId = req.params.id;
+//   var iddItem = mongoose.Types.ObjectId(itemId);
+//   try {
+//       var restDetail = await productData.getShopIdForEditItem(itemId);
+//       const shopDetail = await productData.remove(restDetail, itemId);
+//       res.redirect(`/shopId/${shopDetail}`)
+//   } catch (e) {
+//       res.status(500).json({
+//           error: e.message
+//       });
+//   }
+// })
 
 module.exports = router;

@@ -1,6 +1,8 @@
 const mongoCollections = require('../config/mongoCollections');
 const shop = mongoCollections.shop;
+const messages = mongoCollections.message;
 var mongoose = require('mongoose');
+const user = require('./user')
 
 
 const exportedMethods = {
@@ -51,13 +53,39 @@ const exportedMethods = {
         const resaurantCollection = await shop();
         const newShop = {
             name: name,
-            item: []
+            item: [],
+            message: []
         };
         const newInsertInformation = await resaurantCollection.insertOne(newShop);
         const newId = newInsertInformation.insertedId;
         // console.log(typeof newId)
         return await this.get(newInsertInformation.insertedId);
     },
+
+    async message(userInfo, shopId, message) {
+        var id = mongoose.Types.ObjectId();
+
+        var convertId = mongoose.Types.ObjectId(shopId);
+        const resaurantCollection = await shop();
+        const messageCollection = await messages();
+        const userInformation = await user.getUser(userInfo._id);
+        var usermessage = {
+            _id: id,
+            'name': userInformation.name,
+            'id': userInformation._id,
+            'message': message,
+            shopId: shopId
+        }
+        const newaddedItem = await messageCollection.insertOne(usermessage);
+        const newInsertInformation = await resaurantCollection.updateOne({
+            _id: convertId
+        }, {
+            $push: {
+                message: usermessage
+            }
+        })
+        return;
+    }
 
 }
 

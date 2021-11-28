@@ -5,24 +5,24 @@ const shopData = data.shop;
 const productData = data.products;
 var mongoose = require('mongoose');
 
-router.get('/', function (req, res) {
-    const datta = {
-        title: "characters Finder"
-    };
-    res.render('home', datta);
-});
+
 
 router.get('/:id', async function (req, res) {
     const idd = req.params.id;
     const shopDetail = await shopData.get(idd);
     var shopName = shopDetail.name
     var shopId = shopDetail._id;
+    var shopMessage = shopDetail.message;
+
+    //console.log(shopMessage)
+
     const allProduct = await productData.getAllProduct(idd);
     if (allProduct.item.length != 0) {
         const dataa = {
             allItem: allProduct.item,
             title: shopName,
-            shopId: shopId
+            shopId: shopId,
+            msg: shopMessage
         };
         res.render('allItem', dataa);
         return;
@@ -31,7 +31,8 @@ router.get('/:id', async function (req, res) {
             allItem: allProduct.item,
             title: shopName,
             shopId: shopId,
-            message: "No product in Database"
+            message: "No product in Database",
+            msg: shopMessage
         };
         res.render('allItem', dataa);
         return;
@@ -215,93 +216,6 @@ router.post('/:id', async function (req, res) {
     } = req.body;
 
     try {
-        const restDetail = await shopData.get(idProduct);
-        // console.log(restDetail)
-    } catch (e) {
-        res.status(500).json({
-            error: e.message
-        });
-    }
-    // var priceNum = parseInt(price)
-    // var qtyRem = parseInt(quantityremaining)
-
-    // try {
-    //     if ((!productname) || typeof productname != 'string') {
-    //         var data = {
-    //             message: `productname "${productname}" is not valid`,
-    //         }
-    //         res.status(400)
-    //         res.render('edititem', data)
-    //         return;
-    //     }
-    // } catch (e) {
-    //     res.status(500).json({
-    //         error: e.message
-    //     });
-    // }
-    // try {
-    //     if ((!productdetails) || typeof productdetails != 'string' || (!productdetails.match(/^[0-9A-z]{5,}$/))) {
-    //         var data = {
-    //             message: `productdetails "${productdetails}" is not valid or not atleast 5 charcture`,
-    //         }
-    //         res.status(400)
-    //         res.render('edititem', data)
-    //         return;
-    //     }
-    // } catch (e) {
-    //     res.status(500).json({
-    //         error: e.message
-    //     });
-    // }
-    // try {
-    //     if ((!producthighlights) || typeof producthighlights != 'string') {
-    //         var data = {
-    //             message: `producthighlights "${producthighlights}" is not valid`,
-    //         }
-    //         res.status(400)
-    //         res.render('edititem', data)
-    //         return;
-    //     }
-    // } catch (e) {
-    //     res.status(500).json({
-    //         error: e.message
-    //     });
-    // }
-    // try {
-    //     if ((!price) || typeof priceNum != 'number' || (!price.match(/^[0-9]{1,}$/))) {
-    //         var data = {
-    //             message: `Price "${price}" is not valid`,
-    //             shopId: restDetail._id,
-    //             itemDetail: itemDetail
-    //         }
-    //         res.status(400)
-    //         res.render('edititem', data)
-    //         return;
-    //     }
-    // } catch (e) {
-    //     res.status(500).json({
-    //         error: e.message
-    //     });
-    // }
-
-    // try {
-    //     if ((!quantityremaining) || typeof qtyRem != 'number' || (!quantityremaining.match(/^[0-9]{1,}$/))) {
-    //         var data = {
-    //             message: `quantityremaining "${quantityremaining}" is not valid or not atleast 5 charcture`,
-    //             shopId: restDetail._id,
-    //             itemDetail: itemDetail
-    //         }
-    //         res.status(400)
-    //         res.render('edititem', data)
-    //         return;
-    //     }
-    // } catch (e) {
-    //     res.status(500).json({
-    //         error: e.message
-    //     });
-    // }
-
-    try {
         const newItem = await productData.createProduct(
             idProduct,
             productname,
@@ -340,35 +254,26 @@ router.post('/:id', async function (req, res) {
 });
 
 router.delete('/delete/:id', async function (req, res) {
-    const itemId = req.params.id;
-    var iddItem = mongoose.Types.ObjectId(itemId);
+    const itemorMessageId = req.params.id;
     try {
-        var restDetail = await productData.getShopIdForEditItem(itemId);
-        const shopDetail = await productData.remove(restDetail, itemId);
-        res.redirect(`/shopId/${shopDetail}`)
+        var restDetail = await productData.getShopIdForEditItem(itemorMessageId);
+        if (typeof restDetail == 'string') {
+           // console.log("a-route")
+            restDetailforMessage = await productData.getShopIdForDeleteMessage(itemorMessageId);
+            //console.log("b-route")
+            const shopDetailId = await productData.removeMessage(restDetailforMessage, itemorMessageId);
+            res.redirect(`/shopId/${shopDetailId}`)
+        } else {
+            const shopDetail = await productData.remove(restDetail, itemorMessageId);
+            res.redirect(`/shopId/${shopDetail}`)
+        }
     } catch (e) {
         res.status(500).json({
             error: e.message
         });
     }
+
 })
 
-// router.get('/:id/allItem', async function (req, res) {
-//     const idd = req.params.id;
-//     try {
-//         const shopDetail = await shopData.get(idd);
-//         var shopName = shopDetail.name
-//         var shopItem = shopDetail.item
-//         const data = {
-//             title: shopName,
-//             allItem: newItem,
-//             shopItem: shopItem
-//         };
-//     } catch (e) {
-//         res.status(500).json({
-//             error: e
-//         });
-//     }
-// });
 
 module.exports = router;

@@ -2,7 +2,7 @@
 
 <main id="ab">
     <title>Welcome {{userData.name}} in {{shopName}}</title>
- 
+
     <h3>shopId: {{shopId}}</h3>
     <h3>UserId: {{userData._id}}</h3>
     <table width="25%" border="0">
@@ -17,18 +17,21 @@
         </tr>
         {{#each allItem}}
         <tr>
-            <td><label size="10" type="text" name="name" id="name" value="{{this.productname}}">{{this.productname}}</label>
+            <td><label size="10" type="text" name="name" id="name"
+                    value="{{this.productname}}">{{this.productname}}</label>
             </td>
-            <td><label size="10" type="text" name="name" id="name" value="{{this.productdetails}}">{{this.productdetails}}</label>
+            <td><label size="10" type="text" name="name" id="name"
+                    value="{{this.productdetails}}">{{this.productdetails}}</label>
             </td>
-            <td><label size="10"  type="text" name="name" id="name"
+            <td><label size="10" type="text" name="name" id="name"
                     value="{{this.producthighlights}}">{{this.producthighlights}}</label></td>
             <td><label size="10" type="text" name="name" id="name" value="{{this.price}}">{{this.price}}</label></td>
             <td><label size="10" type="text" name="name" id="name"
                     value="{{this.quantityremaining}}">{{this.quantityremaining}}</label></td>
             <td><label size="10" type="text" name="name" id="name"
                     value="{{this.dateofmanufacture}}">{{this.dateofmanufacture}}</label></td>
-            <td><label size="10" type="text" name="name" id="name" value="{{this.dateofexpiry}}">{{this.dateofexpiry}}</label>
+            <td><label size="10" type="text" name="name" id="name"
+                    value="{{this.dateofexpiry}}">{{this.dateofexpiry}}</label>
             </td>
             </td>
         </tr>
@@ -36,5 +39,18 @@
     </table>
     {{#if message}}
     <p id="message">{{message}}</p>
+    {{/if}}
+
+    <br><br><br>
+    {{!-- this means shop {{userData._id}}/shop/{{shopDetail._id}}
+    href="/user/{{../userId}}/shop/{{this._id}}">{{this.name}} --}}
+    <form method="post" id="addItem-form" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
+        <label for="">Message</label>
+        <input type="message" name="message" />
+        <button type="submit" id="submit addNew" class="btn btn-default">Send</button>
+    </form>
+
+    {{#if mess}}
+    <p id="message">{{mess}}</p>
     {{/if}}
 </main>

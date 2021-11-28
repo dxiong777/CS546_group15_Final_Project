@@ -5,6 +5,10 @@ body {
     width: 90%;
     padding: 30px 30px 30px 30px;
 }
+/* table#messages{
+    border: 1ch;
+    column-gap: 6ch;
+} */
 
 label {
     display: block;

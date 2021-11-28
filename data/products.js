@@ -1,6 +1,7 @@
 const mongoCollections = require('../config/mongoCollections');
 const products = mongoCollections.products;
 const shops = mongoCollections.shop;
+const messages = mongoCollections.message;
 var mongoose = require('mongoose');
 var shop = require("./shop");
 const {
@@ -29,8 +30,28 @@ const exportedMethods = {
         const findShop = await findShopItem.findOne({
             _id: idd
         });
-       // console.log(findShop)
+        if(!findShop){
+            return "ok";
+        }
         shopId = findShop.shopId
+        var shopObj = mongoose.Types.ObjectId(shopId);
+        const findStore = await shopCollection.findOne({
+            _id: shopObj
+        });
+        var shopFind = findStore
+        return shopFind
+    },
+    async getShopIdForDeleteMessage(id) {
+        var shopCollection = await shops();
+        var idd = mongoose.Types.ObjectId(id);
+
+        var shopId;
+        const findMessageItem = await messages();
+        const findMessage = await findMessageItem.findOne({
+            _id: idd
+        });
+        // console.log(findShop)
+        shopId = findMessage.shopId
         var shopObj = mongoose.Types.ObjectId(shopId);
         const findStore = await shopCollection.findOne({
             _id: shopObj
@@ -102,11 +123,11 @@ const exportedMethods = {
             return message
         }
 
-        if ((!price) || (!price.match(/^(?!0\d)\d*(\.\d+)?$/)) ) {
+        if ((!price) || (!price.match(/^(?!0\d)\d*(\.\d+)?$/))) {
             message = `Price "${price}" is not valid`
             return message
         }
-                                                                        
+
         if ((!quantityremaining) || typeof qtyRem != 'number' || (!quantityremaining.match(/^[0-5]{1}$/))) {
             message = `quantityremaining is in 0 to 5 no "${quantityremaining}".`
             return message
@@ -136,6 +157,7 @@ const exportedMethods = {
         if (message) {
             return message;
         }
+     //   const newaddedItem = await messageCollection.insertOne(usermessage);
 
         const newaddedItem = await productCollection.insertOne(newItem);
         const newId = newaddedItem.insertedId;
@@ -216,7 +238,6 @@ const exportedMethods = {
     },
 
     async remove(restDetail, itemId) {
-        // console.log(restDetail)
         var iddItem = mongoose.Types.ObjectId(itemId);
         const productCollection = await products();
         const shopCollection = await shops();
@@ -232,8 +253,26 @@ const exportedMethods = {
                 }
             }
         });
-
         return restDetail._id
+    },
+    async removeMessage(restDetail, messageId) {
+        var iddItem = mongoose.Types.ObjectId(messageId);
+        const messageCollection = await messages();
+        const shopCollection = await shops();
+        await messageCollection.deleteOne({
+            _id: iddItem
+        });
+        await shopCollection.updateOne({
+            _id: restDetail._id
+        }, {
+            $pull: {
+                message: {
+                    _id: iddItem
+                }
+            }
+        });
+        return restDetail._id
+
     },
 
 
