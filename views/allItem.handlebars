@@ -122,7 +122,7 @@
                         <button type="submit" id="submit addNew" class="btn btn-default">Add</button>
                     </div>
                 </td>
-                
+
             </form>
     </table>
     {{#if messagetoCreateProduct}}
@@ -132,7 +132,7 @@
     <p id="message">{{messageProduct}}</p>
     {{/if}}
 </main>
-<br>
+
 
 {{#if messageForMessage}}
 <p id="message">{{messageForMessage}}</p>
@@ -163,7 +163,7 @@
             </form>
         </td>
     </tr>
-    <br>
+    
     {{/each}}
 
 </table>
@@ -187,35 +187,8 @@
             {{this.date}}
         </td>
     </tr>
-    <br>
+   
     {{/each}}
 
 </table>
 {{/if}}
-
-{{!--
-{{#if commentFromCuetomer}}
-<p id="message">{{commentFromCuetomer}}</p>
-{{/if}}
-
-
-{{#if mcomForShop}}
-<h2> Comment from Customer</h2>
-<table id="message" width="20%" border="0">
-    <tr>
-        <th>User Name</th>
-        <th>Comment</th>
-        <th>Comment Date</th>
-    </tr>
-    {{#each comForShop}}
-    <tr>
-        <td>{{this.userName}}</td>
-        <td>{{this.comment}}</td>
-        <td>{{this.date}}</td>
-
-    </tr>
-    <br>
-    {{/each}}
-
-</table>
-{{/if}} --}}

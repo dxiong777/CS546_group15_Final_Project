@@ -38,67 +38,61 @@
         {{/each}}
     </table>
 
-    <tr>
-        {{#if message}}
-        <p id="message">{{message}}</p>
-        {{/if}}
+</main>
 
-        <br><br><br>
-        {{!-- this means shop {{userData._id}}/shop/{{shopDetail._id}}
-        href="/user/{{../userId}}/shop/{{this._id}}">{{this.name}} --}}
-        <form method="post" id="addItem-form" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
-            <label for="">Message</label>
-            <input type="message" name="message" />
-            <button type="submit" id="submit addNew" class="btn btn-default">Send</button>
-        </form>
 
-        {{#if mess}}
-        <p id="message">{{mess}}</p>
-        {{/if}}
-        {{!-- =============================================================================================--}}
-        {{#if comment}}
-        <p id="message">{{comment}}</p>
-        {{/if}}
-
-        <br><br><br>
-        {{!-- this means shop {{userData._id}}/shop/{{shopDetail._id}}
-        href="/user/{{../userId}}/shop/{{this._id}}">{{this.name}} --}}
-        <form method="post" id="addItem-form" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
-            <label for="">Comment</label>
-            <input type="message" name="comment" />
-            <button type="submit" id="submit addNew" class="btn btn-default">Send Comment</button>
-        </form>
-
-        {{#if comm}}
-        <p id="message">{{comm}}</p>
-        {{/if}}
-    </tr>
+<tr>
+    {{#if message}}
+    <p id="message">{{message}}</p>
+    {{/if}}
 
     <br>
+    <form method="post" id="addItem-form" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
+        <label for="">Message</label>
+        <input required oninvalid="this.setCustomValidity('Please Enter Message for ShopKeeper.')"
+            oninput="this.setCustomValidity('')" type="message" name="message" />
+        <button type="submit" id="submit addNew" class="btn btn-default">Send</button>
+    </form>
 
-    {{#if noComment}}
-    <h2>{{noComment}}</h3>
+    {{#if mess}}
+    <p>{{mess}}</p>
     {{/if}}
-    {{#if commentForShop}}
-    <h2> Review from Customer</h2>
-    <table id="comment" width="20%" border="0">
+    {{!-- =============================================================================================--}}
 
-        <tr>
-            <th>User Name</th>
-            <th>Comment</th>
-            <th>Date</th>
-        </tr>
-        {{#each commentForShop}}
-        <tr>
-            <td>{{this.userName}}</td>
-            <td>{{this.comment}}</td>
-            <td>
-                {{this.date}}
-            </td>
-        </tr>
-        <br>
-        {{/each}}
+    <form method="post" id="addItem-form" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
+        <label for="">Comment</label>
+        <input required oninvalid="this.setCustomValidity('Please Write review of your experience.')"
+            oninput="this.setCustomValidity('')" type="message" name="comment" />
+        <button type="submit" id="submit addNew" class="btn btn-default">Send Comment</button>
+    </form>
 
-    </table>
+    {{#if comm}}
+    <p>{{comm}}</p>
     {{/if}}
-</main>
+</tr>
+
+
+
+{{#if commentForShop}}
+
+<h2> Review from Customer</h2>
+<table id="comment" width="20%" border="0">
+
+    <tr>
+        <th>User Name</th>
+        <th>Comment</th>
+        <th>Date</th>
+    </tr>
+    {{#each commentForShop}}
+    <tr>
+        <td>{{this.userName}}</td>
+        <td>{{this.comment}}</td>
+        <td>
+            {{this.date}}
+        </td>
+    </tr>
+
+    {{/each}}
+
+</table>
+{{/if}}
