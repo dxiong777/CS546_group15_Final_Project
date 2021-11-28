@@ -15,61 +15,59 @@
             <label>itemId : {{itemDetail._id}}</label>
             <br>
             <br>
-
-            <label>Product Name</label>
-            <input required oninvalid="this.setCustomValidity('Please Enter Product Name')"
-                oninput="this.setCustomValidity('')" type="text" name="productname" placeholder="Product Name"
-                value="{{itemDetail.productname}}" />
-            <br>
-            <br>
-
-            <label>Product Details</label>
-            <input required oninvalid="this.setCustomValidity('Please Enter Product Details')"
-                oninput="this.setCustomValidity('')" type="text" name="productdetails" placeholder="ProductDetails"
-                value="{{itemDetail.productdetails}}" />
-            <br>
-            <br>
-
-            <label>Product Highlights</label>
-            <input type="text" name="producthighlights" placeholder="Product Highlights"
-                value="{{itemDetail.producthighlights}}" />
-            <br>
-            <br>
-
-            <label>Price</label>
-            <input required oninvalid="this.setCustomValidity('Please Enter Valid Price')"
-                oninput="this.setCustomValidity('')" type="text" name="price" placeholder="Price ( $ )"
-                value="{{itemDetail.price}}" />
-            <br>
-            <br>
-
-            <label>Quantity Remaining</label>
-            <input required oninvalid="this.setCustomValidity('Please Enter Quantity Remaining')"
-                oninput="this.setCustomValidity('')" type="number" name="quantityremaining"
-                placeholder="Quantity Remaining" value="{{itemDetail.quantityremaining}}" />
-            <br>
-            <br>
-
-            <label>Date of Manufacture</label>
-            <input required oninvalid="this.setCustomValidity('Please Enter Valid Date')"
-                oninput="this.setCustomValidity('')" type="date" name="dateofmanufacture"
-                placeholder="Date of Manufacture" value="{{itemDetail.dateofmanufacture}}" />
-            <br>
-            <br>
-
-            <label>Date of Expiry</label>
-            <input required oninvalid="this.setCustomValidity('Please Enter Valid Date of Expiry')"
-                oninput="this.setCustomValidity('')" type="date" name="dateofexpiry" placeholder="Date of Expiry"
-                value="{{itemDetail.dateofexpiry}}" />
-            <br>
-            <br>
-
-            <input type="submit" name="Edit" value='Edit' />
+            <table>
+                <tr>
+                    <th> <label>Product Name</label></th>
+                    <th> <label>Product Details</label></th>
+                    <th> <label>Product Highlights</label></th>
+                    <th> <label>Price</label></th>
+                    <th> <label>Quantity Remaining</label></th>
+                    <th> <label>Date of Manufacture</label></th>
+                    <th> <label>Date of Expiry</label></th>
+                </tr>
+                <tr>
+                    <td> <input required oninvalid="this.setCustomValidity('Please Enter Product Name')"
+                            oninput="this.setCustomValidity('')" type="text" name="productname"
+                            placeholder="Product Name" value="{{itemDetail.productname}}" />
+                    </td>
+                    <td>
+                        <input required oninvalid="this.setCustomValidity('Please Enter Product Details')"
+                            oninput="this.setCustomValidity('')" type="text" name="productdetails"
+                            placeholder="ProductDetails" value="{{itemDetail.productdetails}}" />
+                    </td>
+                    <td>
+                        <input type="text" name="producthighlights" placeholder="Product Highlights"
+                            value="{{itemDetail.producthighlights}}" />
+                    </td>
+                    <td>
+                        <input required oninvalid="this.setCustomValidity('Please Enter Valid Price')"
+                            oninput="this.setCustomValidity('')" type="text" name="price" placeholder="Price ( $ )"
+                            value="{{itemDetail.price}}" />
+                    </td>
+                    <td>
+                        <input required oninvalid="this.setCustomValidity('Please Enter Quantity Remaining')"
+                            oninput="this.setCustomValidity('')" type="number" name="quantityremaining"
+                            placeholder="Quantity Remaining" value="{{itemDetail.quantityremaining}}" />
+                    </td>
+                    <td>
+                        <input required oninvalid="this.setCustomValidity('Please Enter Valid Date')"
+                            oninput="this.setCustomValidity('')" type="date" name="dateofmanufacture"
+                            placeholder="Date of Manufacture" value="{{itemDetail.dateofmanufacture}}" />
+                    </td>
+                    <td>
+                        <input required oninvalid="this.setCustomValidity('Please Enter Valid Date of Expiry')"
+                            oninput="this.setCustomValidity('')" type="date" name="dateofexpiry"
+                            placeholder="Date of Expiry" value="{{itemDetail.dateofexpiry}}" />
+                    </td>
+                    <td> <input type="submit" name="Edit" value='Edit' />
+                    </td>
+                </tr>
+            </table>
 
             {{#if message}}
             <p id="message">{{message}}</p>
             {{/if}}
-            
-    </form>
+
+        </form>
 
 </main>
