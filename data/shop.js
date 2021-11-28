@@ -113,8 +113,8 @@ const exportedMethods = {
     },
     async comment(userInfo, shopId, comment) {
         var id = mongoose.Types.ObjectId();
-        var CurrentDate = new Date();
-
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         var convertId = mongoose.Types.ObjectId(shopId);
         const resaurantCollection = await shop();
         const commentCollection = await comments();
@@ -125,7 +125,7 @@ const exportedMethods = {
             userName: userInformation.name,
             comment: comment,
             shopId: shopId,
-            date: CurrentDate
+            date: date
         }
         const newaddedItem = await commentCollection.insertOne(userComment);
         const newInsertInformation = await resaurantCollection.updateOne({

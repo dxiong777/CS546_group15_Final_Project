@@ -24,8 +24,8 @@ router.get('/:id', async function (req, res) {
     var comments;
 
     const allProduct = await productData.getAllProduct(idd);
-
-
+    const allProductBeforeExpire = await productData.allProductBeforeExpire(idd);
+    var x = allProductBeforeExpire
     //  if(allProduct.item.length != 0){}
     if (allProduct.item.length == 0) {
         noItem = "No product in Database"
@@ -42,8 +42,6 @@ router.get('/:id', async function (req, res) {
     if (allProduct.comment.length == 0) {
         noComment = "No comment in Your Shop"
     }
-    //console.log(comments)
-    // if (allProduct.item.length != 0 && allProduct.message.length != 0, allProduct.comment.length != 0) {
     const dataa = {
         allItem: allProduct.item,
         title: shopName,
@@ -54,40 +52,9 @@ router.get('/:id', async function (req, res) {
         messageProduct: noItem,
         noComment: noComment
     };
-    console.log(dataa.commentForShop)
     res.render('allItem', dataa);
     return;
-    //}
-    // else if (allProduct.message.length == 0 && allProduct.item.length == 0 ) {
-    //     const dataa = {
-    //         allItem: allProduct.item,
-    //         title: shopName,
-    //         shopId: shopId,
-    //         messageForMessage: "No message in Inbox",
-    //         messageProduct: "No product in Database",
-    //     };
-    //     res.render('allItem', dataa);
-    //     return;
-    // } else if (allProduct.message.length != 0 && allProduct.item.length == 0) {
-    //     const dataa = {
-    //         allItem: allProduct.item,
-    //         title: shopName,
-    //         shopId: shopId,
-    //         msgForShop: shopMessage,
-    //         messageProduct: "No product in Database"
-    //     };
-    //     res.render('allItem', dataa);
-    //     return;
-    // } else {
-    //     const dataa = {
-    //         allItem: allProduct.item,
-    //         title: shopName,
-    //         shopId: shopId,
-    //         messageForMessage: "No message in Inbox",
-    //     };
-    //     res.render('allItem', dataa);
-    //     return;
-    // }
+
 });
 
 router.get('/addItem/:id', async function (req, res) {
@@ -277,19 +244,50 @@ router.post('/:id', async function (req, res) {
             dateofmanufacture,
             dateofexpiry
         );
+        console.log(newItem)
         if (typeof newItem == "string") {
-            //console.log("=====================================================")
-            //------------------------------------
             const shopDetail = await shopData.get(idProduct);
+            //////-----------------
+            //  var restDetail = await productData.getShopIdForEditItem(itemId);
+
+            var shopMessage = shopDetail.message;
+            var shopComment = shopDetail.comment;
+            var noItem;
+            var noMessage;
+            var noComment;
+            var messages;
+            var comments;
+            const allProducts = await productData.getAllProduct(idProduct);
+            await productData.allProductBeforeExpire(idProduct);
+            if (allProducts.item.length == 0) {
+                noItem = "No product in Database"
+            }
+            if (allProducts.message.length != 0) {
+                messages = shopMessage
+            }
+            if (allProducts.message.length == 0) {
+                noMessage = "No message in Inbox"
+            }
+            if (allProducts.comment.length != 0) {
+                comments = shopComment
+            }
+            if (allProducts.comment.length == 0) {
+                noComment = "No comment in Your Shop"
+            }
+            //=========================================
             var shopName = shopDetail.name
             var shopId = shopDetail._id;
-            var allProducts = await productData.getAllProduct(idProduct);
             if (allProducts.item.length != 0) {
                 const data = {
                     allItem: allProducts.item,
                     title: shopName,
                     shopId: shopId,
-                    message: newItem
+                    msgForShop: messages,
+                    commentForShop: comments,
+                    messageForMessage: noMessage,
+                    messageProduct: noItem,
+                    noComment: noComment,
+                    messagetoCreateProduct: newItem
                 }
                 res.status(400)
                 res.render("allItem", data)

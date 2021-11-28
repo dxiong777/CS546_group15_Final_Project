@@ -106,26 +106,28 @@
                 <td>
                     <input id="dateofmanufacture" required oninvalid="this.setCustomValidity('Please Enter Valid Date')"
                         oninput="this.setCustomValidity('')" type="date" name="dateofmanufacture"
-                        placeholder="Date of Manufacture" value="2021-01-01" />
+                        placeholder="Date of Manufacture" />
                 </td>
+                {{!-- value="2021-01-01" --}}
                 <td>
                     <input id="dateofexpiry" required
                         oninvalid="this.setCustomValidity('Please Enter Valid Date of Expiry')"
                         oninput="this.setCustomValidity('')" type="date" name="dateofexpiry"
-                        placeholder="Date of Expiry" value="2022-01-01" />
+                        placeholder="Date of Expiry" />
                 </td>
+                {{!-- value="2022-01-01" --}}
 
                 <td>
                     <div class="form-group" id="addNeww">
                         <button type="submit" id="submit addNew" class="btn btn-default">Add</button>
                     </div>
                 </td>
-                {{!-- <div class="form-group hidden" id="error-container">
-                    <div class="alert alert-danger text-goes-here">
-                    </div>
-                </div> --}}
+                
             </form>
     </table>
+    {{#if messagetoCreateProduct}}
+    <p id="messagetoCreateProduct">{{messagetoCreateProduct}}</p>
+    {{/if}}
     {{#if messageProduct}}
     <p id="message">{{messageProduct}}</p>
     {{/if}}

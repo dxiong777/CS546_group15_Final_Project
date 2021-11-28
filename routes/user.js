@@ -53,7 +53,7 @@ router.get('/:idUser/shop/:shopId', async (req, res) => {
         const shopDetail = await shopData.get(shopId);
         const allProduct = await productData.getAllProduct(shopId);
         var shopComment = shopDetail.comment;
-        console.log(shopComment)
+        //console.log(shopComment)
         var noComment;
         var comments;
         if (allProduct.comment.length != 0) {
@@ -104,7 +104,7 @@ router.post('/:idUser/shop/:shopId', async (req, res) => {
             var shopIdd = shopInfo._id;
             const allProduct = await productData.getAllProduct(shopId);
            
-            console.log(allProduct)
+            //console.log(allProduct)
             // const shopDetail = await shopData.get(shopId);
             // var shopComment = shopDetail.comment;
             // var noComment;
