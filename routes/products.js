@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 router.get('/:id', async function (req, res) {
     const idd = req.params.id;
     const shopDetail = await shopData.get(idd);
+    console.log(shopDetail)
     var shopName = shopDetail.name
     var shopId = shopDetail._id;
     var shopMessage = shopDetail.message;
