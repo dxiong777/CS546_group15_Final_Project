@@ -7,7 +7,7 @@ async function main() {
   await db.dropDatabase();
 
   try {
-    const res1 = await restaurants.create("Hoboken rest.........");
+    const res1 = await restaurants.create("Hoboken rest");
     console.log(res1);
   } catch (e) {
     console.log(e);

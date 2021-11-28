@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
 router.get('/:id', async function (req, res) {
     const idd = req.params.id;
     const shopDetail = await shopData.get(idd);
-    console.log(shopDetail)
+    //console.log(shopDetail)
     var shopName = shopDetail.name
     var shopId = shopDetail._id;
     var shopMessage = shopDetail.message;
@@ -155,7 +155,7 @@ router.put('/:id', async function (req, res) {
         });
     }
     try {
-        if ((!price) || typeof priceNum != 'number' || (!price.match(/^[0-9]{1,}$/))) {
+        if ((!price) || (!price.match(/^(?!0\d)\d*(\.\d+)?$/))) {
             var data = {
                 message: `Price "${price}" is not valid`,
                 shopId: restDetail._id,
