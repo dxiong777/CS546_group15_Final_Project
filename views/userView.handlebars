@@ -5,7 +5,7 @@
 
     <h3>shopId: {{shopId}}</h3>
     <h3>UserId: {{userData._id}}</h3>
-    <table width="25%" border="0">
+    <table width="35%" border="2">
         <tr style='text-align:left; background-color:#CCC'>
             <th> Product Name</th>
             <th> Product Details</th>
@@ -40,7 +40,6 @@
 
 </main>
 
-
 <tr>
     {{#if message}}
     <p id="message">{{message}}</p>
@@ -57,12 +56,11 @@
     {{#if mess}}
     <p>{{mess}}</p>
     {{/if}}
-    {{!-- =============================================================================================--}}
 
     <form method="post" id="addItem-form" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
         <label for="">Comment</label>
         <input required oninvalid="this.setCustomValidity('Please Write review of your experience.')"
-            oninput="this.setCustomValidity('')" type="message" name="comment" />
+            oninput="this.setCustomValidity('')" type="comment" name="comment" />
         <button type="submit" id="submit addNew" class="btn btn-default">Send Comment</button>
     </form>
 
@@ -74,10 +72,8 @@
 
 
 {{#if commentForShop}}
-
 <h2> Review from Customer</h2>
-<table id="comment" width="20%" border="0">
-
+<table id="comment" width="60%" border="5">
     <tr>
         <th>User Name</th>
         <th>Comment</th>

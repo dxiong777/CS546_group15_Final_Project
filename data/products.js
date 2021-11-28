@@ -4,10 +4,6 @@ const shops = mongoCollections.shop;
 const messages = mongoCollections.message;
 var mongoose = require('mongoose');
 var shop = require("./shop");
-const {
-    all
-} = require('../routes/products');
-//const shop = data.shop;
 
 const exportedMethods = {
 
@@ -35,14 +31,10 @@ const exportedMethods = {
                 resDetail = element;
             }
         });
-        var message;
-        var CurrentDate = new Date();
-        var allProducts = [];
+
         resDetail.item.forEach(async (x) => {
             var todayDate = new Date().toISOString().slice(0, 10);
-           // console.log(todayDate);
             var d1 = Date.parse(x.dateofexpiry);
-
             if (todayDate > x.dateofexpiry) {
 
                 await productCollection.deleteOne({
@@ -57,13 +49,9 @@ const exportedMethods = {
                         }
                     }
                 });
-                // console.log(x)
-                // allProducts.push(x)
             }
         })
         await this.getAllProduct(id)
-        // console.log(allProducts)
-        // return allProducts;
     },
     async getShopIdForEditItem(id) {
         var shopCollection = await shops();
@@ -93,7 +81,6 @@ const exportedMethods = {
         const findMessage = await findMessageItem.findOne({
             _id: idd
         });
-        // console.log(findShop)
         shopId = findMessage.shopId
         var shopObj = mongoose.Types.ObjectId(shopId);
         const findStore = await shopCollection.findOne({
@@ -198,7 +185,6 @@ const exportedMethods = {
         if (message) {
             return message;
         }
-        //   const newaddedItem = await messageCollection.insertOne(usermessage);
 
         const newaddedItem = await productCollection.insertOne(newItem);
         const newId = newaddedItem.insertedId;

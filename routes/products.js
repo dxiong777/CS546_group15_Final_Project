@@ -10,12 +10,10 @@ var mongoose = require('mongoose');
 router.get('/:id', async function (req, res) {
     const idd = req.params.id;
     const shopDetail = await shopData.get(idd);
-    //console.log(shopDetail)
     var shopName = shopDetail.name
     var shopId = shopDetail._id;
     var shopMessage = shopDetail.message;
     var shopComment = shopDetail.comment;
-    //console.log(shopDetail)
 
     var noItem;
     var noMessage;
@@ -26,7 +24,6 @@ router.get('/:id', async function (req, res) {
     const allProduct = await productData.getAllProduct(idd);
     const allProductBeforeExpire = await productData.allProductBeforeExpire(idd);
     var x = allProductBeforeExpire
-    //  if(allProduct.item.length != 0){}
     if (allProduct.item.length == 0) {
         noItem = "No product in Database"
     }
@@ -69,7 +66,6 @@ router.get('/addItem/:id', async function (req, res) {
 });
 
 router.get('/editItem/:id', async function (req, res) {
-    //console.log("z")
     var itemId = req.params.id;
     var restDetail = await productData.getShopIdForEditItem(itemId);
     var itemDetail = await productData.getProductDetail(restDetail._id, itemId)
@@ -82,7 +78,6 @@ router.get('/editItem/:id', async function (req, res) {
 
 router.put('/:id', async function (req, res) {
     const iddProduct = req.params.id;
-    //console.log("xxxxxxxxxxxxx")
     const {
         productname,
         productdetails,
@@ -186,7 +181,6 @@ router.put('/:id', async function (req, res) {
         });
     }
 
-
     try {
         const updateStore = await productData.updateProduct(
             iddProduct,
@@ -244,12 +238,8 @@ router.post('/:id', async function (req, res) {
             dateofmanufacture,
             dateofexpiry
         );
-        console.log(newItem)
         if (typeof newItem == "string") {
             const shopDetail = await shopData.get(idProduct);
-            //////-----------------
-            //  var restDetail = await productData.getShopIdForEditItem(itemId);
-
             var shopMessage = shopDetail.message;
             var shopComment = shopDetail.comment;
             var noItem;
@@ -307,9 +297,7 @@ router.delete('/delete/:id', async function (req, res) {
     try {
         var restDetail = await productData.getShopIdForEditItem(itemorMessageId);
         if (typeof restDetail == 'string') {
-            // console.log("a-route")
             restDetailforMessage = await productData.getShopIdForDeleteMessage(itemorMessageId);
-            //console.log("b-route")
             const shopDetailId = await productData.removeMessage(restDetailforMessage, itemorMessageId);
             res.redirect(`/shopId/${shopDetailId}`)
         } else {
@@ -323,6 +311,5 @@ router.delete('/delete/:id', async function (req, res) {
     }
 
 })
-
 
 module.exports = router;

@@ -4,11 +4,9 @@
     <h1>{{title}}</h1>
     <h2 id="shopId">{{shopId}}</h2>
 
-    {{!-- <form method="get" id="b1" action="/shopId/addItem/{{shopId}}">
-        <button type="submit" value="search">Add</button>
-    </form> --}}
-    <table width="25%" border="0">
-        {{!-- <ul> --}}
+
+    <table width="30%" border="2">
+
             <tr style='text-align:left; background-color:#CCC'>
 
                 <th> Product Name</th>
@@ -24,12 +22,9 @@
 
 
             {{#each allItem}}
-            {{!-- <p>------------------------------------------</p> --}}
 
             <tr>
 
-                {{!-- <label for="na">{{this._id}}</label> --}}
-                {{!-- <td><label type="text" name="name" id="name" value="{{this._id}}">{{this._id}}</label></td> --}}
                 <td><label type="text" name="name" id="name" value="{{this.productname}}">{{this.productname}}</label>
                 </td>
                 <td><label type="text" name="name" id="name"
@@ -46,7 +41,6 @@
 
                 <td>
                     <form method="get" action="/shopId/editItem/{{this._id}}">
-                        {{!-- <input type="hidden" name="_method" value="PUT"> --}}
                         <input type="submit" name="Edit" value='Edit' />
                     </form>
                 </td>
@@ -55,44 +49,26 @@
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="submit" name="delete" value='Delete' />
                     </form>
-
-                    {{!-- <form action="/shopId/delete/{{this._id}}" style="float:right">
-                        <input type="hidden" name="_method" value="DELETE" />
-                        <input type="submit" name="delete" value='Delete' />
-                    </form>
-                    --}}
-                    {{!-- </div> --}}
                 </td>
-
             </tr>
-
-
             {{/each}}
 
-            {{!--
-            ..........................................................................................................................
-            --}}
             <form method="post" id="addItem-form" action="/shopId/{{shopId}}">
-
-
                 <td>
                     <input size="18" required oninvalid="this.setCustomValidity('Please Enter Product Name')"
                         oninput="this.setCustomValidity('')" id="productname" type="text" name="productname"
                         placeholder="Product Name" />
                 </td>
-
                 <td>
                     <input required oninvalid="this.setCustomValidity('Please Enter Product Details')"
                         oninput="this.setCustomValidity('')" id="productdetails" type="text" name="productdetails"
                         placeholder="ProductDetails" value="John55" />
                 </td>
-
                 <td>
                     <input required oninvalid="this.setCustomValidity('Please Enter Product Highlights')"
                         oninput="this.setCustomValidity('')" id="producthighlights" type="text" name="producthighlights"
                         placeholder="Product Highlights" value="John" />
                 </td>
-
                 <td>
                     <input size="10" required oninvalid="this.setCustomValidity('Please Enter Valid Price')"
                         oninput="this.setCustomValidity('')" type="text" id="price totalAmt" step="0.5" name="price"
@@ -108,15 +84,12 @@
                         oninput="this.setCustomValidity('')" type="date" name="dateofmanufacture"
                         placeholder="Date of Manufacture" />
                 </td>
-                {{!-- value="2021-01-01" --}}
                 <td>
                     <input id="dateofexpiry" required
                         oninvalid="this.setCustomValidity('Please Enter Valid Date of Expiry')"
                         oninput="this.setCustomValidity('')" type="date" name="dateofexpiry"
                         placeholder="Date of Expiry" />
                 </td>
-                {{!-- value="2022-01-01" --}}
-
                 <td>
                     <div class="form-group" id="addNeww">
                         <button type="submit" id="submit addNew" class="btn btn-default">Add</button>
@@ -142,10 +115,9 @@
 <p id="message">{{noComment}}</p>
 {{/if}}
 
-{{!-- .......................................... --}}
 {{#if msgForShop}}
 <h2> Message from Customer</h2>
-<table id="message" width="20%" border="0">
+<table id="message" width="50%" border="5">
 
     <tr>
         <th>User Name</th>
@@ -154,7 +126,7 @@
     </tr>
     {{#each msgForShop}}
     <tr>
-        <td>{{this.name}}</td>
+        <td>{{this.userName}}</td>
         <td>{{this.message}}</td>
         <td>
             <form method="post" action="/shopId/delete/{{this._id}}?_method=DELETE" <input type="hidden" name="_method"
@@ -172,8 +144,7 @@
 
 {{#if commentForShop}}
 <h2> Comment from Customer</h2>
-<table id="comment" width="20%" border="0">
-
+<table id="comment" width="50%" border="5">
     <tr>
         <th>User Name</th>
         <th>Comment</th>
@@ -187,8 +158,6 @@
             {{this.date}}
         </td>
     </tr>
-   
     {{/each}}
-
 </table>
 {{/if}}

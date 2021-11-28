@@ -5,9 +5,7 @@ const shop = data.shop;
 
 router.get('/', async (req, res) => {
   try {
-    //console.log("A")
     const restaurantList = await shop.getAll();
-    //console.log(restaurantList)
     const data = {
       title: "All Shop",
       allShop: restaurantList,
@@ -27,7 +25,6 @@ router.post('/', async (req, res) => {
 
   try {
     const shopData = await shop.create(name);
-    // res.json(newPost);
     const data = {
       title: "All Shop",
       allShop: shopData,

@@ -1,21 +1,15 @@
 <a class="get-home" href="/shop">To Home Page</a>
 
 <main class="ab">
-    {{!-- <p id="bold">logIn form</p> --}}
-    {{!-- <h1>Edit Item {{shopName}}</h1> --}}
 
     <form method="post" action="/shopId/{{itemDetail._id}}?_method=PUT">
         <input type="hidden" name="_method" value="PUT">
-
-
-        {{!-- <form method="post" action="/shopId/{{this._id}}?_method=PUT"> --}}
-
 
             <label> shop id: {{shopId}} </label><br>
             <label>itemId : {{itemDetail._id}}</label>
             <br>
             <br>
-            <table>
+            <table border="3">
                 <tr>
                     <th> <label>Product Name</label></th>
                     <th> <label>Product Details</label></th>

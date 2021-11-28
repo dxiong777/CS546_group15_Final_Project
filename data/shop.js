@@ -9,7 +9,6 @@ const comments = mongoCollections.comment;
 
 const exportedMethods = {
     async getAll() {
-        // console.log("BB")
         const movieCollection = await shop();
         const movieList = await movieCollection.find({}).toArray();
         return movieList;
@@ -20,7 +19,6 @@ const exportedMethods = {
         var noshopWithItem;
         const movieCollection = await shop();
         const allShop = await movieCollection.find({}).toArray();
-        //console.log(allShop)
         allShop.forEach(i => {
             i.item.forEach((element) => {
                 if (element.length != 0) {
@@ -33,7 +31,6 @@ const exportedMethods = {
             return noshopWithItem
         }
         var x = [...new Set(shopListWithItem)];
-        //console.log(x)
         return x;
 
     },
@@ -47,7 +44,6 @@ const exportedMethods = {
         const shopData = await findShop.findOne({
             _id: convertId
         });
-        if (!shopData) console.log("----------------------------------no shop found");
         return shopData;
     },
 
@@ -61,7 +57,6 @@ const exportedMethods = {
         };
         const newInsertInformation = await resaurantCollection.insertOne(newShop);
         const newId = newInsertInformation.insertedId;
-        // console.log(typeof newId)
         return await this.get(newInsertInformation.insertedId);
     },
     async getAllMessage(id) {
