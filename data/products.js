@@ -29,7 +29,7 @@ const exportedMethods = {
         const findShop = await findShopItem.findOne({
             _id: idd
         });
-        console.log(findShop)
+       // console.log(findShop)
         shopId = findShop.shopId
         var shopObj = mongoose.Types.ObjectId(shopId);
         const findStore = await shopCollection.findOne({
@@ -85,15 +85,15 @@ const exportedMethods = {
             return message
         }
         if ((!productname) || typeof productname != 'string') {
-            message = `productname "${productname}" is not valid`
+            message = `productname "${productname}" is not valid.`
             return message
         }
-        if ((!productdetails) || typeof productdetails != 'string' || (!productdetails.match(/^[0-9A-z]{5,}$/))) {
-            message = `productdetails "${productdetails}" is not valid or not atleast 5 charcture`
+        if ((!productdetails) || typeof productdetails != 'string' || (!productdetails.match(/^[0-9A-z ]{5,}$/))) {
+            message = `productdetails "${productdetails}" is not valid.`
             return message
         }
         if ((!producthighlights) || typeof producthighlights != 'string') {
-            message = `producthighlights "${producthighlights}" is not valid`
+            message = `producthighlights "${producthighlights}" is not valid.`
             return message
         }
         if ((!price) || typeof priceNum != 'number' || (!price.match(/^[0-9]{1,}$/))) {
@@ -101,7 +101,7 @@ const exportedMethods = {
             return message
         }
         if ((!quantityremaining) || typeof qtyRem != 'number' || (!quantityremaining.match(/^[0-9]{1,}$/))) {
-            message = `quantityremaining "${quantityremaining}" is not valid or not atleast 5 charcture`
+            message = `quantityremaining "${quantityremaining}" is not valid or not atleast 5 charcture.`
             return message
         }
 

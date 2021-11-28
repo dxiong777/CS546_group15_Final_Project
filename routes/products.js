@@ -50,7 +50,7 @@ router.get('/addItem/:id', async function (req, res) {
 });
 
 router.get('/editItem/:id', async function (req, res) {
-    console.log("z")
+    //console.log("z")
     var itemId = req.params.id;
     var restDetail = await productData.getShopIdForEditItem(itemId);
     var itemDetail = await productData.getProductDetail(restDetail._id, itemId)
@@ -313,7 +313,7 @@ router.post('/:id', async function (req, res) {
             dateofexpiry
         );
         if (typeof newItem == "string") {
-            console.log("=====================================================")
+            //console.log("=====================================================")
             //------------------------------------
             const shopDetail = await shopData.get(idProduct);
             var shopName = shopDetail.name
