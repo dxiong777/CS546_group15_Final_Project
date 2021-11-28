@@ -20,5 +20,6 @@ module.exports = {
   shop: getCollectionFn('shop'),
   products: getCollectionFn('products'),
   user: getCollectionFn('user'),
-  message: getCollectionFn('message')
+  message: getCollectionFn('message'),
+  comment: getCollectionFn('comment')
 };

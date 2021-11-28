@@ -1,7 +1,7 @@
 <a class="get-home" href="/user">To Home Page</a>
 
 <main id="ab">
-    <title>Welcome {{userData.name}} in {{shopName}}</title>
+    <p>Welcome {{userData.name}} in {{shopName}}</p>
 
     <h3>shopId: {{shopId}}</h3>
     <h3>UserId: {{userData._id}}</h3>
@@ -37,20 +37,68 @@
         </tr>
         {{/each}}
     </table>
-    {{#if message}}
-    <p id="message">{{message}}</p>
+
+    <tr>
+        {{#if message}}
+        <p id="message">{{message}}</p>
+        {{/if}}
+
+        <br><br><br>
+        {{!-- this means shop {{userData._id}}/shop/{{shopDetail._id}}
+        href="/user/{{../userId}}/shop/{{this._id}}">{{this.name}} --}}
+        <form method="post" id="addItem-form" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
+            <label for="">Message</label>
+            <input type="message" name="message" />
+            <button type="submit" id="submit addNew" class="btn btn-default">Send</button>
+        </form>
+
+        {{#if mess}}
+        <p id="message">{{mess}}</p>
+        {{/if}}
+        {{!-- =============================================================================================--}}
+        {{#if comment}}
+        <p id="message">{{comment}}</p>
+        {{/if}}
+
+        <br><br><br>
+        {{!-- this means shop {{userData._id}}/shop/{{shopDetail._id}}
+        href="/user/{{../userId}}/shop/{{this._id}}">{{this.name}} --}}
+        <form method="post" id="addItem-form" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
+            <label for="">Comment</label>
+            <input type="message" name="comment" />
+            <button type="submit" id="submit addNew" class="btn btn-default">Send Comment</button>
+        </form>
+
+        {{#if comm}}
+        <p id="message">{{comm}}</p>
+        {{/if}}
+    </tr>
+
+    <br>
+
+    {{#if noComment}}
+    <h2>{{noComment}}</h3>
     {{/if}}
+    {{#if commentForShop}}
+    <h2> Review from Customer</h2>
+    <table id="comment" width="20%" border="0">
 
-    <br><br><br>
-    {{!-- this means shop {{userData._id}}/shop/{{shopDetail._id}}
-    href="/user/{{../userId}}/shop/{{this._id}}">{{this.name}} --}}
-    <form method="post" id="addItem-form" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
-        <label for="">Message</label>
-        <input type="message" name="message" />
-        <button type="submit" id="submit addNew" class="btn btn-default">Send</button>
-    </form>
+        <tr>
+            <th>User Name</th>
+            <th>Comment</th>
+            <th>Date</th>
+        </tr>
+        {{#each commentForShop}}
+        <tr>
+            <td>{{this.userName}}</td>
+            <td>{{this.comment}}</td>
+            <td>
+                {{this.date}}
+            </td>
+        </tr>
+        <br>
+        {{/each}}
 
-    {{#if mess}}
-    <p id="message">{{mess}}</p>
+    </table>
     {{/if}}
 </main>

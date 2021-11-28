@@ -51,16 +51,29 @@ router.get('/:idUser/shop/:shopId', async (req, res) => {
 
         const userInfo = await user.getUser(userid);
         const shopDetail = await shopData.get(shopId);
+        const allProduct = await productData.getAllProduct(shopId);
+        var shopComment = shopDetail.comment;
+        console.log(shopComment)
+        var noComment;
+        var comments;
+        if (allProduct.comment.length != 0) {
+            comments = shopComment
+        }
+        if (allProduct.comment.length == 0) {
+            noComment = "No Review for this Shop"
+        }   
+
         var shopName = shopDetail.name
         var shopIdd = shopDetail._id;
-        const allProduct = await productData.getAllProduct(shopId);
         if (allProduct) {
             const dataa = {
                 allItem: allProduct.item,
                 shopName: shopName,
                 shopId: shopIdd,
                 userData: userInfo,
-                shopDetail: shopDetail
+                shopDetail: shopDetail,
+                commentForShop: comments,
+                noComment: noComment
             };
             res.render('userView', dataa);
             return;
@@ -76,27 +89,62 @@ router.get('/:idUser/shop/:shopId', async (req, res) => {
 router.post('/:idUser/shop/:shopId', async (req, res) => {
     const userid = req.params.idUser;
     const shopId = req.params.shopId;
+
     const {
-        message
+        message,
+        comment
     } = req.body;
+
     try {
         const userInfo = await user.getUser(userid);
         const shopInfo = await shopData.get(shopId);
-        await shopData.message(userInfo, shopId, message)
-        var shopName = shopInfo.name
-        var shopIdd = shopInfo._id;
-        const allProduct = await productData.getAllProduct(shopId);
-        if (allProduct) {
-            const dataa = {
-                allItem: allProduct.item,
-                shopName: shopName,
-                shopId: shopIdd,
-                userData: userInfo,
-                shopDetail: shopInfo,
-                mess: "Thanks for sending replay"
-            };
-            res.render('userView', dataa);
-            return;
+        if (message) {
+            await shopData.message(userInfo, shopId, message)
+            var shopName = shopInfo.name
+            var shopIdd = shopInfo._id;
+            const allProduct = await productData.getAllProduct(shopId);
+           
+            console.log(allProduct)
+            // const shopDetail = await shopData.get(shopId);
+            // var shopComment = shopDetail.comment;
+            // var noComment;
+            // var comments;
+            // if (allProduct.comment.length != 0) {
+            //     comments = shopComment
+            // }
+            // if (allProduct.comment.length == 0) {
+            //     noComment = "No comment for this Shop"
+            // }   
+
+            if (allProduct) {
+                const dataa = {
+                    allItem: allProduct.item,
+                    shopName: shopName,
+                    shopId: shopIdd,
+                    userData: userInfo,
+                    shopDetail: shopInfo,
+                    mess: "Thanks for sending replay"
+                };
+                res.render('userView', dataa);
+                return;
+            }
+        }else{
+            await shopData.comment(userInfo, shopId, comment)
+            var shopName = shopInfo.name
+            var shopIdd = shopInfo._id;
+            const allProduct = await productData.getAllProduct(shopId);
+            if (allProduct) {
+                const dataa = {
+                    allItem: allProduct.item,
+                    shopName: shopName,
+                    shopId: shopIdd,
+                    userData: userInfo,
+                    shopDetail: shopInfo,
+                    comm: "Thanks For sending Comment"
+                };
+                res.render('userView', dataa);
+                return;
+            }
         }
 
     } catch (e) {

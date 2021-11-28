@@ -14,49 +14,80 @@ router.get('/:id', async function (req, res) {
     var shopName = shopDetail.name
     var shopId = shopDetail._id;
     var shopMessage = shopDetail.message;
+    var shopComment = shopDetail.comment;
+    //console.log(shopDetail)
+
+    var noItem;
+    var noMessage;
+    var noComment;
+    var messages;
+    var comments;
 
     const allProduct = await productData.getAllProduct(idd);
-    //const allMesg = await shopData.getAllMessage(idd);
-    //console.log(allProduct)
-    if (allProduct.item.length != 0 && allProduct.message.length != 0) {
-        const dataa = {
-            allItem: allProduct.item,
-            title: shopName,
-            shopId: shopId,
-            msgForShop: shopMessage
-        };
-        res.render('allItem', dataa);
-        return;
-    } else if (allProduct.message.length == 0 && allProduct.item.length == 0) {
-        const dataa = {
-            allItem: allProduct.item,
-            title: shopName,
-            shopId: shopId,
-            messageForMessage: "No message in Inbox",
-            messageProduct: "No product in Database"
-        };
-        res.render('allItem', dataa);
-        return;
-    } else if (allProduct.message.length != 0 && allProduct.item.length == 0) {
-        const dataa = {
-            allItem: allProduct.item,
-            title: shopName,
-            shopId: shopId,
-            msgForShop: shopMessage,
-            messageProduct: "No product in Database"
-        };
-        res.render('allItem', dataa);
-        return;
-    } else {
-        const dataa = {
-            allItem: allProduct.item,
-            title: shopName,
-            shopId: shopId,
-            messageForMessage: "No message in Inbox",
-        };
-        res.render('allItem', dataa);
-        return;
+
+
+    //  if(allProduct.item.length != 0){}
+    if (allProduct.item.length == 0) {
+        noItem = "No product in Database"
     }
+    if (allProduct.message.length != 0) {
+        messages = shopMessage
+    }
+    if (allProduct.message.length == 0) {
+        noMessage = "No message in Inbox"
+    }
+    if (allProduct.comment.length != 0) {
+        comments = shopComment
+    }
+    if (allProduct.comment.length == 0) {
+        noComment = "No comment in Your Shop"
+    }
+    //console.log(comments)
+    // if (allProduct.item.length != 0 && allProduct.message.length != 0, allProduct.comment.length != 0) {
+    const dataa = {
+        allItem: allProduct.item,
+        title: shopName,
+        shopId: shopId,
+        msgForShop: messages,
+        commentForShop: comments,
+        messageForMessage: noMessage,
+        messageProduct: noItem,
+        noComment: noComment
+    };
+    console.log(dataa.commentForShop)
+    res.render('allItem', dataa);
+    return;
+    //}
+    // else if (allProduct.message.length == 0 && allProduct.item.length == 0 ) {
+    //     const dataa = {
+    //         allItem: allProduct.item,
+    //         title: shopName,
+    //         shopId: shopId,
+    //         messageForMessage: "No message in Inbox",
+    //         messageProduct: "No product in Database",
+    //     };
+    //     res.render('allItem', dataa);
+    //     return;
+    // } else if (allProduct.message.length != 0 && allProduct.item.length == 0) {
+    //     const dataa = {
+    //         allItem: allProduct.item,
+    //         title: shopName,
+    //         shopId: shopId,
+    //         msgForShop: shopMessage,
+    //         messageProduct: "No product in Database"
+    //     };
+    //     res.render('allItem', dataa);
+    //     return;
+    // } else {
+    //     const dataa = {
+    //         allItem: allProduct.item,
+    //         title: shopName,
+    //         shopId: shopId,
+    //         messageForMessage: "No message in Inbox",
+    //     };
+    //     res.render('allItem', dataa);
+    //     return;
+    // }
 });
 
 router.get('/addItem/:id', async function (req, res) {

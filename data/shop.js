@@ -3,6 +3,8 @@ const shop = mongoCollections.shop;
 const messages = mongoCollections.message;
 var mongoose = require('mongoose');
 const user = require('./user')
+const comments = mongoCollections.comment;
+
 
 
 const exportedMethods = {
@@ -54,7 +56,8 @@ const exportedMethods = {
         const newShop = {
             name: name,
             item: [],
-            message: []
+            message: [],
+            comment: []
         };
         const newInsertInformation = await resaurantCollection.insertOne(newShop);
         const newId = newInsertInformation.insertedId;
@@ -81,9 +84,9 @@ const exportedMethods = {
         const userInformation = await user.getUser(userInfo._id);
         var usermessage = {
             _id: id,
-            'name': userInformation.name,
-            'id': userInformation._id,
-            'message': message,
+            idUser: userInformation._id,
+            message: message,
+            userName: userInformation.name,
             shopId: shopId
         }
         const newaddedItem = await messageCollection.insertOne(usermessage);
@@ -92,6 +95,44 @@ const exportedMethods = {
         }, {
             $push: {
                 message: usermessage
+            }
+        })
+        return;
+    },
+
+    async getAllComment(id) {
+        var allComment;
+        const allCommentsdata = await comments();
+        var allComments = await allCommentsdata.find({}).toArray();
+        allComments.forEach(element => {
+            if (element._id == id) {
+                allComment = element;
+            }
+        });
+        return allComment;
+    },
+    async comment(userInfo, shopId, comment) {
+        var id = mongoose.Types.ObjectId();
+        var CurrentDate = new Date();
+
+        var convertId = mongoose.Types.ObjectId(shopId);
+        const resaurantCollection = await shop();
+        const commentCollection = await comments();
+        const userInformation = await user.getUser(userInfo._id);
+        var userComment = {
+            _id: id,
+            idUser: userInformation._id,
+            userName: userInformation.name,
+            comment: comment,
+            shopId: shopId,
+            date: CurrentDate
+        }
+        const newaddedItem = await commentCollection.insertOne(userComment);
+        const newInsertInformation = await resaurantCollection.updateOne({
+            _id: convertId
+        }, {
+            $push: {
+                comment: userComment
             }
         })
         return;
