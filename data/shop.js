@@ -45,8 +45,9 @@ const exportedMethods = {
         const shopData = await findShop.findOne({
             _id: convertId
         });
-        if (!shopData) console.log("----------------------------------no shop found");
-        return shopData;
+        if (!shopData) {
+            return shopData;
+        }
     },
 
     async create(name, item) {
@@ -61,7 +62,17 @@ const exportedMethods = {
         // console.log(typeof newId)
         return await this.get(newInsertInformation.insertedId);
     },
-
+    async getAllMessage(id) {
+        var allMessag;
+        const allMessage = await messages();
+        var allMsg = await allMessage.find({}).toArray();
+        allMsg.forEach(element => {
+            if (element._id == id) {
+                allMessag = element;
+            }
+        });
+        return allMessag;
+    },
     async message(userInfo, shopId, message) {
         var id = mongoose.Types.ObjectId();
 

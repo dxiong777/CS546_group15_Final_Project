@@ -28,8 +28,9 @@ const exportedMethods = {
         const shopData = await findShop.findOne({
             _id: convertId
         });
-        if (!shopData) console.log("----------------------------------no shop found");
-        return shopData;
+        if (!shopData) {
+            return shopData;
+        }
     },
 
     async create(name, item) {

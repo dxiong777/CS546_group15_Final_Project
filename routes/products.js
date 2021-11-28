@@ -14,15 +14,35 @@ router.get('/:id', async function (req, res) {
     var shopId = shopDetail._id;
     var shopMessage = shopDetail.message;
 
-    //console.log(shopMessage)
-
     const allProduct = await productData.getAllProduct(idd);
-    if (allProduct.item.length != 0) {
+    //const allMesg = await shopData.getAllMessage(idd);
+    //console.log(allProduct)
+    if (allProduct.item.length != 0 && allProduct.message.length != 0) {
         const dataa = {
             allItem: allProduct.item,
             title: shopName,
             shopId: shopId,
-            msg: shopMessage
+            msgForShop: shopMessage
+        };
+        res.render('allItem', dataa);
+        return;
+    } else if (allProduct.message.length == 0 && allProduct.item.length == 0) {
+        const dataa = {
+            allItem: allProduct.item,
+            title: shopName,
+            shopId: shopId,
+            messageForMessage: "No message in Inbox",
+            messageProduct: "No product in Database"
+        };
+        res.render('allItem', dataa);
+        return;
+    } else if (allProduct.message.length != 0 && allProduct.item.length == 0) {
+        const dataa = {
+            allItem: allProduct.item,
+            title: shopName,
+            shopId: shopId,
+            msgForShop: shopMessage,
+            messageProduct: "No product in Database"
         };
         res.render('allItem', dataa);
         return;
@@ -31,8 +51,7 @@ router.get('/:id', async function (req, res) {
             allItem: allProduct.item,
             title: shopName,
             shopId: shopId,
-            message: "No product in Database",
-            msg: shopMessage
+            messageForMessage: "No message in Inbox",
         };
         res.render('allItem', dataa);
         return;
@@ -258,7 +277,7 @@ router.delete('/delete/:id', async function (req, res) {
     try {
         var restDetail = await productData.getShopIdForEditItem(itemorMessageId);
         if (typeof restDetail == 'string') {
-           // console.log("a-route")
+            // console.log("a-route")
             restDetailforMessage = await productData.getShopIdForDeleteMessage(itemorMessageId);
             //console.log("b-route")
             const shopDetailId = await productData.removeMessage(restDetailforMessage, itemorMessageId);
