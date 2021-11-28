@@ -2,14 +2,10 @@
 <main id="ab">
     <h3>{{title}}</h3>
     <h1>{{userdata.name}} </h1>
-
-
     <ul>
-        
         {{#each allShop}}
-        
         <li>
-            <a class="person-item" href="/user/{{userId}}/shop/{{this._id}}">{{this.name}} </a>
+            <a class="person-item" href="/user/{{../userId}}/shop/{{this._id}}">{{this.name}} </a>
         </li>
         <br>
         {{/each}}
