@@ -55,7 +55,7 @@
 </h3>
 {{/if}}
 {{#if noSecond}}
-<h3 style="background-color:rgb(206, 101, 201);" for="noRating">{{noSecond}}
+<h3 style="background-color:rgb(206, 101, 106);" for="noRating">{{noSecond}}
 </h3>
 {{/if}}
 <form method="post" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
@@ -71,6 +71,10 @@
     <br><br>
     <input type="submit" value="Submit">
 </form>
+{{#if forRating}}
+<h3 style="background-color:rgb(117, 219, 171);" for="noRating">{{noRating}}
+</h3>
+{{/if}}
 
 <br>
 
@@ -103,7 +107,9 @@
     {{/if}}
 </tr>
 
-
+{{#if noComment}}
+<p id="message">{{noComment}}</p>
+{{/if}}
 
 {{#if commentForShop}}
 <h2> Review from Customer</h2>
