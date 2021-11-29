@@ -35,8 +35,8 @@ router.get('/:id1/allshop', async (req, res) => {
         } else {
             restaurantListData = restaurantList;
         }
-        console.log(noRest)
-        console.log(restaurantListData)
+        // console.log(noRest)
+        // console.log(restaurantListData)
         const data = {
             title: "Shop List",
             allShop: restaurantListData,
@@ -112,7 +112,7 @@ router.post('/:idUser/shop/:shopId', async (req, res) => {
         comment,
         review
     } = req.body;
-  
+
 
     try {
         const userInfo = await user.getUser(userid);
@@ -132,6 +132,52 @@ router.post('/:idUser/shop/:shopId', async (req, res) => {
         }
         if (review) {
 
+            var checkuser = await shopData.checkuser(userInfo, shopId, review)
+            //console.log(checkuser)
+            if (checkuser != undefined) {
+                const allProduct = await productData.getAllProduct(shopId);
+
+                const shopInfonew = await shopData.get(shopId);
+                var noRating;
+                var averageRating;
+                if (shopInfonew.overallRating != 0) {
+                    averageRating = shopInfonew.overallRating
+                }
+                //console.log(shopInfonew)
+                if (allProduct.overallRating == 0) {
+                    noRating = "No Review for this Shop"
+                }
+                var commentss;
+                var noComments;
+                if (allProduct.comment.length != 0) {
+                    commentss = shopComment
+                }
+                if (allProduct.comment.length == 0) {
+                    noComments = "No Review for this Shop"
+                }
+                var noSecond = "You can not add rating second time"
+                var shopName = shopInfo.name
+                var shopIdd = shopInfo._id;
+                if (allProduct) {
+                    const dataa = {
+                        noSecond: noSecond,
+                        averageRating: averageRating,
+                        noRating: noRating,
+                        commentForShop: commentss,
+                        noComment: noComments,
+                        allItem: allProduct.item,
+                        shopName: shopName,
+                        shopId: shopIdd,
+                        userData: userInfo,
+                        shopDetail: shopInfo,
+                        mess: msgs,
+                        comm: coms
+                    };
+                    res.render('userView', dataa);
+                    return;
+                }
+                return;
+            }
             var average = await shopData.review(userInfo, shopId, review)
             const allProduct = await productData.getAllProduct(shopId);
 

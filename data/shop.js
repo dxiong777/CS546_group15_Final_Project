@@ -133,25 +133,38 @@ const exportedMethods = {
         })
         return;
     },
- 
-    async review(userInfo, shopId, reviewss) {
-        var id = mongoose.Types.ObjectId();
-
+    async checkuser(userInfo, shopId, review) {
         var convertId = mongoose.Types.ObjectId(shopId);
-    
         var userId = mongoose.Types.ObjectId(userInfo._id);
         const resaurantCollection = await shop();
-        const reviewCollection = await reviews();
-
-        const findUser = await reviewCollection.findOne({
-            idUser: userId
-        });
-        const findStore = await resaurantCollection.findOne({
+        var findStore;
+        const store = await resaurantCollection.findOne({
             _id: convertId
-        });
-     
-        console.log("------------------------")
+        })
+        var rat = store.overallRating;
+        var xx; 
+        //console.log(typeof userInfo._id)
+        store.rating.forEach(x => {
+            var y = (x.idUser).toString()
+            if (y == userId) {
+                xx = rat
+                return
+            }
+           return //return x;
+
+        })
+   
+        return xx;
+        // console.log("----")
+        // console.log(findStore)
+        // return findStore
+    },
+    async review(userInfo, shopId, reviewss) {
+        var id = mongoose.Types.ObjectId();
         var review = parseInt(reviewss)
+        var convertId = mongoose.Types.ObjectId(shopId);
+        const resaurantCollection = await shop();
+        const reviewCollection = await reviews();
         const userInformation = await user.getUser(userInfo._id);
         var userReview = {
             _id: id,
@@ -175,7 +188,9 @@ const exportedMethods = {
                 rating: userReview,
             }
         });
-        
+        const findStore = await resaurantCollection.findOne({
+            _id: convertId
+        });
         var allReview = [];
         findStore.rating.forEach(x => {
             allReview.push(x.review)
