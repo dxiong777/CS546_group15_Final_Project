@@ -9,7 +9,7 @@ const constructorMethod = (app) => {
     })*/
 
   app.use('*', (req, res) => {
-    res.status(404).render('pages/error', { "status": 404, "message": "page not found" })
+    res.status(404).render('pages/error', { "status": 404, "message": "pageeee not found" })
   });
 };
 
