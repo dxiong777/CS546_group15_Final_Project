@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const shopData = data.shop;
 const productData = data.products;
+const userData = data.user;
 var mongoose = require('mongoose');
 
 
@@ -30,7 +31,7 @@ router.get('/:id', async function (req, res) {
 
     if (allProduct.overallRating == 0) {
         noRating = "No Rating for your shop"
-    }else{
+    } else {
         averageRating = overRating
     }
 
@@ -226,6 +227,16 @@ router.put('/:id', async function (req, res) {
     }
 });
 
+router.post('/:iduser/:storeId', async function (req, res) {
+    const iduser = req.params.iduser; // in object
+    const storeId = req.params.storeId; // in string
+    const {
+        replayMessage
+    } = req.body;
+
+    await userData.replayMessage(iduser, storeId, replayMessage)
+    res.redirect(`/shopId/${storeId}`)
+})
 
 router.post('/:id', async function (req, res) {
     const idProduct = req.params.id;
@@ -236,10 +247,11 @@ router.post('/:id', async function (req, res) {
         price,
         quantityremaining,
         dateofmanufacture,
-        dateofexpiry
+        dateofexpiry,
     } = req.body;
 
     try {
+
         const newItem = await productData.createProduct(
             idProduct,
             productname,
@@ -264,7 +276,7 @@ router.post('/:id', async function (req, res) {
             var averageRating;
             const allProducts = await productData.getAllProduct(idProduct);
             await productData.allProductBeforeExpire(idProduct);
-            
+
             if (allProducts.item.length == 0) {
                 noItem = "No product in Database"
             }
@@ -282,7 +294,7 @@ router.post('/:id', async function (req, res) {
             }
             if (allProducts.overallRating == 0) {
                 noRating = "No Rating for your shop"
-            }else{
+            } else {
                 averageRating = allProducts.overRating
             }
 

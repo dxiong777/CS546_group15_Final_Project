@@ -2,9 +2,12 @@ const mongoCollections = require('../config/mongoCollections');
 const shop = mongoCollections.shop;
 const messages = mongoCollections.message;
 const reviews = mongoCollections.reviews;
+const replayMessage = mongoCollections.replayMessages;
 var mongoose = require('mongoose');
 const user = require('./user')
 const comments = mongoCollections.comment;
+var userdata = mongoCollections.user;
+
 
 
 
@@ -95,7 +98,8 @@ const exportedMethods = {
         })
         return;
     },
-
+    ////////////////////////////////////////
+  
     async getAllComment(id) {
         var allComment;
         const allCommentsdata = await comments();
@@ -142,7 +146,7 @@ const exportedMethods = {
             _id: convertId
         })
         var rat = store.overallRating;
-        var xx; 
+        var xx;
         //console.log(typeof userInfo._id)
         store.rating.forEach(x => {
             var y = (x.idUser).toString()
@@ -150,10 +154,10 @@ const exportedMethods = {
                 xx = rat
                 return
             }
-           return //return x;
+            return //return x;
 
         })
-   
+
         return xx;
         // console.log("----")
         // console.log(findStore)
