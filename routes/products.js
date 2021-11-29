@@ -251,6 +251,7 @@ router.post('/:id', async function (req, res) {
             dateofexpiry
         );
         if (typeof newItem == "string") {
+            console.log(newItem)
             const shopDetail = await shopData.get(idProduct);
             var shopMessage = shopDetail.message;
             var shopComment = shopDetail.comment;
@@ -285,7 +286,6 @@ router.post('/:id', async function (req, res) {
                 averageRating = allProducts.overRating
             }
 
-            //=========================================
             var shopName = shopDetail.name
             var shopId = shopDetail._id;
             if (allProducts.item.length != 0) {
