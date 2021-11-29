@@ -133,23 +133,25 @@ const exportedMethods = {
         })
         return;
     },
-    // async getReviewAverage(id) {
-    //     var allReview;
-    //     const allReviews = await reviews();
-    //     var allComments = await allCommentsdata.find({}).toArray();
-    //     allComments.forEach(element => {
-    //         if (element._id == id) {
-    //             allComment = element;
-    //         }
-    //     });
-    //     return allComment;
-    // },
-    async review(userInfo, shopId, review) {
+ 
+    async review(userInfo, shopId, reviewss) {
         var id = mongoose.Types.ObjectId();
 
         var convertId = mongoose.Types.ObjectId(shopId);
+    
+        var userId = mongoose.Types.ObjectId(userInfo._id);
         const resaurantCollection = await shop();
         const reviewCollection = await reviews();
+
+        const findUser = await reviewCollection.findOne({
+            idUser: userId
+        });
+        const findStore = await resaurantCollection.findOne({
+            _id: convertId
+        });
+     
+        console.log("------------------------")
+        var review = parseInt(reviewss)
         const userInformation = await user.getUser(userInfo._id);
         var userReview = {
             _id: id,
@@ -173,9 +175,7 @@ const exportedMethods = {
                 rating: userReview,
             }
         });
-        const findStore = await resaurantCollection.findOne({
-            _id: convertId
-        });
+        
         var allReview = [];
         findStore.rating.forEach(x => {
             allReview.push(x.review)
@@ -184,20 +184,21 @@ const exportedMethods = {
         for (var i in allReview) {
             totalSum += allReview[i];
         }
-        var numsCount = x.length;
+        var numsCount = allReview.length;
         var average = totalSum / numsCount;
-
+        var averages = (Number(average).toFixed(2));
+        //console.log(average)
         const updateFinal = await resaurantCollection.updateOne({
             _id: convertId
         }, {
             $set: {
-                overallRating: average
+                overallRating: averages
             }
         });
         const frRee = await resaurantCollection.findOne({
             _id: convertId
         });
-        return average;
+        return averages;
     }
 
 }

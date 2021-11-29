@@ -28,10 +28,9 @@ router.get('/:id', async function (req, res) {
     const allProductBeforeExpire = await productData.allProductBeforeExpire(idd);
     var x = allProductBeforeExpire
 
-    if (allProduct.item.length == 0) {
-        noRating = "No Rating in Database"
-    }
-    if (allProduct.message.length != 0) {
+    if (allProduct.overallRating == 0) {
+        noRating = "No Rating for your shop"
+    }else{
         averageRating = overRating
     }
 
@@ -260,8 +259,11 @@ router.post('/:id', async function (req, res) {
             var noComment;
             var messages;
             var comments;
+            var noRating;
+            var averageRating;
             const allProducts = await productData.getAllProduct(idProduct);
             await productData.allProductBeforeExpire(idProduct);
+            
             if (allProducts.item.length == 0) {
                 noItem = "No product in Database"
             }
@@ -277,6 +279,12 @@ router.post('/:id', async function (req, res) {
             if (allProducts.comment.length == 0) {
                 noComment = "No comment in Your Shop"
             }
+            if (allProducts.overallRating == 0) {
+                noRating = "No Rating for your shop"
+            }else{
+                averageRating = allProducts.overRating
+            }
+
             //=========================================
             var shopName = shopDetail.name
             var shopId = shopDetail._id;
@@ -290,7 +298,9 @@ router.post('/:id', async function (req, res) {
                     messageForMessage: noMessage,
                     messageProduct: noItem,
                     noComment: noComment,
-                    messagetoCreateProduct: newItem
+                    messagetoCreateProduct: newItem,
+                    noRating: noRating,
+                    averageRating: averageRating,
                 }
                 res.status(400)
                 res.render("allItem", data)

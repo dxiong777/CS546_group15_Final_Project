@@ -2,6 +2,9 @@
 <main id="ab">
     <h3>{{title}}</h3>
     <h1>{{userdata.name}} </h1>
+    {{#if noData}}
+    <h1 style="color: blueviolet;" for="overAllRating">{{noData}}</h1>
+    {{/if}}
     <ul>
         {{#each allShop}}
         <li>

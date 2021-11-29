@@ -1,6 +1,10 @@
 <a class="get-home" href="/user">To Home Page</a>
 
 <main id="ab">
+    {{#if noData}}
+    <label for="overAllRating">{{noData}}</label>
+    {{/if}}
+    {{#if allItem}}
     <p>Welcome {{userData.name}} in {{shopName}}</p>
 
     <h3>shopId: {{shopId}}</h3>
@@ -37,17 +41,26 @@
         </tr>
         {{/each}}
     </table>
-
+    {{/if}}
 </main>
+
 <br>
 {{#if averageRating}}
-<label for="overAllRating">{{averageRating}}</label>
+<h3 style="background-color:rgb(206, 101, 201);" for="overAllRating">Average ratinig of {{shopDetail.name}} sohp:
+    {{averageRating}}
+</h3>
 {{/if}}
 {{#if noRating}}
-<label for="overAllRating">No rating for this shop</label>
+<h3 style="background-color:rgb(206, 101, 201);" for="noRating">{{noRating}}
+</h3>
+{{/if}}
+{{#if noSecond}}
+<h3 style="background-color:rgb(206, 101, 201);" for="noRating">{{noSecond}}
+</h3>
 {{/if}}
 <form method="post" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
     <label for="cars">Rate for Shop</label>
+
     <select style="width: 10%; background-color:rgb(108, 194, 161)" name="review" id="cars">
         <option value="1">1</option>
         <option value="2">2</option>

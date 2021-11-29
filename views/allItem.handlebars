@@ -105,7 +105,13 @@
     {{/if}}
 </main>
 
-
+{{#if averageRating}}
+<h3 style="background-color:rgb(206, 101, 201);" for="overAllRating">Average ratinig of your shop:         {{averageRating}}</h3>
+{{/if}}
+{{#if noRating}}
+<h3 style="background-color:rgb(206, 101, 201);" for="noRating">{{noRating}}
+</h3>
+{{/if}}
 
 {{#if messageForMessage}}
 <p id="message">{{messageForMessage}}</p>
