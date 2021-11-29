@@ -14,16 +14,27 @@ router.get('/:id', async function (req, res) {
     var shopId = shopDetail._id;
     var shopMessage = shopDetail.message;
     var shopComment = shopDetail.comment;
+    var overRating = shopDetail.overallRating;
 
     var noItem;
     var noMessage;
     var noComment;
     var messages;
     var comments;
+    var noRating;
+    var averageRating;
 
     const allProduct = await productData.getAllProduct(idd);
     const allProductBeforeExpire = await productData.allProductBeforeExpire(idd);
     var x = allProductBeforeExpire
+
+    if (allProduct.item.length == 0) {
+        noRating = "No Rating in Database"
+    }
+    if (allProduct.message.length != 0) {
+        averageRating = overRating
+    }
+
     if (allProduct.item.length == 0) {
         noItem = "No product in Database"
     }
@@ -41,6 +52,8 @@ router.get('/:id', async function (req, res) {
     }
     const dataa = {
         allItem: allProduct.item,
+        noRating: noRating,
+        averageRating: averageRating,
         title: shopName,
         shopId: shopId,
         msgForShop: messages,

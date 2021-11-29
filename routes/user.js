@@ -87,8 +87,10 @@ router.post('/:idUser/shop/:shopId', async (req, res) => {
 
     const {
         message,
-        comment
+        comment,
+        review
     } = req.body;
+    console.log(review)
 
     try {
         const userInfo = await user.getUser(userid);
@@ -105,6 +107,51 @@ router.post('/:idUser/shop/:shopId', async (req, res) => {
         }
         if (comment) {
             coms = "Thanks For sending Comment"
+        }
+        if (review) {
+
+            var average = await shopData.review(userInfo, shopId, review)
+            const allProduct = await productData.getAllProduct(shopId);
+
+            const shopInfonew = await shopData.get(shopId);
+            var commentss;
+            var noRating;
+          var averageRating;
+            if (allProduct.rating.length != 0) {
+                averageRating = average
+            }
+            if (allProduct.comment.length == 0) {
+                noRating = "No Review for this Shop"
+            }
+            var commentss;
+            var noComments;
+            if (allProduct.comment.length != 0) {
+                commentss = shopComment
+            }
+            if (allProduct.comment.length == 0) {
+                noComments = "No Review for this Shop"
+            }
+
+            var shopName = shopInfo.name
+            var shopIdd = shopInfo._id;
+            if (allProduct) {
+                const dataa = {
+                    averageRating: averageRating,
+                    noRating: noRating,
+                    commentForShop: commentss,
+                    noComment: noComments,
+                    allItem: allProduct.item,
+                    shopName: shopName,
+                    shopId: shopIdd,
+                    userData: userInfo,
+                    shopDetail: shopInfo,
+                    mess: msgs,
+                    comm: coms
+                };
+                res.render('userView', dataa);
+                return;
+            }
+
         }
 
         if (message) {

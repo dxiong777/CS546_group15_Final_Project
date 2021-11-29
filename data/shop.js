@@ -1,6 +1,7 @@
 const mongoCollections = require('../config/mongoCollections');
 const shop = mongoCollections.shop;
 const messages = mongoCollections.message;
+const reviews = mongoCollections.reviews;
 var mongoose = require('mongoose');
 const user = require('./user')
 const comments = mongoCollections.comment;
@@ -49,9 +50,11 @@ const exportedMethods = {
         const resaurantCollection = await shop();
         const newShop = {
             name: name,
+            overallRating: 0,
             item: [],
             message: [],
-            comment: []
+            comment: [],
+            rating: []
         };
         const newInsertInformation = await resaurantCollection.insertOne(newShop);
         const newId = newInsertInformation.insertedId;
@@ -129,6 +132,72 @@ const exportedMethods = {
             }
         })
         return;
+    },
+    // async getReviewAverage(id) {
+    //     var allReview;
+    //     const allReviews = await reviews();
+    //     var allComments = await allCommentsdata.find({}).toArray();
+    //     allComments.forEach(element => {
+    //         if (element._id == id) {
+    //             allComment = element;
+    //         }
+    //     });
+    //     return allComment;
+    // },
+    async review(userInfo, shopId, review) {
+        var id = mongoose.Types.ObjectId();
+
+        var convertId = mongoose.Types.ObjectId(shopId);
+        const resaurantCollection = await shop();
+        const reviewCollection = await reviews();
+        const userInformation = await user.getUser(userInfo._id);
+        var userReview = {
+            _id: id,
+            idUser: userInformation._id,
+            userName: userInformation.name,
+            review: review,
+            shopId: shopId,
+        }
+        const newaddedItem = await reviewCollection.insertOne(userReview);
+        const newInsertInformation = await reviewCollection.updateOne({
+            _id: convertId
+        }, {
+            $push: {
+                rating: userReview
+            }
+        })
+        const updateInfo = await resaurantCollection.updateOne({
+            _id: convertId
+        }, {
+            $addToSet: {
+                rating: userReview,
+            }
+        });
+        const findStore = await resaurantCollection.findOne({
+            _id: convertId
+        });
+        var allReview = [];
+        findStore.rating.forEach(x => {
+            allReview.push(x.review)
+        })
+        var totalSum = 0;
+        for (var i in allReview) {
+            totalSum += allReview[i];
+        }
+        var numsCount = x.length;
+        var average = totalSum / numsCount;
+
+        const updateFinal = await resaurantCollection.updateOne({
+            _id: convertId
+        }, {
+            $set: {
+                overallRating: average
+            }
+        });
+        const frRee = await resaurantCollection.findOne({
+            _id: convertId
+        });
+        return average;
     }
 
 }
