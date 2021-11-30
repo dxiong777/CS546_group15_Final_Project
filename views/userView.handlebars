@@ -80,7 +80,7 @@
 {{!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxzzzzzzzzzzz --}}
 
 {{#if userData.replayMessages}}
-<h2> Message from Customer</h2>
+<h2> Message from you</h2>
 <table id="message" width="50%" border="5">
 
     <tr>
@@ -94,17 +94,21 @@
         <td>{{this.shopNmae}}</td>
         <td>{{this.message}}</td>
         <td>
-            <form method="post" action="/shopId/delete/{{this._id}}?_method=DELETE" <input type="hidden" name="_method"
+           <form method="post" action="/user/{{this.idUser}}/shop/{{this.isShop}}/{{this._id}}?_method=DELETE" <input type="hidden" name="_method"
                 value="DELETE">
                 <input type="submit" name="delete" value='Delete' />
             </form>
+            {{!-- <form method="post" action="/user/{{this.idUser}}/{{this.isShop}}/{{this._id}}?_method=DELETE" />
+            <input type="hidden" name="_method" value="DELETE" />
+            <input type="submit" name="delete" value='Delete' />
+            </form> --}}
         </td>
         <td>
             <form method="post" id="addItem-form" action="/shopId/{{this.idUser}}/{{this.shopId}}">
                 <label for="">Message</label>
                 <input required oninvalid="this.setCustomValidity('Please Enter Message for ShopKeeper.')"
                     oninput="this.setCustomValidity('')" type="message" name="replayMessage" />
-                <button type="submit" id="submit addNew" class="btn btn-default">Send Replay</button>
+                <button type="submit" id="submit addNew" class="btn btn-default">Send Replay to</button>
             </form>
         </td>
     </tr>
@@ -124,7 +128,7 @@
         <input type="submit" name="delete" value='Delete' />
     </form> --}}
     <br>
-
+    <h1>---------------------------------------------------------------------------------------------------------------------</h1>
     <form method="post" id="addItem-form" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
         <label for="">Message</label>
         <input required oninvalid="this.setCustomValidity('Please Enter Message for ShopKeeper.')"

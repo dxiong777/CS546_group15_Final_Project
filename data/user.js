@@ -1,12 +1,12 @@
 const mongoCollections = require('../config/mongoCollections');
 const user = mongoCollections.user;
 var mongoose = require('mongoose');
-//var shopData = require('./shop')
+const {
+    replayMessages
+} = require('../config/mongoCollections');
 const shop = mongoCollections.shop;
 const messages = mongoCollections.message;
 const replayMessage = mongoCollections.replayMessages;
-
-
 
 const exportedMethods = {
     async getAll() {
@@ -44,7 +44,32 @@ const exportedMethods = {
         const newId = newInsertInformation.insertedId;
         return await this.get(newInsertInformation.insertedId);
     },
-    //////////////////////////////////////////////////////////////////////////
+ 
+    async removeMessage(messageId) {
+        var iddItem = mongoose.Types.ObjectId(messageId);
+        const messageCollection = await replayMessages();
+        const userCollection = await user();
+
+        const usergetDetail = await messageCollection.findOne({
+            _id: iddItem
+        })
+        var userId = usergetDetail.idUser;
+        await messageCollection.deleteOne({
+            _id: iddItem
+        });
+
+        await userCollection.updateOne({
+            _id: userId
+        }, {
+            $pull: {
+                replayMessages: {
+                    _id: iddItem
+                }
+            }
+        });
+        return ;
+
+    },
 
     async replayMessage(idusers, storeId, replayMessages) {
         var id = mongoose.Types.ObjectId();
@@ -52,7 +77,6 @@ const exportedMethods = {
         var iduserCon = mongoose.Types.ObjectId(idusers);
         var storeIdCon = mongoose.Types.ObjectId(storeId);
         const userInfo = await this.getUser(idusers);
-        // const shopDetail = await shopData.get(storeId);
         const findShop = await shop();
         const shopDetail = await findShop.findOne({
             _id: storeIdCon
@@ -63,12 +87,7 @@ const exportedMethods = {
         const messageCollection = await messages();
         const sendMessage = await messageCollection.find({}).toArray();
 
-        // const sendMessage = await messageCollection.findOne({
-        //     idUser: iduserCon
-        // })
-        console.log(idusers)
-        console.log(typeof iduserCon)
-        console.log(sendMessage)
+  
         var finalMessage;
         sendMessage.forEach(x => {
             console.log(x)
@@ -96,8 +115,6 @@ const exportedMethods = {
         })
         return;
     },
-
-    ///////////////////////////////////
 
 
 }

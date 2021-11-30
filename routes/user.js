@@ -362,23 +362,26 @@ router.post('/:idUser/shop/:shopId', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
-    const userData = req.body;
-    const name = userData.name;
 
+
+router.delete('/:iduser/shop/:idshop/:messId', async (req, res) => {
+    //const idUsers = req.params.idUser;
+    const messageId = req.params.messId;
+    const iduser = req.params.iduser;
+    const idshop = req.params.idshop;
     try {
-        const userData = await user.create(name);
-        const data = {
-            title: "All user",
-            alluser: userData,
-        };
-        response.render('alluser', data);
+
+        const shopDetailId = await user.removeMessage(messageId);
+      console.log("--------------------------")
+        res.redirect(`/user/${iduser}/shop/${idshop}`)
+
     } catch (e) {
         res.status(500).json({
-            error: e
+            error: e.message
         });
     }
-});
+
+})
 
 
 module.exports = router;
