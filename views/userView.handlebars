@@ -7,6 +7,19 @@
     {{#if allItem}}
     <p>Welcome {{userData.name}} in {{shopName}}</p>
 
+
+    <div id="mapholder"></div>
+    <form>
+        <input type="button" onclick="getLocation();" value="Get Location" />
+    </form>
+    <br>
+
+    {{!-- <iframe src=”https://www.google.com/maps/embed?pb=!…” width=”600″ height=”450″ frameborder=”0″ style=”border:0″
+        allowfullscreen></iframe> --}}
+
+    <a href="https://www.google.com/maps/place/{{shopAddress}} {{pincode}}">..address.</a>
+
+
     <h3>shopId: {{shopId}}</h3>
     <h3>UserId: {{userData._id}}</h3>
     <table width="35%" border="2">
@@ -77,23 +90,24 @@
 {{/if}}
 
 <br>
-{{!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxzzzzzzzzzzz --}}
 {{#if userData.replayMessages}}
 <h2> Message for you.</h2>
 <table id="message" width="50%" border="5">
 
     <tr>
-        <th>User Name</th>
+        <th>Date</th>
+        <th>Restaurant Name</th>
         <th>Message</th>
         <th></th>
     </tr>
     {{#each userData.replayMessages}}
     <tr>
+        <td>{{this.date}}</td>
         <td>{{this.shopNmae}}</td>
         <td>{{this.message}}</td>
         <td>
-           <form method="post" action="/user/{{this.idUser}}/shop/{{this.isShop}}/{{this._id}}?_method=DELETE" <input type="hidden" name="_method"
-                value="DELETE">
+            <form method="post" action="/user/{{this.idUser}}/shop/{{this.isShop}}/{{this._id}}?_method=DELETE" <input
+                type="hidden" name="_method" value="DELETE">
                 <input type="submit" name="delete" value='Delete' />
             </form>
         </td>
@@ -101,7 +115,6 @@
     {{/each}}
 </table>
 {{/if}}
-{{!-- zzzzzzzzzzzzzzzzzzzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxzzzzzzzzzzz --}}
 
 <tr>
     {{#if message}}

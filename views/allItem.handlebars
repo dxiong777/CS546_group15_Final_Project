@@ -97,6 +97,7 @@
 
         </form>
     </table>
+
     {{#if messagetoCreateProduct}}
     <p id="">{{messagetoCreateProduct}}</p>
     {{/if}}
@@ -127,6 +128,7 @@
 <table id="message" width="50%" border="5">
 
     <tr>
+        <th>Date</th>
         <th>User Name</th>
         <th>Message</th>
         <th></th>
@@ -134,6 +136,7 @@
     {{#each msgForShop}}
     <tr>
         {{!-- <td>{{this.idUser}}</td> --}}
+        <td>{{this.date}}</td>
         <td>{{this.userName}}</td>
         <td>{{this.message}}</td>
         <td>

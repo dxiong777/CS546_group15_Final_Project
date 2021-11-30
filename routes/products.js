@@ -16,7 +16,7 @@ router.get('/:id', async function (req, res) {
     var shopMessage = shopDetail.message;
     var shopComment = shopDetail.comment;
     var overRating = shopDetail.overallRating;
-
+console.log(overRating)
     var noItem;
     var noMessage;
     var noComment;
@@ -207,7 +207,6 @@ router.put('/:id', async function (req, res) {
         )
         var restDetail = await productData.getShopIdForEditItem(iddProduct);
         var itemDetail = await productData.getProductDetail(restDetail._id, iddProduct)
-
         if (typeof updateStore == "string") {
             var data = {
                 shopId: restDetail._id,
@@ -233,9 +232,14 @@ router.post('/:iduser/:storeId', async function (req, res) {
     const {
         replayMessage
     } = req.body;
-
-    await userData.replayMessage(iduser, storeId, replayMessage)
-    res.redirect(`/shopId/${storeId}`)
+    try {
+        await userData.replayMessage(iduser, storeId, replayMessage)
+        res.redirect(`/shopId/${storeId}`)
+    } catch (e) {
+        res.status(500).json({
+            error: e.message
+        });
+    }
 })
 
 router.post('/:id', async function (req, res) {

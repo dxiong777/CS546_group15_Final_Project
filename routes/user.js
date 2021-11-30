@@ -82,19 +82,23 @@ router.get('/:idUser/shop/:shopId', async (req, res) => {
         }
 
 
-        var shopName = shopDetail.name
+        var shopName = shopDetail.name;
+        var shopAdd = shopDetail.address;
         var shopIdd = shopDetail._id;
+        var shopPin = shopDetail.pincode;
         if (getShopbyId) {
             const dataa = {
                 allItem: getShopbyId.item,
                 shopName: shopName,
+                pincode: shopPin,
                 shopId: shopIdd,
                 userData: userInfo,
                 shopDetail: shopDetail,
                 commentForShop: commentForShop,
                 noComment: noComments,
                 noRating: noRatig,
-                averageRating: or
+                averageRating: or,
+                shopAddress: shopAdd
             };
             res.render('userView', dataa);
             return;
@@ -136,48 +140,48 @@ router.post('/:idUser/shop/:shopId', async (req, res) => {
         }
         ////////////////////////////////////////////////////////////
 
-        if (replayMessage) {
-            await shopData.replayMessage(userInfo, shopId, message)
-            const getShopbyId = await productData.getAllProduct(shopId);
+        // if (replayMessage) {
+        //     await shopData.replayMessage(userInfo, shopId, message)
+        //     const getShopbyId = await productData.getAllProduct(shopId);
 
-            const shopInfonew = await shopData.get(shopId);
-            var shopComment = shopInfonew.comment;
-            var noRating;
-            var averageRating;
-            if (shopInfonew.overallRating != 0) {
-                averageRating = shopInfonew.overallRating
-            } else {
-                noRating = "No Review for this Shop"
-            }
-            var commentss;
-            var noComments;
-            if (getShopbyId.comment.length != 0) {
-                commentss = shopComment
-            }
-            if (getShopbyId.comment.length == 0) {
-                noComments = "No Review for this Shop"
-            }
+        //     const shopInfonew = await shopData.get(shopId);
+        //     var shopComment = shopInfonew.comment;
+        //     var noRating;
+        //     var averageRating;
+        //     if (shopInfonew.overallRating != 0) {
+        //         averageRating = shopInfonew.overallRating
+        //     } else {
+        //         noRating = "No Review for this Shop"
+        //     }
+        //     var commentss;
+        //     var noComments;
+        //     if (getShopbyId.comment.length != 0) {
+        //         commentss = shopComment
+        //     }
+        //     if (getShopbyId.comment.length == 0) {
+        //         noComments = "No Review for this Shop"
+        //     }
 
-            var shopName = shopInfo.name
-            var shopIdd = shopInfo._id;
-            if (getShopbyId) {
-                const dataa = {
-                    averageRating: averageRating,
-                    noRating: noRating,
-                    commentForShop: commentss,
-                    noComment: noComments,
-                    allItem: getShopbyId.item,
-                    shopName: shopName,
-                    shopId: shopIdd,
-                    userData: userInfo,
-                    shopDetail: shopInfo,
-                    mess: msgs,
-                    comm: coms
-                };
-                res.render('userView', dataa);
-                return;
-            }
-        }
+        //     var shopName = shopInfo.name
+        //     var shopIdd = shopInfo._id;
+        //     if (getShopbyId) {
+        //         const dataa = {
+        //             averageRating: averageRating,
+        //             noRating: noRating,
+        //             commentForShop: commentss,
+        //             noComment: noComments,
+        //             allItem: getShopbyId.item,
+        //             shopName: shopName,
+        //             shopId: shopIdd,
+        //             userData: userInfo,
+        //             shopDetail: shopInfo,
+        //             mess: msgs,
+        //             comm: coms
+        //         };
+        //         res.render('userView', dataa);
+        //         return;
+        //     }
+        // }
         ////////////////////////////////////////////////////////////
 
         if (review) {
@@ -373,7 +377,6 @@ router.delete('/:iduser/shop/:idshop/:messId', async (req, res) => {
     try {
 
         const shopDetailId = await user.removeMessage(messageId);
-      //console.log("--------------------------")
         res.redirect(`/user/${iduser}/shop/${idshop}`)
 
     } catch (e) {
