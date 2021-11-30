@@ -27,6 +27,7 @@ router.get('/:id1/allshop', async (req, res) => {
         const restaurantList = await shopData.getShopWithItem();
         //console.log(restaurantList)
         const userInfo = await user.getUser(userid);
+        //console.log(userInfo)
         var userId = userInfo._id
         var noRest;
         var restaurantListData;
@@ -372,7 +373,7 @@ router.delete('/:iduser/shop/:idshop/:messId', async (req, res) => {
     try {
 
         const shopDetailId = await user.removeMessage(messageId);
-      console.log("--------------------------")
+      //console.log("--------------------------")
         res.redirect(`/user/${iduser}/shop/${idshop}`)
 
     } catch (e) {
