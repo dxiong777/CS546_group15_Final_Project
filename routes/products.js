@@ -15,8 +15,7 @@ router.get('/:id', async function (req, res) {
     var shopId = shopDetail._id;
     var shopMessage = shopDetail.message;
     var shopComment = shopDetail.comment;
-    var overRating = shopDetail.overallRating;
-console.log(overRating)
+    var overRating = shopDetail.overallRating; 
     var noItem;
     var noMessage;
     var noComment;

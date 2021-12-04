@@ -24,10 +24,8 @@ router.get('/', async (req, res) => {
 router.get('/:id1/allshop', async (req, res) => {
     try {
         const userid = req.params.id1;
-        const restaurantList = await shopData.getShopWithItem();
-        //console.log(restaurantList)
+        const restaurantList = await shopData.getShopWithItem(); 
         const userInfo = await user.getUser(userid);
-        //console.log(userInfo)
         var userId = userInfo._id
         var noRest;
         var restaurantListData;
@@ -36,8 +34,6 @@ router.get('/:id1/allshop', async (req, res) => {
         } else {
             restaurantListData = restaurantList;
         }
-        // console.log(noRest)
-        // console.log(restaurantListData)
         const data = {
             title: "Shop List",
             allShop: restaurantListData,
@@ -61,7 +57,6 @@ router.get('/:idUser/shop/:shopId', async (req, res) => {
         const shopDetail = await shopData.get(shopId);
         const getShopbyId = await productData.getAllProduct(shopId);
         var shopComment = shopDetail.comment;
-        //var shopRepMess = shopDetail.replayMessages;
         var overallRatings = shopDetail.overallRating;
         var noComments;
         var commentForShop;
@@ -69,10 +64,8 @@ router.get('/:idUser/shop/:shopId', async (req, res) => {
         var or;
 
         if (getShopbyId.comment.length != 0) {
-            //console.log("x")
             commentForShop = shopComment
         } else {
-            //console.log("y")
             noComments = "No review for this shop"
         }
         if (overallRatings == 0) {
@@ -187,7 +180,6 @@ router.post('/:idUser/shop/:shopId', async (req, res) => {
         if (review) {
 
             var checkuser = await shopData.checkuser(userInfo, shopId, review)
-            //console.log(checkuser)
             if (checkuser != undefined) {
                 const getShopbyId = await productData.getAllProduct(shopId);
 
