@@ -97,6 +97,7 @@
 
         </form>
     </table>
+
     {{#if messagetoCreateProduct}}
     <p id="">{{messagetoCreateProduct}}</p>
     {{/if}}
@@ -127,18 +128,29 @@
 <table id="message" width="50%" border="5">
 
     <tr>
+        <th>Date</th>
         <th>User Name</th>
         <th>Message</th>
         <th></th>
     </tr>
     {{#each msgForShop}}
     <tr>
+        {{!-- <td>{{this.idUser}}</td> --}}
+        <td>{{this.date}}</td>
         <td>{{this.userName}}</td>
         <td>{{this.message}}</td>
         <td>
             <form method="post" action="/shopId/delete/{{this._id}}?_method=DELETE" <input type="hidden" name="_method"
                 value="DELETE">
                 <input type="submit" name="delete" value='Delete' />
+            </form>
+        </td>
+        <td>
+            <form method="post" id="addItem-form" action="/shopId/{{this.idUser}}/{{this.shopId}}">
+                <label for="">Message</label>
+                <input required oninvalid="this.setCustomValidity('Please Enter Message for ShopKeeper.')"
+                    oninput="this.setCustomValidity('')" type="message" name="replayMessage" />
+                <button type="submit" id="submit addNew" class="btn btn-default">Send Replay</button>
             </form>
         </td>
     </tr>

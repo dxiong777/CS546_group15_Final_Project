@@ -27,6 +27,7 @@ router.get('/:id1/allshop', async (req, res) => {
         const restaurantList = await shopData.getShopWithItem();
         //console.log(restaurantList)
         const userInfo = await user.getUser(userid);
+        //console.log(userInfo)
         var userId = userInfo._id
         var noRest;
         var restaurantListData;
@@ -58,39 +59,46 @@ router.get('/:idUser/shop/:shopId', async (req, res) => {
         const shopId = req.params.shopId;
         const userInfo = await user.getUser(userid);
         const shopDetail = await shopData.get(shopId);
-        const allProduct = await productData.getAllProduct(shopId);
+        const getShopbyId = await productData.getAllProduct(shopId);
         var shopComment = shopDetail.comment;
+        //var shopRepMess = shopDetail.replayMessages;
         var overallRatings = shopDetail.overallRating;
-        var noComment;
-        var comments;
+        var noComments;
+        var commentForShop;
         var noRatig;
         var or;
 
-        if (allProduct.comment.length != 0) {
-            comments = shopComment
+        if (getShopbyId.comment.length != 0) {
+            //console.log("x")
+            commentForShop = shopComment
+        } else {
+            //console.log("y")
+            noComments = "No review for this shop"
         }
-        if (allProduct.overallRating == 0) {
-            noComment = "No Review for this Shop"
+        if (overallRatings == 0) {
+            noRatig = "No Review for this Shop"
         } else {
             or = overallRatings;
         }
-        if (allProduct.overallRating == 0) {
-            noRatig = "No rating for this Shop"
-        }
 
-        var shopName = shopDetail.name
+
+        var shopName = shopDetail.name;
+        var shopAdd = shopDetail.address;
         var shopIdd = shopDetail._id;
-        if (allProduct) {
+        var shopPin = shopDetail.pincode;
+        if (getShopbyId) {
             const dataa = {
-                allItem: allProduct.item,
+                allItem: getShopbyId.item,
                 shopName: shopName,
+                pincode: shopPin,
                 shopId: shopIdd,
                 userData: userInfo,
                 shopDetail: shopDetail,
-                commentForShop: comments,
-                noComment: noComment,
+                commentForShop: commentForShop,
+                noComment: noComments,
                 noRating: noRatig,
-                averageRating: or
+                averageRating: or,
+                shopAddress: shopAdd
             };
             res.render('userView', dataa);
             return;
@@ -110,17 +118,17 @@ router.post('/:idUser/shop/:shopId', async (req, res) => {
     const {
         message,
         comment,
-        review
+        review,
+        replayMessage
     } = req.body;
 
 
     try {
         const userInfo = await user.getUser(userid);
         const shopInfo = await shopData.get(shopId);
-        const allProduct = await productData.getAllProduct(shopId);
+        const getShopbyId = await productData.getAllProduct(shopId);
         var shopComment = shopInfo.comment;
         var noComment;
-        var comments;
 
         var msgs;
         var coms;
@@ -130,42 +138,86 @@ router.post('/:idUser/shop/:shopId', async (req, res) => {
         if (comment) {
             coms = "Thanks For sending Comment"
         }
+        ////////////////////////////////////////////////////////////
+
+        // if (replayMessage) {
+        //     await shopData.replayMessage(userInfo, shopId, message)
+        //     const getShopbyId = await productData.getAllProduct(shopId);
+
+        //     const shopInfonew = await shopData.get(shopId);
+        //     var shopComment = shopInfonew.comment;
+        //     var noRating;
+        //     var averageRating;
+        //     if (shopInfonew.overallRating != 0) {
+        //         averageRating = shopInfonew.overallRating
+        //     } else {
+        //         noRating = "No Review for this Shop"
+        //     }
+        //     var commentss;
+        //     var noComments;
+        //     if (getShopbyId.comment.length != 0) {
+        //         commentss = shopComment
+        //     }
+        //     if (getShopbyId.comment.length == 0) {
+        //         noComments = "No Review for this Shop"
+        //     }
+
+        //     var shopName = shopInfo.name
+        //     var shopIdd = shopInfo._id;
+        //     if (getShopbyId) {
+        //         const dataa = {
+        //             averageRating: averageRating,
+        //             noRating: noRating,
+        //             commentForShop: commentss,
+        //             noComment: noComments,
+        //             allItem: getShopbyId.item,
+        //             shopName: shopName,
+        //             shopId: shopIdd,
+        //             userData: userInfo,
+        //             shopDetail: shopInfo,
+        //             mess: msgs,
+        //             comm: coms
+        //         };
+        //         res.render('userView', dataa);
+        //         return;
+        //     }
+        // }
+        ////////////////////////////////////////////////////////////
+
         if (review) {
 
             var checkuser = await shopData.checkuser(userInfo, shopId, review)
             //console.log(checkuser)
             if (checkuser != undefined) {
-                const allProduct = await productData.getAllProduct(shopId);
+                const getShopbyId = await productData.getAllProduct(shopId);
 
                 const shopInfonew = await shopData.get(shopId);
                 var noRating;
                 var averageRating;
                 if (shopInfonew.overallRating != 0) {
                     averageRating = shopInfonew.overallRating
-                }
-                //console.log(shopInfonew)
-                if (allProduct.overallRating == 0) {
+                } else {
                     noRating = "No Review for this Shop"
                 }
                 var commentss;
                 var noComments;
-                if (allProduct.comment.length != 0) {
+                if (getShopbyId.comment.length != 0) {
                     commentss = shopComment
                 }
-                if (allProduct.comment.length == 0) {
+                if (getShopbyId.comment.length == 0) {
                     noComments = "No Review for this Shop"
                 }
                 var noSecond = "You can not add rating second time"
                 var shopName = shopInfo.name
                 var shopIdd = shopInfo._id;
-                if (allProduct) {
+                if (getShopbyId) {
                     const dataa = {
                         noSecond: noSecond,
                         averageRating: averageRating,
                         noRating: noRating,
                         commentForShop: commentss,
                         noComment: noComments,
-                        allItem: allProduct.item,
+                        allItem: getShopbyId.item,
                         shopName: shopName,
                         shopId: shopIdd,
                         userData: userInfo,
@@ -179,35 +231,37 @@ router.post('/:idUser/shop/:shopId', async (req, res) => {
                 return;
             }
             var average = await shopData.review(userInfo, shopId, review)
-            const allProduct = await productData.getAllProduct(shopId);
+            const getShopbyId = await productData.getAllProduct(shopId);
 
             const shopInfonew = await shopData.get(shopId);
+
             var noRating;
             var averageRating;
-            if (allProduct.rating.length != 0) {
-                averageRating = average
-            }
-            if (allProduct.overallRating == 0) {
+            if (shopInfonew.overallRating != 0) {
+                averageRating = shopInfonew.overallRating
+            } else {
                 noRating = "No Review for this Shop"
             }
             var commentss;
             var noComments;
-            if (allProduct.comment.length != 0) {
+            if (getShopbyId.comment.length != 0) {
                 commentss = shopComment
             }
-            if (allProduct.comment.length == 0) {
+            if (getShopbyId.comment.length == 0) {
                 noComments = "No Review for this Shop"
             }
+            var forRating = "Thanks for rating"
 
             var shopName = shopInfo.name
             var shopIdd = shopInfo._id;
-            if (allProduct) {
+            if (getShopbyId) {
                 const dataa = {
+                    forRating: forRating,
                     averageRating: averageRating,
                     noRating: noRating,
                     commentForShop: commentss,
                     noComment: noComments,
-                    allItem: allProduct.item,
+                    allItem: getShopbyId.item,
                     shopName: shopName,
                     shopId: shopIdd,
                     userData: userInfo,
@@ -223,13 +277,35 @@ router.post('/:idUser/shop/:shopId', async (req, res) => {
 
         if (message) {
             await shopData.message(userInfo, shopId, message)
+            const getShopbyId = await productData.getAllProduct(shopId);
+
+            const shopInfonew = await shopData.get(shopId);
+            var shopComment = shopInfonew.comment;
+            var noRating;
+            var averageRating;
+            if (shopInfonew.overallRating != 0) {
+                averageRating = shopInfonew.overallRating
+            } else {
+                noRating = "No Review for this Shop"
+            }
+            var commentss;
+            var noComments;
+            if (getShopbyId.comment.length != 0) {
+                commentss = shopComment
+            }
+            if (getShopbyId.comment.length == 0) {
+                noComments = "No Review for this Shop"
+            }
+
             var shopName = shopInfo.name
             var shopIdd = shopInfo._id;
-            if (allProduct) {
+            if (getShopbyId) {
                 const dataa = {
-                    commentForShop: comments,
-                    noComment: noComment,
-                    allItem: allProduct.item,
+                    averageRating: averageRating,
+                    noRating: noRating,
+                    commentForShop: commentss,
+                    noComment: noComments,
+                    allItem: getShopbyId.item,
                     shopName: shopName,
                     shopId: shopIdd,
                     userData: userInfo,
@@ -240,28 +316,38 @@ router.post('/:idUser/shop/:shopId', async (req, res) => {
                 res.render('userView', dataa);
                 return;
             }
-        } else {
+        }
+        if (comment) {
             await shopData.comment(userInfo, shopId, comment)
-            const allProduct = await productData.getAllProduct(shopId);
+            const getShopbyId = await productData.getAllProduct(shopId);
 
             const shopInfonew = await shopData.get(shopId);
             var shopComment = shopInfonew.comment;
+            var noRating;
+            var averageRating;
+            if (shopInfonew.overallRating != 0) {
+                averageRating = shopInfonew.overallRating
+            } else {
+                noRating = "No Review for this Shop"
+            }
             var commentss;
             var noComments;
-            if (allProduct.comment.length != 0) {
+            if (getShopbyId.comment.length != 0) {
                 commentss = shopComment
             }
-            if (allProduct.comment.length == 0) {
+            if (getShopbyId.comment.length == 0) {
                 noComments = "No Review for this Shop"
             }
 
             var shopName = shopInfo.name
             var shopIdd = shopInfo._id;
-            if (allProduct) {
+            if (getShopbyId) {
                 const dataa = {
+                    averageRating: averageRating,
+                    noRating: noRating,
                     commentForShop: commentss,
                     noComment: noComments,
-                    allItem: allProduct.item,
+                    allItem: getShopbyId.item,
                     shopName: shopName,
                     shopId: shopIdd,
                     userData: userInfo,
@@ -281,23 +367,25 @@ router.post('/:idUser/shop/:shopId', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
-    const userData = req.body;
-    const name = userData.name;
 
+
+router.delete('/:iduser/shop/:idshop/:messId', async (req, res) => {
+    //const idUsers = req.params.idUser;
+    const messageId = req.params.messId;
+    const iduser = req.params.iduser;
+    const idshop = req.params.idshop;
     try {
-        const userData = await user.create(name);
-        const data = {
-            title: "All user",
-            alluser: userData,
-        };
-        response.render('alluser', data);
+
+        const shopDetailId = await user.removeMessage(messageId);
+        res.redirect(`/user/${iduser}/shop/${idshop}`)
+
     } catch (e) {
         res.status(500).json({
-            error: e
+            error: e.message
         });
     }
-});
+
+})
 
 
 module.exports = router;
