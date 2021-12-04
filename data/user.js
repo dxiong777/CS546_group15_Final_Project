@@ -95,8 +95,7 @@ const exportedMethods = {
 
 
         var finalMessage;
-        sendMessage.forEach(x => {
-            console.log(x)
+        sendMessage.forEach(x => { 
             if (x.shopId == storeIdCon) {
                 finalMessage = x
             }
