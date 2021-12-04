@@ -7,19 +7,19 @@ async function main() {
   await db.dropDatabase();
 
   try {
-    const res1 = await restaurants.create("Hoboken rest");
+    const res1 = await restaurants.create("Hoboken rest", "9 leonard st", "07307");
     console.log(res1);
   } catch (e) {
     console.log(e);
   }
   try {
-    const res2 = await restaurants.create("om sai");
+    const res2 = await restaurants.create("om sai", "new York");
     console.log(res2);
   } catch (e) {
     console.log(e);
   }
   try {
-    const res3 = await restaurants.create("famous indian restautrant");
+    const res3 = await restaurants.create("famous indian restautrant", "33 bleeker St", "07307");
     console.log(res3);
   } catch (e) {
     console.log(e);

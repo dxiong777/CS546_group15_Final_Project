@@ -2,9 +2,12 @@ const mongoCollections = require('../config/mongoCollections');
 const shop = mongoCollections.shop;
 const messages = mongoCollections.message;
 const reviews = mongoCollections.reviews;
+const replayMessage = mongoCollections.replayMessages;
 var mongoose = require('mongoose');
 const user = require('./user')
 const comments = mongoCollections.comment;
+var userdata = mongoCollections.user;
+
 
 
 
@@ -46,7 +49,8 @@ const exportedMethods = {
         return shopData;
     },
 
-    async create(name, item) {
+    async create(name, address, pincode, item) {
+        intPin = parseInt(pincode)
         const resaurantCollection = await shop();
         const newShop = {
             name: name,
@@ -54,7 +58,9 @@ const exportedMethods = {
             item: [],
             message: [],
             comment: [],
-            rating: []
+            rating: [],
+            address: address,
+            pincode: intPin
         };
         const newInsertInformation = await resaurantCollection.insertOne(newShop);
         const newId = newInsertInformation.insertedId;
@@ -78,12 +84,16 @@ const exportedMethods = {
         const resaurantCollection = await shop();
         const messageCollection = await messages();
         const userInformation = await user.getUser(userInfo._id);
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+       
         var usermessage = {
             _id: id,
             idUser: userInformation._id,
             message: message,
             userName: userInformation.name,
-            shopId: shopId
+            shopId: shopId,
+            date: date
         }
         const newaddedItem = await messageCollection.insertOne(usermessage);
         const newInsertInformation = await resaurantCollection.updateOne({
@@ -95,7 +105,8 @@ const exportedMethods = {
         })
         return;
     },
-
+    ////////////////////////////////////////
+  
     async getAllComment(id) {
         var allComment;
         const allCommentsdata = await comments();
@@ -142,7 +153,7 @@ const exportedMethods = {
             _id: convertId
         })
         var rat = store.overallRating;
-        var xx; 
+        var xx;
         //console.log(typeof userInfo._id)
         store.rating.forEach(x => {
             var y = (x.idUser).toString()
@@ -150,10 +161,10 @@ const exportedMethods = {
                 xx = rat
                 return
             }
-           return //return x;
+            return //return x;
 
         })
-   
+
         return xx;
         // console.log("----")
         // console.log(findStore)

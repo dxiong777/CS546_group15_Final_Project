@@ -129,6 +129,38 @@ const exportedMethods = {
         eData = new Date(dateofexpiry);
         var qtyRem = parseInt(quantityremaining)
 
+        if (!productname) {
+            message = ('Please enter productname');
+            return message
+        }
+        if (!productdetails) {
+            message = ('Please enter productdetails');
+            return message
+        }
+        if (!producthighlights) {
+            message = ('Please enter producthighlights');
+            return message
+        }
+        if (!price) {
+            message = ('Please enter price');
+            return message
+        }
+        if (!quantityremaining) {
+            message = ('Please enter quantityremaining');
+            return message
+        }
+        if (!dateofmanufacture) {
+            message = ('Please enter dateofmanufacture');
+            return message
+        }
+        if (!dateofexpiry) {
+            message = ('Please enter dateofexpiry');
+            return message
+        }
+
+
+
+
         if (dateofmanufacture > todayDate) {
             message = ('Date of Manufacture can\'t be future data');
             return message
@@ -213,6 +245,35 @@ const exportedMethods = {
         mDate = new Date(dateofmanufacture);
         eData = new Date(dateofexpiry);
         var qtyRem = parseInt(quantityremaining)
+
+        if (!productname) {
+            message = ('Please enter productname');
+            return message
+        }
+        if (!productdetails) {
+            message = ('Please enter productdetails');
+            return message
+        }
+        if (!producthighlights) {
+            message = ('Please enter producthighlights');
+            return message
+        }
+        if (!price) {
+            message = ('Please enter price');
+            return message
+        }
+        if (!quantityremaining) {
+            message = ('Please enter quantityremaining');
+            return message
+        }
+        if (!dateofmanufacture) {
+            message = ('Please enter dateofmanufacture');
+            return message
+        }
+        if (!dateofexpiry) {
+            message = ('Please enter dateofexpiry');
+            return message
+        }
 
         if (dateofmanufacture > todayDate) {
             message = ('Date of Manufacture can\'t be future data');
