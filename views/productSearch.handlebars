@@ -1,0 +1,26 @@
+<main>
+    <div class="search-card-center">
+        <h1>Welcome!</h1>
+        <p>Discover the best product.</p>
+        <label for="search-bar">
+            <form id="search-form" method="POST" action="/product/search">
+                <input id="search-bar" type="text" name="search" class = "searchFields" placeholder="Search for a product" />
+                <input type="submit" class = "btn" value="Search" />
+            </form>
+        </label>
+    </div>
+    <div class = "product_Collection"> <!-- Note: When changing this section be sure to modify sort.js as well --> 
+    {{#each products}}
+        <div class = "card" onclick="location.href='../productSearch/{{this._id}}';">
+            <h2><a href="/productSearch/{{this._id}}">{{this.productname}}</a></h2>
+            <p>{{this.productdetails}}</p>
+            <p>{{this.producthighlights}}</p>
+            <p>{{this.price}}</p>  
+            <p>{{this.quantityremaining}}</p>
+            <p>{{this.dateofmanufacture}}</p>
+            <p>{{this.dateofexpiry}}</p>
+            <br/>
+        </div>
+    {{/each}}
+    </div>
+</main>
