@@ -1,9 +1,94 @@
 body {
-    background-color: rgba(233, 166, 42, 0.534);
+    background-color: rgba(223, 206, 174, 0.534);
     font-family: "arial", "time new roman";
     margin: auto;
     width: 90%;
     padding: 30px 30px 30px 30px;
+}
+
+/* table#messages{
+    border: 1ch;
+    column-gap: 6ch;
+} */
+
+#map {
+    width: 500px;
+    height: 400px;
+    margin-top: 10px;
+}
+
+#calculate-route {
+    display: none;
+}
+
+.verify-location>a {
+    cursor: pointer;
+    color: #FCA2A2;
+}
+
+.dropbtn {
+    background-color: #04AA6D;
+    color: white;
+    font-size: 16px;
+    border: none;
+}
+
+.rating {
+    width: 180px;
+}
+
+.rating__star {
+    cursor: pointer;
+    color: #dabd18b2;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.checked {
+    color: orange;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+label {
+    display: block;
+    width: 130px;
+    font-weight: bold;
+    text-align: center;
+}
+
+table {
+    background-origin: padding-box;
+    color: rgb(31, 30, 19);
 }
 
 #b1,
@@ -15,7 +100,9 @@ body {
 /* .control-label .text-info {
     display: inline-block;
 } */
-input, td, th{
+input,
+td,
+th {
     align-items: center;
     text-align: center;
 }
@@ -35,12 +122,14 @@ p#message {
 }
 
 main#ab {
-    background-color: rgba(233, 166, 42, 0.534);
+    background-color: rgba(188, 216, 137, 0.534);
     font-family: "arial", "time new roman";
     margin: auto;
     border: 3px solid green;
     padding: 1%;
 }
+
+
 
 button:hover {
     background: #da0b0b;
@@ -53,7 +142,7 @@ button {
 }
 
 p {
-    color: black;
+    color: rgb(255, 0, 0);
 }
 
 p#bold {
@@ -61,10 +150,6 @@ p#bold {
     color: rgb(0, 38, 255);
 }
 
-label {
-    font-weight: bold;
-    text-align: center;
-}
 
 a:hover {
     color: rgba(7, 7, 7, 0.521);
@@ -112,7 +197,7 @@ p#error {
 }
 
 .ab {
-    background-color: rgba(233, 166, 42, 0.534);
+    background-color: rgba(106, 199, 206, 0.534);
     font-family: "arial", "time new roman";
     margin: auto;
     border: 3px solid green;
@@ -127,6 +212,13 @@ h4 {
     color: #da0b0b;
 }
 
+button#addNew {
+    border-block-end-color: #da0b0b;
+}
+
+div#addNeww {
+    background-color: blue;
+}
 
 .people {
     color: darkslategrey;
