@@ -1,4 +1,4 @@
-const dbConnection = require('./mongoConnection');
+ const dbConnection = require('./mongoConnection');
 
 /* This will allow you to have one reference to each collection per app */
 /* Feel free to copy and paste this this */
@@ -23,5 +23,7 @@ module.exports = {
   message: getCollectionFn('message'),
   comment: getCollectionFn('comment'),
   reviews: getCollectionFn('reviews'),
-  replayMessages: getCollectionFn('replayMessages')
+  replayMessages: getCollectionFn('replayMessages'),
+  shopkeeper: getCollectionFn('shopkeeper'),
+  user: getCollectionFn("user"),
 };

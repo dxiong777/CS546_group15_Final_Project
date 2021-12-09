@@ -1,29 +1,23 @@
+
+<section>
+    <a href="/user/profiledetail">User Profile</a>
+</section>
+
 <a class="get-home" href="/user">To Home Page</a>
+
 
 <main id="ab">
     {{#if noData}}
     <label for="overAllRating">{{noData}}</label>
     {{/if}}
     {{#if allItem}}
-    <p>Welcome {{userData.name}} in {{shopName}}</p>
 
+    <p>Welcome {{userData.firstname}} in {{shopName}}</p>
 
+    <a style="font-weight: 900; background-color: yellow;"
+        href="https://www.google.com/maps/place/{{shopAddress}} {{pincode}}" target="_blank">Click to get Location of
+        Restaurant </a>
 
-
-    {{!-- <div class="verify-location">Is the your location incorrect? <a>Click here to enter your location manually</a></div>
-    <form id="calculate-route" name="calculate-route" action="#" method="get">
-        <label for="from">From:</label>
-        <input type="text" id="from" name="from" placeholder="An address" size="30" />
-        <button type="submit">Submit</button>
-    </form>
-    <div id="map"></div>
-    <p id="error"></p>
-    <p class="distance-in-km"></p> --}}
-
-    {{!-- <iframe src=”https://www.google.com/maps/embed?pb=!…” width=”600″ height=”450″ frameborder=”0″
-        style=”border:0″ allowfullscreen></iframe> --}}
-
-    <a style="font-weight: 900; background-color: yellow;" href="https://www.google.com/maps/place/{{shopAddress}} {{pincode}}" target="_blank">Click to get Location of Restaurant </a>
 
 
     <h3>shopId: {{shopId}}</h3>
@@ -77,7 +71,9 @@
 <h3 style="background-color:rgb(206, 101, 106);" for="noRating">{{noSecond}}
 </h3>
 {{/if}}
-<form method="post" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
+
+<form method="post" id="rating" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
+
     <label for="cars">Rate for Shop</label>
 
     <select style="width: 10%; background-color:rgb(108, 194, 161)" name="review" id="cars">
@@ -128,12 +124,20 @@
     {{/if}}
 
     <br>
-    <form method="post" id="addItem-form" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
+
+    <form method="post" id="userToShopMessaage" action="/user/{{userData._id}}/shop/{{shopDetail._id}}">
+
         <label for="">Message</label>
         <input required oninvalid="this.setCustomValidity('Please Enter Message for ShopKeeper.')"
             oninput="this.setCustomValidity('')" type="message" name="message" />
         <button type="submit" id="submit addNew" class="btn btn-default">Send</button>
     </form>
+
+   {{#if messageError}}
+    <p id="message">{{messageError}}</p>
+    {{/if}}
+    
+
 
     {{#if mess}}
     <p>{{mess}}</p>
@@ -166,6 +170,9 @@
     {{#each commentForShop}}
     <tr>
         <td>{{this.userName}}</td>
+
+        {{!-- <td>{{this.firstname}}</td> --}}
+
         <td>{{this.comment}}</td>
         <td>
             {{this.date}}

@@ -1,3 +1,111 @@
+
+var readonly = true;
+let profilebtn = document.getElementById('profilebtn');
+let userfirstname = document.getElementById('userfirstname');
+
+
+$(profilebtn).on('click', function() {
+    $(userfirstname).attr('readonly', !readonly);
+    readonly = !readonly;
+    $(profilebtn).val( readonly ? 'Edit' : 'Save' );
+    return false;
+})
+
+// const ratingStars = [...document.getElementsByClassName("rating__star")];
+
+// function executeRating(stars) {
+//   const starClassActive = "rating__star fas fa-star";
+//   const starClassInactive = "rating__star far fa-star";
+//   const starsLength = stars.length;
+//   let i;
+//   stars.map((star) => {
+//     star.onclick = () => {
+//       i = stars.indexOf(star);
+
+//       if (star.className===starClassInactive) {
+//         for (i; i >= 0; --i) stars[i].className = starClassActive;
+//       } else {
+//         for (i; i < starsLength; ++i) stars[i].className = starClassInactive;
+//       }
+//     };
+//   });
+// }
+// executeRating(ratingStars);
+
+// $(document).ready(function () {
+//   // Set form variable
+//   var form = $('#addItem-formm');
+
+//   form.submit(function (event) {
+//     var productname = $('#productname').val();
+//     var productdetails = $('#productdetails').val();
+//     var producthighlights = $('#producthighlights').val();
+//     var price = $('#price').val();
+//     var quantityremaining = $('#quantityremaining').val();
+//     var dateofmanufacture = $('#dateofmanufacture').val();
+//     var dateofexpiry = $('#dateofexpiry').val();
+//     var shopId = $('shopId').innerHTML;
+//     if ($.trim(productname) != '' && $.trim(productdetails) != '' &&
+//       $.trim(producthighlights) != '' && $.trim(price) != '' &&
+//       $.trim(quantityremaining) != '' && $.trim(dateofmanufacture) != '' &&
+//       $.trim(dateofexpiry) != '') {
+//       // Process AJAX request
+//       $.post('http://localhost:3001/shopId/'+shopId, {
+//         productname: productname,
+//         productdetails: productdetails,
+//         producthighlights: producthighlights,
+//         price: price,
+//         quantityremaining: quantityremaining,
+//         dateofmanufacture: dateofmanufacture,
+//         dateofexpiry: dateofexpiry
+//       }, function (data) {
+//         console.log(data);
+//       });
+//     }
+//     // Prevent default form action
+//     event.preventDefault();
+//   });
+// });
+
+
+// $('#edit').click(function (event) {
+//   // event.preventDefault();
+//   var text = $('.text-info').text();
+//   var input = $('<input id="attribute" type="text" value="' + text + '" />')
+//   $('.text-info').text('').append(input);
+//   input.select();
+
+//   input.blur(function () {
+//     var text = $('#attribute').val();
+//     $('#attribute').parent().text(text);
+//     $('#attribute').remove();
+//   });
+// });
+
+// $('#edit2').click(function (event) {
+//   // event.preventDefault();
+//   var text2 = $('.text-info2').text();
+//   var input2 = $('<input id="attribute2" type="text" value="' + text2 + '" />')
+//   $('.text-info2').text('').append(input2);
+//   input2.select();
+
+//   input2.blur(function () {
+//     var text2 = $('#attribute2').val();
+//     $('#attribute2').parent().text(text2);
+//     $('#attribute2').remove();
+//   });
+// });
+
+
+// function increment() {
+//   // event.preventDefault();
+//   document.getElementById('demoInput').stepUp();
+// }
+
+// function decrement() {
+//   document.getElementById('demoInput').stepDown();
+// }
+
 const ratingStars = [...document.getElementsByClassName("rating__star")];
 
 function executeRating(stars) {
@@ -92,6 +200,7 @@ function increment() {
 function decrement() {
   document.getElementById('demoInput').stepDown();
 }
+
 // $scope.checkErr = function(startDate,endDate) {
 //   $scope.errMessage = '';
 //   var curDate = new Date();
