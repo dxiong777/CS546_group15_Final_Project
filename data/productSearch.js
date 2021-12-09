@@ -1,10 +1,9 @@
 const { ObjectId } = require('mongodb');
-
+var mongoose = require('mongoose');
 const mongoCollections = require("../config/mongoCollections");
 const productsForSearch = mongoCollections.productsForSearch;
-const commentForProduct = mongoCollections.commentForProduct;
 
-module.exports = {
+const exportedMethods = {
     async addProductForSearch(productname, productdetails, producthighlights, price, quantityremaining, dateofmanufacture, dateofexpiry) {
         const productCollection = await productsForSearch();
 
@@ -73,25 +72,31 @@ module.exports = {
             return message
         }
 
-        if ((!quantityremaining) || typeof qtyRem != 'number' || (!quantityremaining.match(/^[0-5]{1}$/))) {
-            message = `quantityremaining is in 0 to 5 no "${quantityremaining}".`
-            return message
-        }
+        // if ((!quantityremaining) || typeof qtyRem != 'number' || !(String(quantityremaining).match(/^[0-5]{1}$/))) {
+        //     message = `quantityremaining is in 0 to 5 no "${quantityremaining}".`
+        //     return message
+        // }
 
         const newItem = {
             _id: id,
-            shopId: shopId,
             productname: productname,
             productdetails: productdetails,
             producthighlights: producthighlights,
             price: price,
             quantityremaining: quantityremaining,
             dateofmanufacture: dateofmanufacture,
-            dateofexpiry: dateofexpiry
+            dateofexpiry: dateofexpiry,
+            rating: 0,
+            reviews: [],
         };
+        console.log(newItem);
 
-        const newaddedItem = await productCollection.insertOne(newItem);
-        return newaddedItem;
+        const insertInfo = await productCollection.insertOne(newItem);
+        if (insertInfo.insertedCount === 0) throw "could not add product";
+        const newId = insertInfo.insertedId;
+        const newIDString = String(newId);
+        const product = await this.getProductForSearch(newIDString);
+        return product;
     },
     async updateProductForSearch(id, productname, productdetails, producthighlights, price, quantityremaining, dateofmanufacture, dateofexpiry) {
         const productCollection = await productsForSearch();
@@ -206,3 +211,5 @@ module.exports = {
         return productList;
     }
 }
+
+module.exports = exportedMethods;

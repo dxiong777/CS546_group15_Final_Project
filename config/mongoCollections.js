@@ -25,5 +25,5 @@ module.exports = {
   reviews: getCollectionFn('reviews'),
   replayMessages: getCollectionFn('replayMessages'),
   productsForSearch: getCollectionFn('productForSearch'),
-  commentForProduct: getCollectionFn('commentForProduct')
+  reviewForProduct: getCollectionFn('reviewForProduct')
 };

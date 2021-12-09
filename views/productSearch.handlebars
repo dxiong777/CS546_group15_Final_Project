@@ -3,7 +3,7 @@
         <h1>Welcome!</h1>
         <p>Discover the best product.</p>
         <label for="search-bar">
-            <form id="search-form" method="POST" action="/product/search">
+            <form id="search-form" method="POST" action="/productSearch/search">
                 <input id="search-bar" type="text" name="search" class = "searchFields" placeholder="Search for a product" />
                 <input type="submit" class = "btn" value="Search" />
             </form>
@@ -19,6 +19,11 @@
             <p>{{this.quantityremaining}}</p>
             <p>{{this.dateofmanufacture}}</p>
             <p>{{this.dateofexpiry}}</p>
+            {{#if this.rated}}  
+            <p class="avg">{{this.rating}}/5</p>
+            {{else}}
+            <p class="avg">No Reviews</p>
+            {{/if}}
             <br/>
         </div>
     {{/each}}

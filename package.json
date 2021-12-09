@@ -1,13 +1,13 @@
 {
-  "name": "group 15 search",
+  "name": "search page",
   "version": "1.0.0",
-  "description": "update from branch partUpdate for search 80%",
+  "description": "group 15",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
-  "author": "deng",
+  "author": "deng, parth",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0",
