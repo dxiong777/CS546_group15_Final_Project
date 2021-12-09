@@ -12,7 +12,7 @@ const bcrypt = require('bcrypt');
 const ObjectId = require('mongodb').ObjectId
 const saltRounds = 10;
 
-const exportedMethods = {
+
 
 
     // //kk
@@ -22,11 +22,16 @@ const exportedMethods = {
     //     return insertInfo;
     // },
     // //kk
+
+
+const exportedMethods = {
+
     async getAll() {
         const movieCollection = await user();
         const movieList = await movieCollection.find({}).toArray();
         return movieList;
     },
+
 
     //kk
     // async getById(id){
@@ -41,6 +46,7 @@ const exportedMethods = {
     //     return insertInfo;
     // },
     //kk
+
     async getUser(id) {
         var x = id.toString()
         var convertId = mongoose.Types.ObjectId(id);
@@ -59,6 +65,7 @@ const exportedMethods = {
         });
         return shopData;
     },
+
     //lkkk
     async create(firstname, lastname, email, address, city, zipcode, password) {
      
@@ -253,6 +260,20 @@ const exportedMethods = {
     //     return await this.get(newInsertInformation.insertedId);
     // },
 
+
+//     async create(name, item) {
+//         const resaurantCollection = await user();
+//         const newShop = {
+//             name: name,
+//             item: [],
+//             replayMessages: []
+//         };
+//         const newInsertInformation = await resaurantCollection.insertOne(newShop);
+//         const newId = newInsertInformation.insertedId;
+//         return await this.get(newInsertInformation.insertedId);
+//     },
+
+
     async removeMessage(messageId) {
         var iddItem = mongoose.Types.ObjectId(messageId);
         const messageCollection = await replayMessages();
@@ -303,7 +324,9 @@ const exportedMethods = {
 
 
         var finalMessage;
+
         sendMessage.forEach(x => {
+
             if (x.shopId == storeIdCon) {
                 finalMessage = x
             }
@@ -312,13 +335,17 @@ const exportedMethods = {
 
         var today = new Date();
         var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    
+
 
         var userReplaymessage = {
             _id: id,
             idUser: iduserCon,
             message: replayMessages,
+
             userName: userInfo.firstname, //kk
+
+         //   userName: userInfo.name,
+
             shopNmae: shopDetail.name,
             isShop: storeIdCon,
             date: date

@@ -91,7 +91,11 @@ const exportedMethods = {
             _id: id,
             idUser: userInformation._id,
             message: message,
+
             userName: userInformation.firstname,
+
+           // userName: userInformation.name,
+
             shopId: shopId,
             date: date
         }
@@ -129,7 +133,11 @@ const exportedMethods = {
         var userComment = {
             _id: id,
             idUser: userInformation._id,
+
             userName: userInformation.firstname,
+
+           // userName: userInformation.name,
+
             comment: comment,
             shopId: shopId,
             date: date
@@ -153,16 +161,20 @@ const exportedMethods = {
             _id: convertId
         })
         var rat = store.overallRating;
+
         var xx;
+
         store.rating.forEach(x => {
             var y = (x.idUser).toString()
             if (y == userId) {
                 xx = rat
                 return
             }
+
             return
         })
         return xx;
+
     },
     async review(userInfo, shopId, reviewss) {
         var id = mongoose.Types.ObjectId();
@@ -174,7 +186,11 @@ const exportedMethods = {
         var userReview = {
             _id: id,
             idUser: userInformation._id,
+
             userName: userInformation.firstname,
+
+            //userName: userInformation.name,
+
             review: review,
             shopId: shopId,
         }
@@ -206,7 +222,9 @@ const exportedMethods = {
         }
         var numsCount = allReview.length;
         var average = totalSum / numsCount;
+
         var averages = (Number(average).toFixed(2));
+
         const updateFinal = await resaurantCollection.updateOne({
             _id: convertId
         }, {

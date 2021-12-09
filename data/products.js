@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var shop = require("./shop");
 
 
+
 function checkValidations(productname, productdetails, producthighlights, price, quantityremaining, dateofmanufacture, dateofexpiry) {
     var message;
 
@@ -201,73 +202,16 @@ const exportedMethods = {
         }
         var message;
 
-        // var todayDate = new Date().toISOString().slice(0, 10);
+  
+        var todayDate = new Date().toISOString().slice(0, 10);
 
-        // mDate = new Date(dateofmanufacture);
-        // eData = new Date(dateofexpiry);
-        // var qtyRem = parseInt(quantityremaining)
 
-        // //else if (/^\s+$/.test(keyword))
-        // if (!productname || (/^\s+$/.test(productname))) {
-        //     message = ('Please enter productname');
-        //     return message
-        // }
-        // if (!productdetails || (/^\s+$/.test(productdetails))) {
-        //     message = ('Please enter productdetails');
-        //     return message
-        // }
-        // if (!producthighlights || (/^\s+$/.test(producthighlights))) {
-        //     message = ('Please enter producthighlights');
-        //     return message
-        // }
-        // if (!price || (/^\s+$/.test(price))) {
-        //     message = ('Please enter price');
-        //     return message
-        // }
-        // if (!quantityremaining || (/^\s+$/.test(quantityremaining))) {
-        //     message = ('Please enter quantityremaining');
-        //     return message
-        // }
-        // if (!dateofmanufacture || (/^\s+$/.test(dateofmanufacture))) {
-        //     message = ('Please enter dateofmanufacture');
-        //     return message
-        // }
-        // if (!dateofexpiry || (/^\s+$/.test(dateofexpiry))) {
-        //     message = ('Please enter dateofexpiry');
-        //     return message
-        // }
+        mDate = new Date(dateofmanufacture);
+        eData = new Date(dateofexpiry);
+        var qtyRem = parseInt(quantityremaining)
 
-        // if (dateofmanufacture > todayDate) {
-        //     message = ('Date of Manufacture can\'t be future data');
-        //     return message
-        // }
-        // if (dateofexpiry < todayDate) {
-        //     message = ('Date of Expire can\'t be past date');
-        //     return message
-        // }
+ 
 
-        // if ((!productname) || typeof productname != 'string') {
-        //     message = `productname "${productname}" is not valid.`
-        //     return message
-        // }
-        // if ((!productdetails) || typeof productdetails != 'string' || (!productdetails.match(/^[0-9A-z ]{5,}$/))) {
-        //     message = `productdetails "${productdetails}" is not valid.`
-        //     return message
-        // }
-        // if ((!producthighlights) || typeof producthighlights != 'string') {
-        //     message = `producthighlights "${producthighlights}" is not valid.`
-        //     return message
-        // }
-
-        // if ((!price) || (!price.match(/^(?!0\d)\d*(\.\d+)?$/))) {
-        //     message = `Price "${price}" is not valid`
-        //     return message
-        // }
-
-        // if ((!quantityremaining) || typeof qtyRem != 'number' ) {
-        //     message = 'Enter valid number of Qty. is remine'
-        //     return message
-        // }
 
         const shopCollection = await shops();
         const newItem = {
@@ -316,47 +260,14 @@ const exportedMethods = {
         var message;
         // var todayDate = new Date().toISOString().slice(0, 10);
 
-        // mDate = new Date(dateofmanufacture);
-        // eData = new Date(dateofexpiry);
-        // var qtyRem = parseInt(quantityremaining);
 
-        // if (!productname || (/^\s+$/.test(productname))) {
-        //     message = ('Please enter productname');
-        //     return message
-        // }
-        // if (!productdetails || (/^\s+$/.test(productdetails))) {
-        //     message = ('Please enter productdetails');
-        //     return message
-        // }
-        // if (!producthighlights || (/^\s+$/.test(producthighlights))) {
-        //     message = ('Please enter producthighlights');
-        //     return message
-        // }
-        // if (!price || (/^\s+$/.test(price))) {
-        //     message = ('Please enter price');
-        //     return message;
-        // }
-        // if (!quantityremaining || (/^\s+$/.test(quantityremaining))) {
-        //     message = ('Enter valid number of Qty. is remine');
-        //     return message
-        // }
-        // if (!dateofmanufacture || (/^\s+$/.test(dateofmanufacture))) {
-        //     message = ('Please enter dateofmanufacture');
-        //     return message
-        // }
-        // if (!dateofexpiry || (/^\s+$/.test(dateofexpiry))) {
-        //     message = ('Please enter dateofexpiry');
-        //     return message
-        // }
+        var todayDate = new Date().toISOString().slice(0, 10);
 
-        // if (dateofmanufacture > todayDate) {
-        //     message = ('Date of Manufacture can\'t be future data');
-        //     return message
-        // }
-        // if (dateofexpiry < todayDate) {
-        //     message = ('Date of Expire can\'t be past date');
-        //     return message
-        // }
+
+        mDate = new Date(dateofmanufacture);
+        eData = new Date(dateofexpiry);
+        var qtyRem = parseInt(quantityremaining)
+
 
         const shopCollection = await shops();
         const productCollection = await products();
