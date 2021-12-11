@@ -83,6 +83,11 @@ function checkValidations(productname, productdetails, producthighlights, price,
 
 const exportedMethods = {
 
+    async getAll() {
+        const allProduct = await products();
+        var allproduct = await allProduct.find({}).toArray();
+        return allproduct;
+    },
     async getAllProduct(id) {
         var allProducts;
         const allProduct = await shops();
@@ -195,7 +200,7 @@ const exportedMethods = {
 
         var id = mongoose.Types.ObjectId();
         var convertId = mongoose.Types.ObjectId(shopId);
-
+        var shopDetails = await shop.get(shopId);
         var y = checkValidations(productname, productdetails, producthighlights, price, quantityremaining, dateofmanufacture, dateofexpiry)
         if (y) {
             return y;
@@ -205,6 +210,9 @@ const exportedMethods = {
         const newItem = {
             _id: id,
             shopId: shopId,
+            shopName: shopDetails.ShopName,
+            address: shopDetails.Address,
+            pincode: shopDetails.pincode,
             productname: productname,
             productdetails: productdetails,
             producthighlights: producthighlights,

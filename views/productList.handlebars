@@ -1,0 +1,45 @@
+<menu>
+  <ul id="nav">
+    <li id="nav-home"><a href="/" class="current">Home</a></li>
+    <li id="nav-shopkeeper"><a href="/shop/login">Shopkeeper</a></li>
+    <li id="nav-customer"><a href="/users/login">Customer</a></li>
+    <li id="nav-product"><a href="/shop/allProduct">Product</a></li>
+  </ul>
+</menu>
+
+{{!-- <ul>
+        {{#each allProducts}}
+        <li>
+            <h1><a class="all-item" href="#">{{this.productname}} </a></h1>
+        </li>
+        <br>
+        {{/each}}
+    </ul> --}}
+<div id="search_button_container">
+  <a id="search_button" href="/productSearch">Search Product</a>
+</div>
+<div class="product_Collection">
+  <!-- Note: When changing this section be sure to modify sort.js as well -->
+  {{#each allProducts}}
+
+    <div class="cards">
+      <article class="card">
+        <header>
+          <h2>ShopName: {{this.shopName}}</h2>
+        </header>
+
+        <div class="content">
+          <p>Productname: {{this.productname}}</p>
+          <p>price {{this.price}}</p>
+          <p>quantityremaining {{this.quantityremaining}}</p>
+          <p>dateofmanufacture {{this.dateofmanufacture}}</p>
+          <p>dateofexpiry {{this.dateofexpiry}}</p>
+          <p>{{this.address}} {{this.pincode}}</p>
+        </div>
+
+      </article>
+
+    </div>
+    
+  {{/each}}
+</div>

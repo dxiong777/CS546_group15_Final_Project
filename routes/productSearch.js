@@ -18,7 +18,7 @@ router.get('/', async function (request, response) {
       response.render('productSearch', datta);
     } catch (e) {
       console.log(e);
-      res.status(500).send();
+      response.status(500).send();
     }
 })
 

@@ -6,10 +6,21 @@ const {
 } = require('bson');
 const data = require('../data');
 var shop = data.shop
+var product = data.products
 
 router.get("/", async(req,res)=>{
+    
     res.render("pages/home");
 });
+
+router.get("/allProduct", async(req, res) => {
+    var allProduct = await product.getAll();
+    
+  var data = {
+       allProducts:  allProduct
+    }
+    res.render("productList", data);
+})
 
 router.get("/login", async (req, res) => {
     // console.log(req.session.user.authenticatedUser._id)

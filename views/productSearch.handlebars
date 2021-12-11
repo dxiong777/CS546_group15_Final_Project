@@ -1,3 +1,11 @@
+<menu>
+  <ul id="nav">
+    <li id="nav-home"><a href="/" class="current">Home</a></li>
+    <li id="nav-shopkeeper"><a href="/shop/login">Shopkeeper</a></li>
+    <li id="nav-customer"><a href="/users/login">Customer</a></li>
+    <li id="nav-product"><a href="/shop/allProduct">Product</a></li>
+  </ul>
+</menu>
 <main>
     <div class="search-card-center">
         <h1>Welcome!</h1>
@@ -13,6 +21,7 @@
     {{#each products}}
         <div class = "card" onclick="location.href='../productSearch/{{this._id}}';">
             <h2><a href="/productSearch/{{this._id}}">{{this.productname}}</a></h2>
+            <h3><a href="/shopId/{{this.shopId}}">{{this.shopId}}</a></p>
             <p>{{this.productdetails}}</p>
             <p>{{this.producthighlights}}</p>
             <p>{{this.price}}</p>  

@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
-  "author": "kaushal solanki",
+  "author": "Group 15",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0",

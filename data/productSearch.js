@@ -207,7 +207,7 @@ const exportedMethods = {
     async getAllProducts() {
         const productCollection = await productsForSearch();
         const productList = await productCollection.find({}).toArray();
-        if (productList.length === 0) throw "no restaurants in the collection";
+        if (productList.length === 0) throw "no products in the collection";
         return productList;
     }
 }

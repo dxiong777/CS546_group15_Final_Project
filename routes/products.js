@@ -313,7 +313,7 @@ router.post('/:id', async function (req, res) {
 
                 const data = {
                     allItem: allProducts.item,
-                    title: shopName,
+                    ShopName: shopName,
                     shopId: shopId,
                     msgForShop: messages,
                     commentForShop: comments,
