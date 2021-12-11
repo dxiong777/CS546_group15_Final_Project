@@ -1,3 +1,4 @@
+
 const mongoCollections = require('../config/mongoCollections');
 const shop = mongoCollections.shopkeeper;
 const messages = mongoCollections.message;
@@ -237,6 +238,16 @@ const exportedMethods = {
 // module.exports = {
  async createShopkeeper(ShopName, username, ownerFirstname, ownerLastname, Address, email, pincode, phoneNumber, password){
     const shopkeeperCollections = await shopkeeper();
+=======
+const {ObjectId} = require('bson');
+const mongoCollections = require("../config/mongoCollections");
+const bcrypt = require('bcrypt');
+const saltRounds = 16;
+const shopkeeper = mongoCollections.shopkeeper;
+module.exports = {
+ async createShopkeeper(ShopName, username, ownerFirstname, ownerLastname, Address, email, pincode, phoneNumber, password){
+        const shopkeeperCollections = await shopkeeper();
+
         const hashed_pass = await bcrypt.hash(password, saltRounds);
         let lower = username.toLowerCase();
         let newShopkeeper = {
@@ -249,6 +260,7 @@ const exportedMethods = {
             pincode : pincode,
             phoneNumber : phoneNumber,
             password : hashed_pass,
+
             overallRating: 0,
             item: [],
             message: [],
@@ -256,6 +268,7 @@ const exportedMethods = {
             rating: []
          //      name: name,
 //             address: address,
+
 
         }
         const duplicateUser = await shopkeeperCollections.findOne({username : username});
@@ -271,17 +284,27 @@ const exportedMethods = {
 
     },
     async checkShopkeeper(username, password){
+
        // console.log("aaaasaas")
         const shopkeeperCollections = await shopkeeper();
         const findShopKeeper = await shopkeeperCollections.findOne({username : username});
         //console.log(findShopKeeper);
+
+        const shopkeeperCollections = await shopkeeper();
+        const findShopKeeper = await shopkeeperCollections.findOne({username : username});
+        console.log(findShopKeeper);
+
         if(findShopKeeper === null){
             throw 'Either the username or password is incorrect';
         }
         let comparedPass = false;
         try{
             comparedPass = await bcrypt.compare(password, findShopKeeper.password);
+
            // console.log(comparedPass);
+
+            console.log(comparedPass);
+
             if(comparedPass === true){
                 let authentication = {authenticated : true, authenticatedUser : findShopKeeper };
                 return authentication;
@@ -320,7 +343,11 @@ const exportedMethods = {
         return {deleted : true};
     },
 
+
     async updateShopkeeper(id, ShopName, username, ownerFirstname, ownerLastname, Address, email, pincode, phoneNumber){
+
+    async updateShopkeeper(id, ShopName, username, ownerFirstname, ownerLastname, email, phoneNumber, password){
+
         const UpdateInfo = await this.get(id);
         let updatedLower = username.toLowerCase();
         let shopkeeper_update = {
@@ -328,10 +355,15 @@ const exportedMethods = {
             username : updatedLower,
             ownerFirstname : ownerFirstname,
             ownerLastname : ownerLastname,
+
             Address : Address,
             email : email,
             pincode : pincode,
             phoneNumber : phoneNumber,
+
+            email : email,
+            phoneNumber : phoneNumber
+
         }
         const shopkeeperCollections = await shopkeeper();
         const UpdatedInfo = await shopkeeperCollections.updateOne( 
@@ -344,4 +376,6 @@ const exportedMethods = {
     }
 }
 
+
 module.exports = exportedMethods;
+

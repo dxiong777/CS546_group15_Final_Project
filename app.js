@@ -1,6 +1,8 @@
 const session = require('express-session')
 const express = require("express");
+
 const methodOverride = require('method-override');
+
 const app = express();
 const routes = require("./routes");
 const exphbs = require('express-handlebars');
@@ -23,16 +25,18 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
-//   // app.use(async(req,res,next)=>{
-//   //   user_status= "(Non-Authenticated User)"
+
+  app.use(async(req,res,next)=>{
+    user_status= "(Non-Authenticated User)"
   
-//   //   if(req.session.user){
-//   //     user_status="(Authenticated User)"
-//   //   }
+    if(req.session.user){
+      user_status="(Authenticated User)"
+    }
     
-//   //   console.log(`[${new Date().toUTCString()}] : ${req.method} ${req.originalUrl} ${user_status}`);
-//   //   next()
-//   // })
+    console.log(`[${new Date().toUTCString()}] : ${req.method} ${req.originalUrl} ${user_status}`);
+    next()
+  })
+
   app.get('/users/login', (req, res, next) => {
  
     if (req.session.user) {
@@ -125,6 +129,7 @@ app.use('/edit', (req,res,next)=>{
     
 })
 
+
 app.use((req,res,next)=>{
     if(req.body._mehtod === "DELETE"){
         req.method = "delete"
@@ -132,15 +137,16 @@ app.use((req,res,next)=>{
     next();
 })
 
-// app.use((req,res,next)=>{
-//     let str = "";
-//     if(req.session.username)
-//         str = "User is authenticated";
-//     else
-//         str = "User is not authenticated";
-//     console.log(new Date().toUTCString(), req.method, req.originalUrl, str);
-//     next();
-// })
+
+app.use((req,res,next)=>{
+    let str = "";
+    if(req.session.username)
+        str = "User is authenticated";
+    else
+        str = "User is not authenticated";
+    console.log(new Date().toUTCString(), req.method, req.originalUrl, str);
+    next();
+})
 
 routes(app);
 

@@ -3,6 +3,7 @@ div {
     margin-top: 10px;
 }
 
+
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -44,6 +45,8 @@ a:link {
   color: red;
 }
 
+
+=======
 
 input[type="text"] {
     font-size: 14px;
@@ -179,7 +182,11 @@ body {
   menu a:link, a:visited {
     display: block;
     font-weight: bold;
+
     color: #ff0000;
+=======
+    color: #ffffff;
+
     background-color: #98bf21;
     width: 120px;
     text-align: center;
@@ -215,6 +222,7 @@ body {
   .home-section #introduction {
     height: 100px;
     line-height: 100px;
+
   }
 
   .avg{
@@ -423,3 +431,6 @@ body {
   border-radius: 5px;
 }
   
+
+  }
+

@@ -1,5 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 
+
 const user = mongoCollections.user;
 var mongoose = require('mongoose');
 const {
@@ -9,10 +10,12 @@ const shop = mongoCollections.shopkeeper;
 const messages = mongoCollections.message;
 const replayMessage = mongoCollections.replayMessages;
 
+
 var validator = require("email-validator");
 const bcrypt = require('bcrypt');
 const ObjectId = require('mongodb').ObjectId
 const saltRounds = 10;
+
 
 
 const exportedMethods = {
@@ -142,6 +145,10 @@ const exportedMethods = {
 // const saltRounds = 10;
 // const user= mongoCollections.user;
 // module.exports={
+=======
+const user= mongoCollections.user;
+module.exports={
+
 //user database
     async create(firstname, lastname,email,address,city, zipcode,password){
 
@@ -200,10 +207,15 @@ const exportedMethods = {
             city:city,
             zipcode:zipcode,
             password:hashpassword,
+
 //             rating:{},
 //             comment:{},
                     item: [],
             replayMessages: []
+
+            rating:{},
+            comment:{}
+
         }
         const insertInfo = await mongoColl.insertOne(newres)
         if(insertInfo.length=0){
@@ -402,4 +414,6 @@ const exportedMethods = {
 }
 
 
+
 module.exports = exportedMethods;
+
