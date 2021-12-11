@@ -1,11 +1,11 @@
-<a class="get-home" href="/user">To Home Page</a>
+<a class="get-home" href="/users">To Home Page</a>
 <main id="ab">
     <h1>{{title}} </h1>
 
     <ul>
         {{#each alluser}}
         <li>
-            <a class="person-item" href="/user/{{this._id}}/allshop">{{this.name}} </a>
+            <a class="person-item" href="/users/{{this._id}}/allshop">{{this.firstname}} </a>
         </li>
         <br>
         {{/each}}

@@ -11,11 +11,15 @@ const productsForSearchCo = mongoCollections.productsForSearch;
 var mongoose = require('mongoose');
 const { ObjectId } = require('mongodb');
 
-router.get('/', function (request, response) {
-    const datta = {
-        title: "Product Search"
+router.get('/', async function (request, response) {
+    try {
+      let productList = await productForSearch.getAllProducts();
+      const datta = { products: productList};
+      response.render('productSearch', datta);
+    } catch (e) {
+      console.log(e);
+      res.status(500).send();
     }
-    response.render('productSearch', datta);
 })
 
 router.post("/search", async (req, res) => {

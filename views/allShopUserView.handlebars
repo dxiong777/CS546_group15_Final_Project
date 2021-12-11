@@ -1,4 +1,8 @@
-<a class="get-home" href="/user">To Home Page</a>
+<section>
+<a href="/users/profiledetail">User Profile</a>
+
+<a href="/users/logout">logout</a>
+</section>
 <main id="ab">
     <h3>{{title}}</h3>
     <h1>{{userdata.name}} </h1>
@@ -8,7 +12,7 @@
     <ul>
         {{#each allShop}}
         <li>
-            <a class="person-item" href="/user/{{../userId}}/shop/{{this._id}}">{{this.name}} </a>
+            <a class="person-item" href="/users/{{../userId}}/shop/{{this._id}}">{{this.ShopName}} </a>
         </li>
         <br>
         {{/each}}
@@ -16,28 +20,3 @@
     {{!-- <h1>{{userdata.replayMessages}} </h1> --}}
 </main>
 
-{{!-- {{#if userdata.replayMessages}}
-<h2> Message for you.</h2>
-<table id="message" width="50%" border="5">
-
-    <tr>
-        <td>id</td>
-        <th>User Name</th>
-        <th>Message</th>
-        <th></th>
-    </tr>
-    {{#each userdata.replayMessages}}
-    <tr>
-        <td>{{this.idUser}}</td>
-        <td>{{this.shopNmae}}</td>
-        <td>{{this.message}}</td>
-        <td>
-           <form method="post" action="/user/{{this.idUser}}/{{this._id}}?_method=DELETE" <input type="hidden" name="_method"
-                value="DELETE">
-                <input type="submit" name="delete" value='Delete' />
-            </form>
-        </td>
-    </tr>
-    {{/each}}
-</table>
-{{/if}} --}}

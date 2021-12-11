@@ -1,9 +1,85 @@
 const mongoCollections = require('../config/mongoCollections');
 const products = mongoCollections.products;
-const shops = mongoCollections.shop;
+const shops = mongoCollections.shopkeeper;
 const messages = mongoCollections.message;
 var mongoose = require('mongoose');
-var shop = require("./shop");
+var shop = require("./shopkeeper");
+
+
+
+function checkValidations(productname, productdetails, producthighlights, price, quantityremaining, dateofmanufacture, dateofexpiry) {
+    var message;
+
+    var todayDate = new Date().toISOString().slice(0, 10);
+
+    mDate = new Date(dateofmanufacture);
+    eData = new Date(dateofexpiry);
+    var qtyRem = parseInt(quantityremaining)
+
+    //else if (/^\s+$/.test(keyword))
+    if (!productname || (/^\s+$/.test(productname))) {
+        message = ('Please enter productname');
+        return message
+    }
+    if (!productdetails || (/^\s+$/.test(productdetails))) {
+        message = ('Please enter productdetails');
+        return message
+    }
+    if (!producthighlights || (/^\s+$/.test(producthighlights))) {
+        message = ('Please enter producthighlights');
+        return message
+    }
+    if (!price || (/^\s+$/.test(price))) {
+        message = ('Please enter price');
+        return message
+    }
+    if (!quantityremaining || (/^\s+$/.test(quantityremaining))) {
+        message = ('Please enter quantityremaining');
+        return message
+    }
+    if (!dateofmanufacture || (/^\s+$/.test(dateofmanufacture))) {
+        message = ('Please enter dateofmanufacture');
+        return message
+    }
+    if (!dateofexpiry || (/^\s+$/.test(dateofexpiry))) {
+        message = ('Please enter dateofexpiry');
+        return message
+    }
+
+    if (dateofmanufacture > todayDate) {
+        message = ('Date of Manufacture can\'t be future data');
+        return message
+    }
+    if (dateofexpiry < todayDate) {
+        message = ('Date of Expire can\'t be past date');
+        return message
+    }
+
+    if ((!productname) || typeof productname != 'string') {
+        message = `productname "${productname}" is not valid.`
+        return message
+    }
+    if ((!productdetails) || typeof productdetails != 'string' || (!productdetails.match(/^[0-9A-z ]{5,}$/))) {
+        message = `productdetails "${productdetails}" is not valid.`
+        return message
+    }
+    if ((!producthighlights) || typeof producthighlights != 'string') {
+        message = `producthighlights "${producthighlights}" is not valid.`
+        return message
+    }
+
+    if ((!price) || (!price.match(/^(?!0\d)\d*(\.\d+)?$/))) {
+        message = `Price "${price}" is not valid`
+        return message
+    }
+
+    if ((!quantityremaining) || typeof qtyRem != 'number') {
+        message = 'Enter valid number of Qty. is remine'
+        return message
+    }
+
+}
+
 
 const exportedMethods = {
 
@@ -114,82 +190,17 @@ const exportedMethods = {
             return noData
         }
     },
-
     async createProduct(shopId, productname, productdetails, producthighlights, price, quantityremaining, dateofmanufacture, dateofexpiry) {
         const productCollection = await products();
 
         var id = mongoose.Types.ObjectId();
         var convertId = mongoose.Types.ObjectId(shopId);
+
+        var y = checkValidations(productname, productdetails, producthighlights, price, quantityremaining, dateofmanufacture, dateofexpiry)
+        if (y) {
+            return y;
+        }
         var message;
-
-        var todayDate = new Date().toISOString().slice(0, 10);
-
-
-        mDate = new Date(dateofmanufacture);
-        eData = new Date(dateofexpiry);
-        var qtyRem = parseInt(quantityremaining)
-
-        if (!productname) {
-            message = ('Please enter productname');
-            return message
-        }
-        if (!productdetails) {
-            message = ('Please enter productdetails');
-            return message
-        }
-        if (!producthighlights) {
-            message = ('Please enter producthighlights');
-            return message
-        }
-        if (!price) {
-            message = ('Please enter price');
-            return message
-        }
-        if (!quantityremaining) {
-            message = ('Please enter quantityremaining');
-            return message
-        }
-        if (!dateofmanufacture) {
-            message = ('Please enter dateofmanufacture');
-            return message
-        }
-        if (!dateofexpiry) {
-            message = ('Please enter dateofexpiry');
-            return message
-        }
-
-        if (dateofmanufacture > todayDate) {
-            message = ('Date of Manufacture can\'t be future data');
-            return message
-        }
-        if (dateofexpiry < todayDate) {
-            message = ('Date of Expire can\'t be past date');
-            return message
-        }
-
-        if ((!productname) || typeof productname != 'string') {
-            message = `productname "${productname}" is not valid.`
-            return message
-        }
-        if ((!productdetails) || typeof productdetails != 'string' || (!productdetails.match(/^[0-9A-z ]{5,}$/))) {
-            message = `productdetails "${productdetails}" is not valid.`
-            return message
-        }
-        if ((!producthighlights) || typeof producthighlights != 'string') {
-            message = `producthighlights "${producthighlights}" is not valid.`
-            return message
-        }
-
-        if ((!price) || (!price.match(/^(?!0\d)\d*(\.\d+)?$/))) {
-            message = `Price "${price}" is not valid`
-            return message
-        }
-
-        if ((!quantityremaining) || typeof qtyRem != 'number' || (!quantityremaining.match(/^[0-5]{1}$/))) {
-            message = `quantityremaining is in 0 to 5 no "${quantityremaining}".`
-            return message
-        }
-
         const shopCollection = await shops();
         const newItem = {
             _id: id,
@@ -202,7 +213,6 @@ const exportedMethods = {
             dateofmanufacture: dateofmanufacture,
             dateofexpiry: dateofexpiry
         };
-
         const findStore = await shopCollection.findOne({
             _id: convertId
         });
@@ -224,7 +234,7 @@ const exportedMethods = {
                 item: newItem
             }
         })
-        const shopDetail = await shop.get(shopId);
+        const shopDetail = await shop.getAllDataOfShop(shopId);
         var shopItem = shopDetail.item;
         return shopItem;
     },
@@ -233,60 +243,14 @@ const exportedMethods = {
     async updateProduct(productId, productname, productdetails, producthighlights, price, quantityremaining, dateofmanufacture, dateofexpiry) {
         var id = mongoose.Types.ObjectId();
         var convertId = mongoose.Types.ObjectId(productId);
-
-        var message;
-
-        var todayDate = new Date().toISOString().slice(0, 10);
-
-
-        mDate = new Date(dateofmanufacture);
-        eData = new Date(dateofexpiry);
-        var qtyRem = parseInt(quantityremaining)
-
-        if (!productname) {
-            message = ('Please enter productname');
-            return message
+        var y = checkValidations(productname, productdetails, producthighlights, price, quantityremaining, dateofmanufacture, dateofexpiry)
+        if (y) {
+            return y;
         }
-        if (!productdetails) {
-            message = ('Please enter productdetails');
-            return message
-        }
-        if (!producthighlights) {
-            message = ('Please enter producthighlights');
-            return message
-        }
-        if (!price) {
-            message = ('Please enter price');
-            return message
-        }
-        if (!quantityremaining) {
-            message = ('Please enter quantityremaining');
-            return message
-        }
-        if (!dateofmanufacture) {
-            message = ('Please enter dateofmanufacture');
-            return message
-        }
-        if (!dateofexpiry) {
-            message = ('Please enter dateofexpiry');
-            return message
-        }
-
-        if (dateofmanufacture > todayDate) {
-            message = ('Date of Manufacture can\'t be future data');
-            return message
-        }
-        if (dateofexpiry < todayDate) {
-            message = ('Date of Expire can\'t be past date');
-            return message
-        }
-
         const shopCollection = await shops();
         const productCollection = await products();
-
         const restDetail = await this.getShopIdForEditItem(productId);
         const AllitemDetailofspecificItem = await this.getProductDetail(restDetail._id, productId)
-
         const updateItem = {
             _id: AllitemDetailofspecificItem._id,
             productname: productname,

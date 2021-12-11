@@ -4,18 +4,17 @@ const data = require('../data');
 const shopData = data.shop;
 const productData = data.products;
 const userData = data.user;
-var mongoose = require('mongoose');
-
-
 
 router.get('/:id', async function (req, res) {
     const idd = req.params.id;
-    const shopDetail = await shopData.get(idd);
-    var shopName = shopDetail.name
+    const shopDetail = await shopData.getAllDataOfShop(idd);
+    var shopName = shopDetail.ShopName;
     var shopId = shopDetail._id;
     var shopMessage = shopDetail.message;
     var shopComment = shopDetail.comment;
-    var overRating = shopDetail.overallRating; 
+
+    var overRating = shopDetail.overallRating;
+
     var noItem;
     var noMessage;
     var noComment;
@@ -68,7 +67,7 @@ router.get('/:id', async function (req, res) {
 
 router.get('/addItem/:id', async function (req, res) {
     const shopid = req.params.id;
-    const shopDetail = await shopData.get(shopid);
+    const shopDetail = await shopData.getAllDataOfShop(shopid);
     var shopName = shopDetail.name
     const dataa = {
         shopId: shopid,
@@ -81,6 +80,7 @@ router.get('/editItem/:id', async function (req, res) {
     var itemId = req.params.id;
     var restDetail = await productData.getShopIdForEditItem(itemId);
     var itemDetail = await productData.getProductDetail(restDetail._id, itemId)
+    console.log(itemDetail)
     var data = {
         shopId: restDetail._id,
         itemDetail: itemDetail
@@ -89,6 +89,8 @@ router.get('/editItem/:id', async function (req, res) {
 });
 
 router.put('/:id', async function (req, res) {
+    console.log("11112222-----------------------------------------------")
+
     const iddProduct = req.params.id;
     const {
         productname,
@@ -99,6 +101,7 @@ router.put('/:id', async function (req, res) {
         dateofmanufacture,
         dateofexpiry
     } = req.body;
+    console.log("1111-----------------------------------------------")
 
     try {
         var restDetail = await productData.getShopIdForEditItem(iddProduct);
@@ -108,6 +111,7 @@ router.put('/:id', async function (req, res) {
             error: e.message
         });
     }
+    console.log("1-----------------------------------------------")
     var priceNum = parseInt(price)
     var qtyRem = parseInt(quantityremaining)
 
@@ -266,8 +270,8 @@ router.post('/:id', async function (req, res) {
             dateofexpiry
         );
         if (typeof newItem == "string") {
-            console.log(newItem)
-            const shopDetail = await shopData.get(idProduct);
+           // console.log(newItem)
+            const shopDetail = await shopData.getAllDataOfShop(idProduct);
             var shopMessage = shopDetail.message;
             var shopComment = shopDetail.comment;
             var noItem;
@@ -301,9 +305,12 @@ router.post('/:id', async function (req, res) {
                 averageRating = allProducts.overRating
             }
 
+            console.log("ab")
+
             var shopName = shopDetail.name
             var shopId = shopDetail._id;
-            if (allProducts.item.length != 0) {
+     
+
                 const data = {
                     allItem: allProducts.item,
                     title: shopName,
@@ -317,10 +324,11 @@ router.post('/:id', async function (req, res) {
                     noRating: noRating,
                     averageRating: averageRating,
                 }
+                console.log(data.messagetoCreateProduct)
                 res.status(400)
                 res.render("allItem", data)
                 return;
-            }
+       
         }
         res.redirect(`/shopId/${idProduct}`)
     } catch (e) {

@@ -1,0 +1,61 @@
+<article class = "Sign-up">
+    <header>
+        <h1 class = "Signup-heading">
+            Sign-up
+        </h1>
+    </header>
+    <form action = "/signup" method ="POST" id = "signup-form">
+    <label class = "user-text" for = "shopName">
+            Shop Name:
+        </label>
+        <input name = "ShopName" id = "shopName" type = "text">
+        <br>
+        <label class = "user-text" for = "username">
+            User Name :
+        </label>
+        <input name = "username" id = "username" type = "text">
+        <br>
+        <label class = "user-text" for = "ownerFirstname">
+            First Name:
+        </label>
+        <input name = "ownerFirstname" id = "ownerFirstname" type = "text">
+        <br>
+        <label class = "password-text" for = "ownerLastname">
+            Last Name :
+        </label>
+        <input name = "ownerLastname" id = "ownerLastname" type = "text">
+        <br>
+        <label class = "password-text" for = "Address">
+            Address :
+        </label>
+        <input name = "Address" id = "Address" type = "text">
+        <br>
+        <label class = "password-text" for = "email">
+            Email :
+        </label>
+        <input name = "email" id = "email" type = "email">
+        <br>
+        <label class = "password-text" for = "pincode">
+            Pincode :
+        </label>
+        <input name = "pincode" id = "pincode" type = "number">
+        <br>
+        <label class = "password-text" for = "phoneNumber">
+            Phone number :
+        </label>
+        <input name = "phoneNumber" id = "phoneNumber" type = "number">
+        <br>
+        <label class = "password-text" for = "password">
+            Password : 
+        </label>
+        <input name = "password" id = "spassword" type = "password">
+        <br>
+        <input class = "signup-button" type = "submit" value = "Sign up">
+    </form>
+    {{#if error}}
+    <p class = "error">{{error}}</p>
+    {{/if}}
+    <p>Already have an accout? <a href="/login">Click here</a></p>
+<p id = "success-signup" hidden>Account created successfully</p>
+<p id = "suser-error" hidden>Either the username or password is incorrect</p>
+</article> 
